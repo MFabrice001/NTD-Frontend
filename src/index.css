@@ -1,0 +1,550 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  /* Colors */
+  --color-primary: #FFB347; 
+  --color-primary-dark: #e89c36;
+  --color-blue: #3b82f6;
+  --color-blue-light: #eff6ff;
+  --color-dark: #000000;
+  --color-darker: #111827;
+  --color-light: #F9FAFB;
+  --color-white: #FFFFFF;
+  --color-text: #1a1a1a;
+  --color-text-muted: #6B7280;
+  
+  /* Typography - Using Inter to match the clean look of the new screenshots */
+  --font-heading: 'Inter', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-white); /* Aligning with the white Kolla theme */
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  line-height: 1.2;
+  color: var(--color-dark);
+}
+
+.highlight {
+  color: var(--color-primary);
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.75rem;
+  font-weight: 600;
+  border-radius: 4px; /* Sharper corners to match Kolla */
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  border: none;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: #111;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-2px);
+}
+
+.btn-dark {
+  background-color: var(--color-dark);
+  color: var(--color-white);
+}
+
+.btn-dark:hover {
+  background-color: #222;
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--color-white);
+  color: #fff;
+}
+
+.btn-outline:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.btn-admin {
+  background: var(--color-dark);
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 4px;
+}
+
+/* Header - Floating Pill like Kolla */
+.header {
+  position: fixed;
+  top: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 1100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 2rem;
+  background: var(--color-white);
+  color: var(--color-dark);
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  border-radius: 12px;
+}
+
+.header-logo {
+  font-weight: 800;
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.nav-link {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--color-text);
+}
+
+.nav-link.active, .nav-link:hover {
+  color: var(--color-primary);
+}
+
+/* Hero Section */
+.hero {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  margin-top: 0;
+}
+
+.hero-bg {
+  position: absolute;
+  top: -20%;
+  left: 0;
+  width: 100%;
+  height: 140%;
+  background-image: url('./assets/hero_bg.png'); /* Or we can use an unsplash placeholder */
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 100%);
+  z-index: 1;
+}
+
+.hero-container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: 0 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4rem; /* Offset for fixed header */
+}
+
+.hero-content {
+  max-width: 600px;
+  color: white;
+}
+
+.hero-title {
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 800;
+  letter-spacing: -2px;
+  color: white;
+  line-height: 1.1;
+  margin-bottom: 0.5rem; /* Tighter spacing */
+}
+
+.hero-title span {
+  display: block;
+}
+
+.hero-subtitle {
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  color: #e5e7eb;
+  max-width: 500px;
+  margin-bottom: 2rem; /* Tighter spacing */
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.hero-stats-banner {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 1.5rem 2.5rem;
+  border-radius: 8px;
+  gap: 2.5rem;
+  color: white;
+}
+
+.stat-item h3 {
+  font-size: 2.5rem;
+  color: var(--color-primary);
+  margin-bottom: 0;
+}
+
+.stat-item p {
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 0.25rem;
+}
+
+.stat-divider {
+  width: 1px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Wavy SVG Divider Animations */
+.wave-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  line-height: 0;
+}
+
+.waves {
+  position: relative;
+  width: 100%;
+  height: 15vh;
+  margin-bottom: -7px; /* Fix for safari gap */
+  min-height: 100px;
+  max-height: 150px;
+}
+
+.wave1 use { animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite; }
+.wave2 use { animation: move-forever 20s cubic-bezier(.55,.5,.45,.5) infinite; }
+.wave3 use { animation: move-forever 15s cubic-bezier(.55,.5,.45,.5) infinite; }
+.wave4 use { animation: move-forever 10s cubic-bezier(.55,.5,.45,.5) infinite; }
+
+@keyframes move-forever {
+  0% { transform: translate3d(-90px,0,0); }
+  100% { transform: translate3d(85px,0,0); }
+}
+
+/* Sections General */
+.section {
+  padding: 4rem 5%; /* Tighter vertical padding */
+  background-color: var(--color-white);
+}
+
+.section-bg-light {
+  background-color: var(--color-light);
+}
+
+.section-bg-blue {
+  background-color: var(--color-blue-light);
+}
+
+.section-header {
+  margin: 0 auto 3.5rem;
+  max-width: 800px;
+  text-align: center;
+}
+
+.section-header h2 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 0.75rem; 
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.section-header p {
+  font-size: 1.05rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.35rem 0.85rem;
+  background-color: var(--color-dark);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Grid Layouts */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem; /* Tighter gap */
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem; /* Tighter gap */
+}
+
+/* Cards */
+.card {
+  background: var(--color-white);
+  border-radius: 12px; 
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+}
+
+.card-img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 1.25rem;
+}
+
+.card-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem; /* Tighter spacing */
+}
+
+.card-text {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+/* Specific Sections */
+.skyline-img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Excellence Section (Bento Grid Style) */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.bento-card {
+  padding: 1.25rem; 
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  position: relative;
+}
+
+.bento-icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: var(--color-blue-light);
+  color: var(--color-primary-dark);
+  margin-bottom: 0.75rem;
+}
+
+.bento-card.blue .bento-icon-wrapper {
+  background: rgba(255,255,255,0.2);
+  color: white;
+}
+
+.bento-card.dark .dark-icon {
+  background: rgba(255,255,255,0.1);
+  color: var(--color-primary);
+}
+
+.bento-card.blue {
+  background: #3b82f6;
+  color: white;
+}
+.bento-card.blue h3 { color: white; }
+.bento-card.blue p { color: rgba(255,255,255,0.8); }
+
+.bento-card.dark {
+  background: var(--color-dark);
+  color: white;
+  grid-column: span 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.bento-card.dark h3 { color: white; }
+
+/* Landmarks */
+.filter-tabs {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: -3.5rem;
+  margin-bottom: 1.5rem;
+}
+.filter-btn {
+  padding: 0.5rem 1.5rem;
+  border-radius: 4px;
+  border: 1px solid #e5e7eb;
+  background: white;
+  cursor: pointer;
+  font-weight: 600;
+}
+.filter-btn.active {
+  background: var(--color-dark);
+  color: white;
+}
+
+.landmark-tag {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: rgba(255,255,255,0.9);
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* Team */
+.team-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem; /* Tighter gap */
+  background: white;
+  padding: 1.25rem;
+  border-radius: 8px;
+}
+.team-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+.team-info h4 { margin-bottom: 0.1rem; }
+.team-info .role { color: var(--color-primary); font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; }
+.team-info .quote { font-style: italic; color: var(--color-text-muted); font-size: 0.9rem; }
+
+/* Perspectives */
+.news-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 1.5rem;
+}
+.date-tag {
+  font-size: 0.8rem;
+  color: var(--color-primary);
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+/* Legacy CTA */
+.legacy-section {
+  background: var(--color-dark);
+  color: white;
+  text-align: center;
+  padding: 4rem 5%;
+  border-radius: 8px;
+  margin: 2rem 5%;
+}
+.legacy-section h2 { color: white; font-size: 2.5rem; margin-bottom: 0.5rem; text-transform: uppercase; }
+.legacy-section p { color: rgba(255,255,255,0.7); max-width: 500px; margin: 0 auto 1.5rem; }
+.legacy-btns { display: flex; gap: 1rem; justify-content: center; }
+
+/* Footer */
+.footer {
+  background: var(--color-white); /* Following Kolla's white footer */
+  color: var(--color-dark);
+  padding: 4rem 5% 2rem;
+  border-top: 1px solid #e5e7eb;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 2rem;
+}
+.footer h4 { color: var(--color-dark); margin-bottom: 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+.footer p { color: var(--color-text-muted); font-size: 0.9rem; }
+.footer-links li { margin-bottom: 0.5rem; }
+.footer-links a { color: var(--color-text-muted); font-size: 0.9rem; font-weight: 500; }
+.footer-links a:hover { color: var(--color-primary); }
+.footer-bottom { 
+  display: flex; 
+  justify-content: space-between;
+  color: var(--color-text-muted); 
+  font-size: 0.8rem; 
+  font-weight: 600;
+  text-transform: uppercase;
+}
