@@ -7,7 +7,7 @@ const Blog = () => {
 
   useEffect(() => {
     // Fetch blogs from our new Spring Boot public API
-    fetch('http://localhost:8080/api/public/blogs')
+    fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/public/blogs`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

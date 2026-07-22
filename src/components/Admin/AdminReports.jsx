@@ -11,8 +11,8 @@ const AdminReports = ({ token }) => {
     const fetchReportData = async () => {
       try {
         const [projRes, blogRes] = await Promise.all([
-          fetch('http://localhost:8080/api/public/projects'),
-          fetch('http://localhost:8080/api/public/blogs')
+          fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/public/projects`),
+          fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/public/blogs`)
         ]);
         
         const projects = projRes.ok ? await projRes.json() : [];

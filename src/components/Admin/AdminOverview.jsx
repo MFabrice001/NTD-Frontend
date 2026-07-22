@@ -12,9 +12,9 @@ const AdminOverview = ({ token }) => {
     const fetchStats = async () => {
       try {
         const [projRes, teamRes, blogRes] = await Promise.all([
-          fetch('http://localhost:8080/api/public/projects'),
-          fetch('http://localhost:8080/api/public/team-members'),
-          fetch('http://localhost:8080/api/public/blogs')
+          fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/public/projects`),
+          fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/public/team-members`),
+          fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/public/blogs`)
         ]);
         
         

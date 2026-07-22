@@ -10,7 +10,7 @@ const AdminProjects = ({ token }) => {
 
   const fetchProjects = async () => {
     try {
-      const res = await fetch('http://localhost:8080/api/public/projects');
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/public/projects`);
       if (res.ok) setProjects(await res.json());
     } catch (e) { console.error(e); } finally { setLoading(false); }
   };
@@ -20,7 +20,7 @@ const AdminProjects = ({ token }) => {
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this project?')) return;
     try {
-      const res = await fetch(`http://localhost:8080/api/admin/projects/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/admin/projects/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -38,7 +38,7 @@ const AdminProjects = ({ token }) => {
       if (imageFile) {
         const fileData = new FormData();
         fileData.append('file', imageFile);
-        const uploadRes = await fetch('http://localhost:8080/api/admin/images/upload', {
+        const uploadRes = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/admin/images/upload`, {
           method: 'POST',
           headers: { 'Authorization': `Bearer ${token}` },
           body: fileData
@@ -50,7 +50,7 @@ const AdminProjects = ({ token }) => {
       if (videoFile) {
         const fileData = new FormData();
         fileData.append('file', videoFile);
-        const uploadRes = await fetch('http://localhost:8080/api/admin/images/upload', {
+        const uploadRes = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/admin/images/upload`, {
           method: 'POST',
           headers: { 'Authorization': `Bearer ${token}` },
           body: fileData
@@ -58,7 +58,7 @@ const AdminProjects = ({ token }) => {
         if (uploadRes.ok) finalVideoUrl = (await uploadRes.json()).url;
       }
 
-      const res = await fetch('http://localhost:8080/api/admin/projects', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/admin/projects`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',

@@ -9,7 +9,7 @@ const AdminTeam = ({ token }) => {
 
   const fetchTeam = async () => {
     try {
-      const res = await fetch('http://localhost:8080/api/public/team-members');
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/public/team-members`);
       if (res.ok) setTeam(await res.json());
     } catch (e) { console.error(e); } finally { setLoading(false); }
   };
@@ -19,7 +19,7 @@ const AdminTeam = ({ token }) => {
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this team member?')) return;
     try {
-      const res = await fetch(`http://localhost:8080/api/admin/team-members/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/admin/team-members/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -36,7 +36,7 @@ const AdminTeam = ({ token }) => {
         const fileData = new FormData();
         fileData.append('file', imageFile);
 
-        const uploadRes = await fetch('http://localhost:8080/api/admin/images/upload', {
+        const uploadRes = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/admin/images/upload`, {
           method: 'POST',
           headers: { 'Authorization': `Bearer ${token}` },
           body: fileData
@@ -51,7 +51,7 @@ const AdminTeam = ({ token }) => {
         }
       }
 
-      const res = await fetch('http://localhost:8080/api/admin/team-members', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/admin/team-members`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
