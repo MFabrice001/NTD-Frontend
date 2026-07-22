@@ -3,10 +3,11 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import Header from './components/Header';
 import Home from './pages/Home';
 import Blog from './pages/Blog';
+import FAQ from './pages/Faq';
+import Contact from './pages/Contact';
 import Login from './pages/Login';
 import AdminDashboard from './pages/AdminDashboard';
 
-const Contact = () => <div className="page-container"><h1 className="page-title">Contact Us</h1><p>Coming soon...</p></div>;
 
 const AppContent = () => {
   const location = useLocation();
@@ -19,6 +20,7 @@ const AppContent = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/blog" element={<Blog />} />
+        <Route path="/faq" element={<FAQ />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<AdminDashboard />} />
