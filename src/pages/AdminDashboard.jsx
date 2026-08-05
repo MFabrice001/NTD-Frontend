@@ -1,33 +1,57 @@
 import React, { useState, useEffect } from 'react';
+
 import { useNavigate } from 'react-router-dom';
+
 import AdminProjects from '../components/Admin/AdminProjects';
+
 import AdminTeam from '../components/Admin/AdminTeam';
+
 import AdminBlogs from '../components/Admin/AdminBlogs';
 import AdminFaqs from '../components/Admin/AdminFaqs';
 import AdminOverview from '../components/Admin/AdminOverview';
+
 import AdminReports from '../components/Admin/AdminReports';
 import AdminMessages from '../components/Admin/AdminMessages';
 import { Menu, Mail, LayoutDashboard, FolderKanban, Users, FileText, HelpCircle, BarChart2 } from 'lucide-react';
 
+
+
 const AdminDashboard = () => {
+
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const navigate = useNavigate();
 
+
+
   useEffect(() => {
+
     // Check for authentication
+
     const token = localStorage.getItem('token');
+
     if (!token) {
+
       navigate('/login');
+
     }
+
   }, [navigate]);
 
+
+
   const handleLogout = () => {
+
     localStorage.removeItem('token');
+
     navigate('/login');
+
   };
 
+
+
   return (
+
     <div className="admin-page">
       <div className="admin-sidebar" style={{ width: isSidebarOpen ? '260px' : '70px', transition: 'width 0.25s ease' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
@@ -38,9 +62,13 @@ const AdminDashboard = () => {
           >
             <Menu size={22} />
           </button>
+
         </div>
 
+
+
         {isSidebarOpen ? (
+
           <>
             <ul className="admin-nav" style={{ gap: '0.25rem' }}>
               <li className={activeTab === 'dashboard' ? 'active' : ''} onClick={() => setActiveTab('dashboard')}>
@@ -68,30 +96,47 @@ const AdminDashboard = () => {
             <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
               <button onClick={() => navigate('/')} className="btn" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', color: 'white', width: '100%', padding: '0.5rem', fontSize: '0.85rem' }}>
                 &larr; Public Website
+
               </button>
               <button onClick={handleLogout} className="btn" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', color: 'white', width: '100%', padding: '0.5rem', fontSize: '0.85rem' }}>
                 Logout
+
               </button>
+
             </div>
+
           </>
+
         ) : (
           <button onClick={handleLogout} className="btn" style={{ marginTop: 'auto', padding: '0.5rem', background: 'transparent', border: 'none', color: 'white' }} title="Logout">
             <span style={{ fontSize: '1.5rem' }}>⎋</span>
           </button>
+
         )}
+
       </div>
 
       <div className="admin-content">
+
         {activeTab === 'dashboard' && <AdminOverview token={localStorage.getItem('token')} />}
         {activeTab === 'messages' && <AdminMessages token={localStorage.getItem('token')} />}
         {activeTab === 'projects' && <AdminProjects token={localStorage.getItem('token')} />}
+
         {activeTab === 'team' && <AdminTeam token={localStorage.getItem('token')} />}
+
         {activeTab === 'blogs' && <AdminBlogs token={localStorage.getItem('token')} />}
         {activeTab === 'faqs' && <AdminFaqs token={localStorage.getItem('token')} />}
         {activeTab === 'reports' && <AdminReports token={localStorage.getItem('token')} />}
+
       </div>
+
     </div>
+
   );
+
 };
 
+
+
 export default AdminDashboard;
+

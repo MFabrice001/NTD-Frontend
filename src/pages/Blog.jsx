@@ -9,6 +9,7 @@ const Blog = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedArticle, setSelectedArticle] = useState(null);
 
+  // Parallax scroll hook mirroring the exact Home page behavior
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/public/blogs`)
       .then(response => {
@@ -29,9 +30,9 @@ const Blog = () => {
   const filteredBlogs = useMemo(() => {
     if (!searchQuery.trim()) return blogs;
     const query = searchQuery.toLowerCase();
-    return blogs.filter(b => 
-      b.title?.toLowerCase().includes(query) || 
-      b.author?.toLowerCase().includes(query) || 
+    return blogs.filter(b =>
+      b.title?.toLowerCase().includes(query) ||
+      b.author?.toLowerCase().includes(query) ||
       b.content?.toLowerCase().includes(query)
     );
   }, [blogs, searchQuery]);
@@ -49,10 +50,10 @@ const Blog = () => {
       {/* Hero Header */}
       <div className="blog-hero">
         <div className="blog-hero-content">
-          <span style={{fontSize: '0.85rem', fontWeight: '700', letterSpacing: '2px', color: 'var(--color-primary)', textTransform: 'uppercase'}}>
+          <span style={{ fontSize: '0.85rem', fontWeight: '700', letterSpacing: '2px', color: 'var(--color-primary)', textTransform: 'uppercase' }}>
             ND Build & Design Editorial
           </span>
-          <h1 style={{marginTop: '0.5rem'}}>Architectural Perspectives</h1>
+          <h1 style={{ marginTop: '0.5rem' }}>Architectural Perspectives</h1>
           <p>Explore our deep-dive articles, project documentaries, visual showcases, and industry insights.</p>
         </div>
       </div>
@@ -60,18 +61,18 @@ const Blog = () => {
       {/* Interactive Search Bar */}
       <div className="blog-search-container">
         <div className="blog-search-box">
-          <Search size={20} color="#64748b" style={{marginRight: '0.5rem'}} />
-          <input 
-            type="text" 
-            className="blog-search-input" 
+          <Search size={20} color="#64748b" style={{ marginRight: '0.5rem' }} />
+          <input
+            type="text"
+            className="blog-search-input"
             placeholder="Search articles by topic, author, or keyword..."
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
           />
           {searchQuery && (
-            <button 
-              onClick={() => setSearchQuery('')} 
-              style={{background: 'none', border: 'none', cursor: 'pointer', color: '#9ca3af', padding: '0.25rem'}}
+            <button
+              onClick={() => setSearchQuery('')}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9ca3af', padding: '0.25rem' }}
             >
               <X size={18} />
             </button>
@@ -79,7 +80,7 @@ const Blog = () => {
         </div>
       </div>
 
-      <div className="section" style={{paddingTop: '0'}}>
+      <section className="section" style={{ paddingTop: '0' }}>
         {loading && <div className="loading-state">Loading perspectives...</div>}
         {error && <div className="error-state">{error}</div>}
 
@@ -90,64 +91,81 @@ const Blog = () => {
           </div>
         )}
 
-        {/* Featured Cinematic Banner for Latest/Top Article */}
-        {!loading && !error && featuredBlog && (
-          <div 
-            className="blog-featured-card" 
-            onClick={() => setSelectedArticle(featuredBlog)}
-          >
-            <div 
-              className="blog-featured-media" 
-              style={{
-                backgroundImage: featuredBlog.imageUrl ? `url(${featuredBlog.imageUrl})` : undefined
-              }}
-            >
-              {featuredBlog.videoUrl && (
-                <div style={{
-                  width: '64px', 
-                  height: '64px', 
-                  borderRadius: '50%', 
-                  background: 'rgba(225, 29, 72, 0.9)', 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'center', 
-                  boxShadow: '0 10px 25px rgba(225, 29, 72, 0.4)',
-                  border: '2px solid white'
-                }}>
-                  <Play size={28} color="white" fill="white" style={{marginLeft: '3px'}} />
-                </div>
-              )}
-            </div>
+      {/* Wavy SVG shape divider matching Home layout perfectly */}
+      <div className="wave-container" style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', overflow: 'hidden', lineHeight: 0, zIndex: 4 }}>
+        <svg className="waves" xmlns="http://www.w3.org/2000/svg" viewBox="0 24 150 28" preserveAspectRatio="none" aria-hidden="true" style={{ width: '100%', height: '40px' }}>
+          <defs>
+            <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+          </defs>
+          <g className="wave1"><use href="#gentle-wave" x="48" y="0" fill="rgba(248,250,252,0.05)" /></g>
+          <g className="wave2"><use href="#gentle-wave" x="48" y="3" fill="rgba(248,250,252,0.1)" /></g>
+          <g className="wave3"><use href="#gentle-wave" x="48" y="5" fill="rgba(248,250,252,0.2)" /></g>
+          <g className="wave4"><use href="#gentle-wave" x="48" y="7" fill="#f8fafc" /></g>
+        </svg>
+      </div>
+    </section>
 
-            <div className="blog-featured-content">
-              <span className={`blog-badge ${featuredBlog.videoUrl ? 'blog-badge-video' : ''}`}>
-                {featuredBlog.videoUrl ? '★ Featured Documentary Video' : '★ Featured Perspective'}
-              </span>
-              <h2>{featuredBlog.title}</h2>
-              <p>
-                {featuredBlog.content.substring(0, 180)}
-                {featuredBlog.content.length > 180 ? '...' : ''}
-              </p>
-              <div className="blog-meta-row">
-                <span style={{display: 'inline-flex', alignItems: 'center', gap: '0.35rem'}}>
-                  <User size={14} /> By <strong>{featuredBlog.author}</strong>
-                </span>
-                <span>•</span>
-                <span style={{display: 'inline-flex', alignItems: 'center', gap: '0.35rem'}}>
-                  <Calendar size={14} /> {new Date(featuredBlog.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                </span>
-                <span className="blog-read-more" style={{marginLeft: 'auto'}}>
-                  Read Article <ArrowRight size={16} />
-                </span>
-              </div>
+        {/* Featured Cinematic Banner for Latest/Top Article */ }
+  {
+    !loading && !error && featuredBlog && (
+      <div
+        className="blog-featured-card"
+        onClick={() => setSelectedArticle(featuredBlog)}
+      >
+        <div
+          className="blog-featured-media"
+          style={{
+            backgroundImage: featuredBlog.imageUrl ? `url(${featuredBlog.imageUrl})` : undefined
+          }}
+        >
+          {featuredBlog.videoUrl && (
+            <div style={{
+              width: '64px',
+              height: '64px',
+              borderRadius: '50%',
+              background: 'rgba(225, 29, 72, 0.9)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 10px 25px rgba(225, 29, 72, 0.4)',
+              border: '2px solid white'
+            }}>
+              <Play size={28} color="white" fill="white" style={{ marginLeft: '3px' }} />
             </div>
+          )}
+        </div>
+
+        <div className="blog-featured-content">
+          <span className={`blog-badge ${featuredBlog.videoUrl ? 'blog-badge-video' : ''}`}>
+            {featuredBlog.videoUrl ? '★ Featured Documentary Video' : '★ Featured Perspective'}
+          </span>
+          <h2>{featuredBlog.title}</h2>
+          <p>
+            {featuredBlog.content.substring(0, 180)}
+            {featuredBlog.content.length > 180 ? '...' : ''}
+          </p>
+          <div className="blog-meta-row">
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+              <User size={14} /> By <strong>{featuredBlog.author}</strong>
+            </span>
+            <span>•</span>
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+              <Calendar size={14} /> {new Date(featuredBlog.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+            </span>
+            <span className="blog-read-more" style={{ marginLeft: 'auto' }}>
+              Read Article <ArrowRight size={16} />
+            </span>
           </div>
-        )}
+        </div>
+      </div>
+    )
+  }
 
-        {/* Grid of Remaining Articles */}
-        {!loading && !error && regularBlogs.length > 0 && (
-          <div className="blog-grid" style={{paddingTop: '1rem'}}>
-            {regularBlogs.map(blog => (
+  {/* Grid of Remaining Articles */ }
+  {
+    !loading && !error && regularBlogs.length > 0 && (
+      <div className="blog-grid" style={{ paddingTop: '1rem' }}>
+        {regularBlogs.map(blog => (
               <div 
                 className="blog-card" 
                 key={blog.id}
@@ -187,70 +205,72 @@ const Blog = () => {
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
-        )}
+        ))}
       </div>
+    )
+  }
 
-      {/* Full Article & Video Modal Reader */}
-      {selectedArticle && (
-        <div className="blog-modal-backdrop" onClick={() => setSelectedArticle(null)}>
-          <div className="blog-modal-dialog" onClick={e => e.stopPropagation()}>
-            <button className="blog-modal-close" onClick={() => setSelectedArticle(null)} title="Close Article">
-              <X size={22} />
-            </button>
+  {/* Full Article & Video Modal Reader */ }
+{
+  selectedArticle && (
+    <div className="blog-modal-backdrop" onClick={() => setSelectedArticle(null)}>
+      <div className="blog-modal-dialog" onClick={e => e.stopPropagation()}>
+        <button className="blog-modal-close" onClick={() => setSelectedArticle(null)} title="Close Article">
+          <X size={22} />
+        </button>
 
-            <div className="blog-modal-header">
-              <span className={`blog-badge ${selectedArticle.videoUrl ? 'blog-badge-video' : ''}`}>
-                {selectedArticle.videoUrl ? 'Architectural Video Showcase' : 'Editorial Perspective'}
-              </span>
-              <h1>{selectedArticle.title}</h1>
-              <div className="blog-meta-row" style={{fontSize: '0.95rem'}}>
-                <span>By <strong style={{color: 'var(--color-dark)'}}>{selectedArticle.author}</strong></span>
-                <span>•</span>
-                <span>{new Date(selectedArticle.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
-              </div>
-            </div>
-
-            {/* Render Embedded Video OR Image Banner */}
-            <div className="blog-modal-media-section">
-              {selectedArticle.videoUrl && (
-                <div style={{marginBottom: selectedArticle.imageUrl ? '1.5rem' : '0'}}>
-                  <video 
-                    src={selectedArticle.videoUrl} 
-                    controls 
-                    autoPlay
-                    className="blog-modal-video-player"
-                    poster={selectedArticle.imageUrl || undefined}
-                  />
-                </div>
-              )}
-              {selectedArticle.imageUrl && !selectedArticle.videoUrl && (
-                <div 
-                  className="blog-modal-img-banner" 
-                  style={{backgroundImage: `url(${selectedArticle.imageUrl})`}} 
-                />
-              )}
-            </div>
-
-            <div className="blog-modal-body">
-              {selectedArticle.content}
-            </div>
-
-            <div style={{padding: '0 3rem 3rem', display: 'flex', justifyContent: 'flex-end'}}>
-              <button 
-                className="btn btn-dark"
-                onClick={() => setSelectedArticle(null)}
-                style={{padding: '0.75rem 2rem'}}
-              >
-                Close Perspective
-              </button>
-            </div>
+        <div className="blog-modal-header">
+          <span className={`blog-badge ${selectedArticle.videoUrl ? 'blog-badge-video' : ''}`}>
+            {selectedArticle.videoUrl ? 'Architectural Video Showcase' : 'Editorial Perspective'}
+          </span>
+          <h1>{selectedArticle.title}</h1>
+          <div className="blog-meta-row" style={{ fontSize: '0.95rem' }}>
+            <span>By <strong style={{ color: 'var(--color-dark)' }}>{selectedArticle.author}</strong></span>
+            <span>•</span>
+            <span>{new Date(selectedArticle.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
           </div>
         </div>
-      )}
-      <Footer />
+
+        {/* Render Embedded Video OR Image Banner */}
+        <div className="blog-modal-media-section">
+          {selectedArticle.videoUrl && (
+            <div style={{ marginBottom: selectedArticle.imageUrl ? '1.5rem' : '0' }}>
+              <video
+                src={selectedArticle.videoUrl}
+                controls
+                autoPlay
+                className="blog-modal-video-player"
+                poster={selectedArticle.imageUrl || undefined}
+              />
+            </div>
+          )}
+          {selectedArticle.imageUrl && !selectedArticle.videoUrl && (
+            <div
+              className="blog-modal-img-banner"
+              style={{ backgroundImage: `url(${selectedArticle.imageUrl})` }}
+            />
+          )}
+        </div>
+
+        <div className="blog-modal-body">
+          {selectedArticle.content}
+        </div>
+
+        <div style={{ padding: '0 3rem 3rem', display: 'flex', justifyContent: 'flex-end' }}>
+          <button
+            className="btn btn-dark"
+            onClick={() => setSelectedArticle(null)}
+            style={{ padding: '0.75rem 2rem' }}
+          >
+            Close Perspective
+          </button>
+        </div>
+      </div>
     </div>
+  )
+}
+<Footer />
+    </div >
   );
 };
 

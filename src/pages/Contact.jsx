@@ -103,7 +103,7 @@ const Contact = () => {
               <a href="https://facebook.com" target="_blank" rel="noreferrer" className="contact-social-btn" title="Facebook">
                 f
               </a>
-              <a href="https://tiktok.com" target="_blank" rel="noreferrer" className="contact-social-btn" title="TikTok" style={{fontFamily: 'sans-serif', fontSize: '0.75rem', fontWeight: 800}}>
+              <a href="https://tiktok.com" target="_blank" rel="noreferrer" className="contact-social-btn" title="TikTok" style={{ fontFamily: 'sans-serif', fontSize: '0.75rem', fontWeight: 800 }}>
                 TT
               </a>
             </div>
@@ -112,15 +112,15 @@ const Contact = () => {
           {/* Right Column: Minimal Form Area */}
           <div className="contact-form-panel">
             {submitted ? (
-              <div style={{textAlign: 'center', padding: '4rem 1.5rem'}}>
-                <CheckCircle2 size={56} color="#0f172a" style={{margin: '0 auto 1rem'}} />
-                <h3 style={{fontSize: '1.6rem', color: '#0f172a', marginBottom: '0.5rem'}}>
+              <div style={{ textAlign: 'center', padding: '4rem 1.5rem' }}>
+                <CheckCircle2 size={56} color="#0f172a" style={{ margin: '0 auto 1rem' }} />
+                <h3 style={{ fontSize: '1.6rem', color: '#0f172a', marginBottom: '0.5rem' }}>
                   Message Sent Successfully
                 </h3>
-                <p style={{color: '#64748b', maxWidth: '400px', margin: '0 auto 2rem'}}>
+                <p style={{ color: '#64748b', maxWidth: '400px', margin: '0 auto 2rem' }}>
                   Thank you for contacting ND Build & Design. Our team will get back to you shortly.
                 </p>
-                <button 
+                <button
                   className="contact-send-btn"
                   onClick={() => {
                     setSubmitted(false);
@@ -138,7 +138,7 @@ const Contact = () => {
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} style={{display: 'flex', flexDirection: 'column'}}>
+              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
                 {/* Name * -> First | Last */}
                 <div className="contact-form-field">
                   <label className="contact-form-label">Name *</label>
@@ -203,7 +203,7 @@ const Contact = () => {
                 </div>
 
                 {/* Comment or Message * */}
-                <div className="contact-form-field" style={{marginBottom: '2.5rem'}}>
+                <div className="contact-form-field" style={{ marginBottom: '2.5rem' }}>
                   <label className="contact-form-label">Comment or Message *</label>
                   <textarea
                     rows={3}
@@ -212,14 +212,14 @@ const Contact = () => {
                     value={formData.message}
                     onChange={handleChange}
                     className="contact-input-line"
-                    style={{resize: 'vertical'}}
+                    style={{ resize: 'vertical' }}
                   />
                 </div>
 
                 {/* Send Message Button */}
-                <button 
-                  type="submit" 
-                  disabled={submitting} 
+                <button
+                  type="submit"
+                  disabled={submitting}
                   className="contact-send-btn"
                 >
                   {submitting ? 'Sending...' : 'Send Message'}

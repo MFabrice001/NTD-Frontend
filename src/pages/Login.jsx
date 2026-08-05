@@ -75,7 +75,7 @@ const Login = () => {
         
         <div style={{marginTop: '1.5rem', textAlign: 'center'}}>
           <button 
-            onClick={() => navigate('/')} 
+            onClick={() => navigate('/dashboard')} 
             style={{background: 'none', border: 'none', color: '#6b7280', textDecoration: 'underline', cursor: 'pointer', fontSize: '0.9rem'}}
           >
             &larr; Return to Homepage

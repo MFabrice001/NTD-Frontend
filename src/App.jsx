@@ -3,10 +3,11 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import Header from './components/Header';
 import Home from './pages/Home';
 import Blog from './pages/Blog';
-import FAQ from './pages/FAQ';
+import FAQ from './pages/Faq';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
 import AdminDashboard from './pages/AdminDashboard';
+
 
 const AppContent = () => {
   const location = useLocation();
