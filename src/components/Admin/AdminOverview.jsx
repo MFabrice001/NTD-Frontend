@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
-import { Building2, Users, FileText } from 'lucide-react';
+import { Building2, Users, FileText, Mail } from 'lucide-react';
 
 const AdminOverview = ({ token }) => {
-  const [stats, setStats] = useState({ projects: 0, team: 0, blogs: 0 });
+  const [stats, setStats] = useState({ projects: 0, team: 0, blogs: 0, messages: 0 });
   const [recentActivity, setRecentActivity] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -11,21 +11,25 @@ const AdminOverview = ({ token }) => {
     // Fetch counts from endpoints
     const fetchStats = async () => {
       try {
-        const [projRes, teamRes, blogRes] = await Promise.all([
+        const [projRes, teamRes, blogRes, msgRes] = await Promise.all([
           fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/public/projects`),
           fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/public/team-members`),
-          fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/public/blogs`)
+          fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/public/blogs`),
+          fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/admin/contact-messages`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+          })
         ]);
-        
         
         const projData = projRes.ok ? await projRes.json() : [];
         const blogData = blogRes.ok ? await blogRes.json() : [];
         const teamData = teamRes.ok ? await teamRes.json() : [];
+        const msgData = msgRes.ok ? await msgRes.json() : [];
 
         setStats({
           projects: projData.length,
           team: teamData.length,
           blogs: blogData.length,
+          messages: msgData.length,
         });
 
         // Combine into recent activity feed
@@ -50,7 +54,8 @@ const AdminOverview = ({ token }) => {
   const barData = [
     { name: 'Projects', count: stats.projects, fill: '#3b82f6' },
     { name: 'Team', count: stats.team, fill: '#10b981' },
-    { name: 'Blogs', count: stats.blogs, fill: '#f59e0b' }
+    { name: 'Blogs', count: stats.blogs, fill: '#f59e0b' },
+    { name: 'Messages', count: stats.messages, fill: '#8b5cf6' }
   ];
 
   // Mock data for a "Visitor Traffic" style line chart
@@ -74,7 +79,7 @@ const AdminOverview = ({ token }) => {
       </div>
 
       {/* Metric Cards */}
-      <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1.5rem'}}>
+      <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.75rem', marginBottom: '1rem'}}>
         <div className="premium-admin-card" style={{display: 'flex', alignItems: 'center', gap: '1rem', borderLeft: '4px solid #3b82f6'}}>
           <div style={{background: 'linear-gradient(135deg, #eff6ff, #dbeafe)', padding: '1rem', borderRadius: '12px', color: '#3b82f6', boxShadow: 'inset 0 2px 4px rgba(255,255,255,0.5)'}}>
             <Building2 size={24} />
@@ -104,10 +109,20 @@ const AdminOverview = ({ token }) => {
             <p style={{margin: 0, color: 'var(--color-text-muted)', fontSize: '0.85rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px'}}>Blog Posts</p>
           </div>
         </div>
+
+        <div className="premium-admin-card" style={{display: 'flex', alignItems: 'center', gap: '1rem', borderLeft: '4px solid #8b5cf6'}}>
+          <div style={{background: 'linear-gradient(135deg, #f5f3ff, #ede9fe)', padding: '1rem', borderRadius: '12px', color: '#8b5cf6', boxShadow: 'inset 0 2px 4px rgba(255,255,255,0.5)'}}>
+            <Mail size={24} />
+          </div>
+          <div>
+            <h3 style={{fontSize: '1.75rem', margin: 0, fontWeight: '800', color: 'var(--color-dark)'}}>{stats.messages}</h3>
+            <p style={{margin: 0, color: 'var(--color-text-muted)', fontSize: '0.85rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px'}}>Messages</p>
+          </div>
+        </div>
       </div>
 
       {/* Charts Section */}
-      <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem'}}>
+      <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '0.75rem', marginBottom: '1rem'}}>
         {/* Bar Chart: Content Distribution */}
         <div className="premium-admin-card">
           <h3 style={{marginBottom: '1rem', color: 'var(--color-dark)', fontSize: '1.1rem', fontWeight: '700'}}>Content Distribution</h3>

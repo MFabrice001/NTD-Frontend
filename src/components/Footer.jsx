@@ -24,8 +24,10 @@ const Footer = () => {
         </div>
         
         <div>
-          <h4>LEGAL NOTICES</h4>
+          <h4>LEGAL & RESOURCES</h4>
           <ul className="footer-links">
+            <li><a href="/faq">Frequently Asked Questions (FAQ)</a></li>
+            <li><a href="/blog">Architectural Perspectives</a></li>
             <li><a href="#">Terms of Service</a></li>
             <li><a href="#">Privacy Policy</a></li>
             <li><a href="#">Cookie Policy</a></li>
