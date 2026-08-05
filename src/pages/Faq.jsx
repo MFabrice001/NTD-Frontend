@@ -3,7 +3,68 @@ import { Search, ChevronDown, ChevronUp, HelpCircle, CheckCircle2, Building2, Cl
 import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 
-
+const DEFAULT_FAQ_DATA = [
+  {
+    id: 'd-1',
+    category: 'Architectural Design',
+    question: 'What is ND Build & Design\'s philosophy for architectural commissions?',
+    answer: 'We merge cutting-edge modern aesthetics with sustainable engineering principles. Our philosophy centers on creating timeless landmarks that harmonize with local landscapes—specifically designed for the climate, topography, and cultural fabric of East Africa—while upholding international structural and energy-efficiency standards.'
+  },
+  {
+    id: 'd-2',
+    category: 'Architectural Design',
+    question: 'Do you offer custom 3D architectural rendering and BIM modeling?',
+    answer: 'Yes. Every project we undertake utilizes advanced Building Information Modeling (BIM) and photorealistic 3D rendering. This allows our clients and stakeholders to virtually walkthrough their residential, commercial, or institutional structures before ground is ever broken, ensuring complete alignment on spatial design and finishes.'
+  },
+  {
+    id: 'd-3',
+    category: 'Engineering & Construction',
+    question: 'Can ND Build & Design handle end-to-end turnkey construction?',
+    answer: 'Absolutely. We provide full turnkey engineering and construction management. From initial soil testing and structural engineering to procurement, on-site construction, MEP (Mechanical, Electrical, Plumbing) installation, and luxury interior fit-outs, we manage the entire lifecycle under one unified contract.'
+  },
+  {
+    id: 'd-4',
+    category: 'Engineering & Construction',
+    question: 'What structural and quality assurance protocols do you follow?',
+    answer: 'We adhere strictly to international ISO quality control frameworks and local building codes. All raw materials undergo rigorous testing, and our structural engineers perform continuous site inspections at critical milestones to guarantee seismic safety, load-bearing integrity, and multi-decade durability.'
+  },
+  {
+    id: 'd-5',
+    category: 'Project Timelines & Cost',
+    question: 'How do you estimate budgets and prevent cost overruns?',
+    answer: 'Our quantity surveyors prepare comprehensive Bills of Quantities (BOQ) with transparent, itemized costing during the design development phase. By locking in supplier partnerships and utilizing BIM for conflict detection, we minimize unforeseen site changes and protect our clients from scope creep and budget overruns.'
+  },
+  {
+    id: 'd-6',
+    category: 'Project Timelines & Cost',
+    question: 'What is the typical timeline for a commercial or residential project?',
+    answer: 'Timelines vary based on scale and structural complexity. Typically, architectural design and permitting take 6 to 10 weeks, while construction execution ranges from 8 months for bespoke luxury residences to 18–24 months for multi-story commercial or institutional developments.'
+  },
+  {
+    id: 'd-7',
+    category: 'Sustainability',
+    question: 'How does ND Build & Design incorporate green building practices?',
+    answer: 'We integrate passive solar orientation, natural ventilation, rainwater harvesting, high-performance thermal glazing, and locally sourced sustainable materials into our blueprints. We also consult on LEED and EDGE green building certifications to reduce operational energy costs.'
+  },
+  {
+    id: 'd-8',
+    category: 'Sustainability',
+    question: 'Do you design for energy self-sufficiency and solar integration?',
+    answer: 'Yes. We seamlessly integrate commercial-grade rooftop solar arrays, smart battery storage systems, and LED automation into the architectural rooflines and utility spaces without compromising visual aesthetics.'
+  },
+  {
+    id: 'd-9',
+    category: 'Client Process',
+    question: 'How do we initiate a site consultation or commission a project?',
+    answer: 'Getting started is straightforward. You can book an initial consultation with our principal architects and engineers through our contact page or by phone. We conduct a site analysis, discuss your project vision, and present a customized engagement proposal.'
+  },
+  {
+    id: 'd-10',
+    category: 'Client Process',
+    question: 'Do you assist with local municipal building permits and zoning approval?',
+    answer: 'Yes. Our dedicated legal and permitting team navigates all regulatory requirements, submitting compliant structural, fire safety, and environmental impact dossiers to local municipal authorities for rapid approval.'
+  }
+];
 
 const CATEGORIES = [
   'All',
@@ -17,7 +78,7 @@ const CATEGORIES = [
 const FAQ = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [openItems, setOpenItems] = useState([]);
+  const [openItems, setOpenItems] = useState(['d-1', 'd-3']);
   const [adminFaqs, setAdminFaqs] = useState([]);
   const navigate = useNavigate();
 
@@ -43,6 +104,10 @@ const FAQ = () => {
       .catch(err => console.error('Error fetching admin FAQs:', err));
   }, []);
 
+  const combinedFaqs = useMemo(() => {
+    return [...adminFaqs, ...DEFAULT_FAQ_DATA];
+  }, [adminFaqs]);
+
   const toggleAccordion = (id) => {
     if (openItems.includes(id)) {
       setOpenItems(openItems.filter(item => item !== id));
@@ -52,7 +117,7 @@ const FAQ = () => {
   };
 
   const filteredFAQs = useMemo(() => {
-    return adminFaqs.filter(item => {
+    return combinedFaqs.filter(item => {
       const matchesCategory = selectedCategory === 'All' || item.category === selectedCategory;
       const query = searchQuery.toLowerCase();
       const matchesSearch = !query || 
@@ -61,7 +126,7 @@ const FAQ = () => {
         item.category.toLowerCase().includes(query);
       return matchesCategory && matchesSearch;
     });
-  }, [searchQuery, selectedCategory, adminFaqs]);
+  }, [searchQuery, selectedCategory, combinedFaqs]);
 
   return (
     <div className="faq-page">
