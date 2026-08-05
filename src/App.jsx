@@ -7,6 +7,9 @@ import FAQ from './pages/Faq';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
 import AdminDashboard from './pages/AdminDashboard';
+import Portfolio from './pages/Portfolio';
+import Services from './pages/Services';
+import Quote from './pages/Quote';
 
 
 const AppContent = () => {
@@ -24,6 +27,9 @@ const AppContent = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/portfolio" element={<Portfolio />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/quote" element={<Quote />} />
       </Routes>
     </>
   );

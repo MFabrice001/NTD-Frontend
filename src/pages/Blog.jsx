@@ -91,18 +91,7 @@ const Blog = () => {
           </div>
         )}
 
-      {/* Wavy SVG shape divider matching Home layout perfectly */}
-      <div className="wave-container" style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', overflow: 'hidden', lineHeight: 0, zIndex: 4 }}>
-        <svg className="waves" xmlns="http://www.w3.org/2000/svg" viewBox="0 24 150 28" preserveAspectRatio="none" aria-hidden="true" style={{ width: '100%', height: '40px' }}>
-          <defs>
-            <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
-          </defs>
-          <g className="wave1"><use href="#gentle-wave" x="48" y="0" fill="rgba(248,250,252,0.05)" /></g>
-          <g className="wave2"><use href="#gentle-wave" x="48" y="3" fill="rgba(248,250,252,0.1)" /></g>
-          <g className="wave3"><use href="#gentle-wave" x="48" y="5" fill="rgba(248,250,252,0.2)" /></g>
-          <g className="wave4"><use href="#gentle-wave" x="48" y="7" fill="#f8fafc" /></g>
-        </svg>
-      </div>
+
     </section>
 
         {/* Featured Cinematic Banner for Latest/Top Article */ }

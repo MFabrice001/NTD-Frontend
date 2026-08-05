@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SkylineSection from '../components/SkylineSection';
 import ExcellenceSection from '../components/ExcellenceSection';
 import LandmarksSection from '../components/LandmarksSection';
@@ -9,6 +10,7 @@ import Footer from '../components/Footer';
 
 const Home = () => {
   const bgRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,8 +41,8 @@ const Home = () => {
               Precision-engineered infrastructure and world-class architectural solutions, crafted for the heart of Africa.
             </p>
             <div className="hero-buttons">
-              <button className="btn btn-primary">OUR PORTFOLIO &rarr;</button>
-              <button className="btn btn-outline">CONTACT ENGINEERING</button>
+              <button className="btn btn-primary" onClick={() => navigate('/portfolio')}>OUR PORTFOLIO &rarr;</button>
+              <button className="btn btn-outline" onClick={() => navigate('/contact')}>CONTACT ENGINEERING</button>
             </div>
           </div>
           
