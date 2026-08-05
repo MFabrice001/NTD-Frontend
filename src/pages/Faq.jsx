@@ -1,166 +1,255 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { Search, ChevronDown, ChevronUp, HelpCircle, CheckCircle2, Building2, Clock, DollarSign, Leaf, PhoneCall, X, ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 
+const DEFAULT_FAQ_DATA = [
+  {
+    id: 'd-1',
+    category: 'Architectural Design',
+    question: 'What is ND Build & Design\'s philosophy for architectural commissions?',
+    answer: 'We merge cutting-edge modern aesthetics with sustainable engineering principles. Our philosophy centers on creating timeless landmarks that harmonize with local landscapes—specifically designed for the climate, topography, and cultural fabric of East Africa—while upholding international structural and energy-efficiency standards.'
+  },
+  {
+    id: 'd-2',
+    category: 'Architectural Design',
+    question: 'Do you offer custom 3D architectural rendering and BIM modeling?',
+    answer: 'Yes. Every project we undertake utilizes advanced Building Information Modeling (BIM) and photorealistic 3D rendering. This allows our clients and stakeholders to virtually walkthrough their residential, commercial, or institutional structures before ground is ever broken, ensuring complete alignment on spatial design and finishes.'
+  },
+  {
+    id: 'd-3',
+    category: 'Engineering & Construction',
+    question: 'Can ND Build & Design handle end-to-end turnkey construction?',
+    answer: 'Absolutely. We provide full turnkey engineering and construction management. From initial soil testing and structural engineering to procurement, on-site construction, MEP (Mechanical, Electrical, Plumbing) installation, and luxury interior fit-outs, we manage the entire lifecycle under one unified contract.'
+  },
+  {
+    id: 'd-4',
+    category: 'Engineering & Construction',
+    question: 'What structural and quality assurance protocols do you follow?',
+    answer: 'We adhere strictly to international ISO quality control frameworks and local building codes. All raw materials undergo rigorous testing, and our structural engineers perform continuous site inspections at critical milestones to guarantee seismic safety, load-bearing integrity, and multi-decade durability.'
+  },
+  {
+    id: 'd-5',
+    category: 'Project Timelines & Cost',
+    question: 'How do you estimate budgets and prevent cost overruns?',
+    answer: 'Our quantity surveyors prepare comprehensive Bills of Quantities (BOQ) with transparent, itemized costing during the design development phase. By locking in supplier partnerships and utilizing BIM for conflict detection, we minimize unforeseen site changes and protect our clients from scope creep and budget overruns.'
+  },
+  {
+    id: 'd-6',
+    category: 'Project Timelines & Cost',
+    question: 'What is the typical timeline for a commercial or residential project?',
+    answer: 'Timelines vary based on scale and structural complexity. Typically, architectural design and permitting take 6 to 10 weeks, while construction execution ranges from 8 months for bespoke luxury residences to 18–24 months for multi-story commercial or institutional developments.'
+  },
+  {
+    id: 'd-7',
+    category: 'Sustainability',
+    question: 'How does ND Build & Design incorporate green building practices?',
+    answer: 'We integrate passive solar orientation, natural ventilation, rainwater harvesting, high-performance thermal glazing, and locally sourced sustainable materials into our blueprints. We also consult on LEED and EDGE green building certifications to reduce operational energy costs.'
+  },
+  {
+    id: 'd-8',
+    category: 'Sustainability',
+    question: 'Do you design for energy self-sufficiency and solar integration?',
+    answer: 'Yes. We seamlessly integrate commercial-grade rooftop solar arrays, smart battery storage systems, and LED automation into the architectural rooflines and utility spaces without compromising visual aesthetics.'
+  },
+  {
+    id: 'd-9',
+    category: 'Client Process',
+    question: 'How do we initiate a site consultation or commission a project?',
+    answer: 'Getting started is straightforward. You can book an initial consultation with our principal architects and engineers through our contact page or by phone. We conduct a site analysis, discuss your project vision, and present a customized engagement proposal.'
+  },
+  {
+    id: 'd-10',
+    category: 'Client Process',
+    question: 'Do you assist with local municipal building permits and zoning approval?',
+    answer: 'Yes. Our dedicated legal and permitting team navigates all regulatory requirements, submitting compliant structural, fire safety, and environmental impact dossiers to local municipal authorities for rapid approval.'
+  }
+];
+
+const CATEGORIES = [
+  'All',
+  'Architectural Design',
+  'Engineering & Construction',
+  'Project Timelines & Cost',
+  'Sustainability',
+  'Client Process'
+];
+
 const FAQ = () => {
-  const bgRef = useRef(null);
-  const [activeIndex, setActiveIndex] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [openItems, setOpenItems] = useState(['d-1', 'd-3']);
+  const [adminFaqs, setAdminFaqs] = useState([]);
+  const navigate = useNavigate();
 
-  // Parallax scroll hook mirroring the exact Home/Blog page behavior
   useEffect(() => {
-    const handleScroll = () => {
-      if (bgRef.current) {
-        const scrolled = window.scrollY;
-        bgRef.current.style.transform = `translateY(${scrolled * 0.5}px)`;
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/public/faqs`)
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to load FAQs');
+        return res.json();
+      })
+      .then(data => {
+        if (Array.isArray(data)) {
+          // Format admin FAQs to include category (defaulting to Architectural Design or parsing if stored)
+          const formatted = data.map(item => ({
+            id: `admin-${item.id}`,
+            category: item.question?.includes('[') ? item.question.split(']')[0].replace('[', '').trim() : 'Architectural Design',
+            question: item.question?.includes(']') ? item.question.split(']')[1].trim() : item.question,
+            answer: item.answer,
+            isAdmin: true
+          }));
+          setAdminFaqs(formatted);
+        }
+      })
+      .catch(err => console.error('Error fetching admin FAQs:', err));
   }, []);
 
-  const faqData = [
-    {
-      question: "What engineering disciplines does your firm specialize in?",
-      answer: "We offer full-scale structural design, civil infrastructure planning, architectural blueprint optimization, electromechanical coordination, and comprehensive project management solutions tailored specifically to East African terrains and zoning structures."
-    },
-    {
-      question: "How do you integrate sustainability into high-rise projects?",
-      answer: "Sustainability is embedded into our materials lifecycle. We utilize low-carbon custom concrete mixtures, natural building ventilation modeling, efficient microclimate solar orientation layouts, and localized supply chains to drastically minimize ambient emissions."
-    },
-    {
-      question: "What is your typical project timeline from assessment to construction?",
-      answer: "Timelines depend significantly on the scale of development. Commercial portfolios generally require 3 to 6 months for rigorous structural engineering drafting, site assessments, and regulatory approval workflows before foundational excavation commences."
-    },
-    {
-      question: "Do you offer digital structural health monitoring after project handover?",
-      answer: "Yes, we integrate intelligent IoT sensor networks and real-time digital twins into our signature corporate projects. This permits engineering teams to track ongoing strain, material settling thresholds, and execute preventative maintenance diagnostics."
-    },
-    {
-      question: "How can clients initiate an initial engineering consultation?",
-      answer: "Clients can connect directly with our engineering department using our formal contact form or by scheduling an expert layout evaluation directly at our Kigali headquarters."
+  const combinedFaqs = useMemo(() => {
+    return [...adminFaqs, ...DEFAULT_FAQ_DATA];
+  }, [adminFaqs]);
+
+  const toggleAccordion = (id) => {
+    if (openItems.includes(id)) {
+      setOpenItems(openItems.filter(item => item !== id));
+    } else {
+      setOpenItems([...openItems, id]);
     }
-  ];
-
-  // Filters questions based on real-time interactive search inputs
-  const filteredFaqs = faqData.filter(faq => 
-    faq.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    faq.answer.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  const toggleAccordion = (index) => {
-    setActiveIndex(activeIndex === index ? null : index);
   };
 
+  const filteredFAQs = useMemo(() => {
+    return combinedFaqs.filter(item => {
+      const matchesCategory = selectedCategory === 'All' || item.category === selectedCategory;
+      const query = searchQuery.toLowerCase();
+      const matchesSearch = !query || 
+        item.question.toLowerCase().includes(query) || 
+        item.answer.toLowerCase().includes(query) ||
+        item.category.toLowerCase().includes(query);
+      return matchesCategory && matchesSearch;
+    });
+  }, [searchQuery, selectedCategory, combinedFaqs]);
+
   return (
-    <div className="faq-page" style={{ backgroundColor: '#f8fafc', fontFamily: 'system-ui, sans-serif' }}>
-      
-      {/* =========================================================
-          1. HERO HEADER SECTION (Wavy shape divider & Search box)
-         ========================================================= */}
-      <section className="hero" style={{ position: 'relative', overflow: 'hidden', backgroundColor: '#0f172a', padding: '10rem 2rem 8rem 2rem', color: 'white', textAlign: 'center' }}>
-        <div className="hero-bg" ref={bgRef} style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundImage: 'linear-gradient(to bottom right, #1e1b4b, #0f172a)', backgroundSize: 'cover', zIndex: 1 }}></div>
-        <div className="hero-overlay" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(15, 23, 42, 0.4)', zIndex: 2 }}></div>
-        
-        <div className="hero-container" style={{ position: 'relative', zIndex: 3, maxWidth: '800px', margin: '0 auto' }}>
-          <div className="hero-content">
-            <h1 className="hero-title" style={{ fontSize: '3rem', fontWeight: '800', marginBottom: '1.5rem', letterSpacing: '-0.02em', lineHeight: '1.1' }}>
-              <span style={{ display: 'block', color: '#94a3b8', fontSize: '1rem', fontWeight: '700', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>Support & Knowledge</span>
-              <span>FREQUENTLY ASKED</span>{' '}
-              <span className="highlight" style={{ color: '#f59e0b' }}>QUESTIONS</span>
-            </h1>
-            <p className="hero-subtitle" style={{ fontSize: '1.1rem', color: '#cbd5e1', lineHeight: '1.6', marginBottom: '2.5rem', maxWidth: '650px', margin: '0 auto' }}>
-              Find quick answers regarding our architectural frameworks, infrastructure workflows, sustainability principles, and consultation models.
-            </p>
+    <div className="faq-page">
+      {/* Hero Header */}
+      <div className="faq-hero">
+        <span style={{fontSize: '0.85rem', fontWeight: '700', letterSpacing: '2px', color: 'var(--color-primary)', textTransform: 'uppercase'}}>
+          Knowledge & Transparency
+        </span>
+        <h1 style={{marginTop: '0.5rem'}}>Frequently Asked Questions</h1>
+        <p>
+          Everything you need to know about our architectural commissions, engineering standards, project timelines, and engagement process.
+        </p>
+      </div>
 
-            {/* Interactive Question Search Input */}
-            <div style={{ maxWidth: '500px', margin: '2rem auto 0 auto', position: 'relative' }}>
-              <input 
-                type="text"
-                placeholder="Search queries (e.g., sustainability, timeline)..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                style={{ width: '100%', padding: '1rem 1.5rem', borderRadius: '50px', border: '1px solid rgba(255,255,255,0.2)', backgroundColor: 'rgba(255,255,255,0.1)', color: 'white', fontSize: '0.95rem', backdropFilter: 'blur(8px)', outline: 'none', transition: 'all 0.3s' }}
-              />
-            </div>
-          </div>
-        </div>
-        
-        {/* Wavy SVG shape divider matching Home & Blog perfectly */}
-        <div className="wave-container" style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', overflow: 'hidden', lineHeight: 0, zIndex: 4 }}>
-          <svg className="waves" xmlns="http://www.w3.org/2000/svg" viewBox="0 24 150 28" preserveAspectRatio="none" aria-hidden="true" style={{ width: '100%', height: '40px' }}>
-            <defs>
-              <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
-            </defs>
-            <g className="wave1"><use href="#gentle-wave" x="48" y="0" fill="rgba(248,250,252,0.05)" /></g>
-            <g className="wave2"><use href="#gentle-wave" x="48" y="3" fill="rgba(248,250,252,0.1)" /></g>
-            <g className="wave3"><use href="#gentle-wave" x="48" y="5" fill="rgba(248,250,252,0.2)" /></g>
-            <g className="wave4"><use href="#gentle-wave" x="48" y="7" fill="#f8fafc" /></g>
-          </svg>
-        </div>
-      </section>
-
-      {/* =========================================================
-          2. INTERACTIVE FAQ ACCORDION LIST
-         ========================================================= */}
-      <section className="faq-content-section" style={{ padding: '5rem 2rem 6rem 2rem' }}>
-        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-          
-          {filteredFaqs.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '4rem 2rem', backgroundColor: 'white', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
-              <p style={{ color: '#64748b', fontSize: '1rem', margin: 0 }}>No matching frequently asked questions discovered. Try alternate keywords.</p>
-            </div>
-          ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-              {filteredFaqs.map((faq, idx) => {
-                const isOpen = activeIndex === idx;
-                return (
-                  <div 
-                    key={idx} 
-                    style={{ backgroundColor: 'white', borderRadius: '10px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.01)', overflow: 'hidden', transition: 'all 0.2s ease-in-out' }}
-                  >
-                    {/* Accordion Toggle Header Row */}
-                    <button 
-                      onClick={() => toggleAccordion(idx)}
-                      style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.5rem', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', outline: 'none' }}
-                    >
-                      <span style={{ fontSize: '1.1rem', fontWeight: '700', color: isOpen ? '#f59e0b' : '#0f172a', transition: 'color 0.2s' }}>
-                        {faq.question}
-                      </span>
-                      <span style={{ fontSize: '1.5rem', fontWeight: '400', color: '#94a3b8', transform: isOpen ? 'rotate(45deg)' : 'rotate(0deg)', transition: 'transform 0.2s', display: 'inline-block', lineHeight: 1 }}>
-                        ＋
-                      </span>
-                    </button>
-
-                    {/* Collapsible Answer Body Box */}
-                    <div style={{ maxHeight: isOpen ? '300px' : '0px', overflow: 'hidden', transition: 'max-height 0.3s ease-in-out, padding 0.3s ease' }}>
-                      <div style={{ padding: '0 1.5rem 1.5rem 1.5rem', color: '#475569', fontSize: '0.95rem', lineHeight: '1.6', borderTop: '1px solid #f1f5f9', paddingTop: '1rem' }}>
-                        {faq.answer}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-
-          {/* Additional Assistance CTA Block */}
-          <div style={{ marginTop: '4rem', textAlign: 'center', backgroundColor: '#1e1b4b', color: 'white', padding: '2.5rem', borderRadius: '12px', backgroundImage: 'linear-gradient(to bottom right, #0f172a, #1e293b)' }}>
-            <h3 style={{ margin: 0, fontSize: '1.4rem', fontWeight: '700' }}>Still have specific queries?</h3>
-            <p style={{ color: '#cbd5e1', fontSize: '0.9rem', margin: '0.5rem 0 1.5rem 0' }}>
-              Our project engineering consultation team is standing by to help evaluate structural scale blueprints.
-            </p>
-            <button style={{ padding: '0.75rem 1.75rem', backgroundColor: '#f59e0b', color: '#1e1b4b', border: 'none', fontWeight: '700', borderRadius: '4px', cursor: 'pointer', letterSpacing: '0.025em' }}>
-              CONTACT OUR ENGINEERS
+      {/* Interactive Search Bar */}
+      <div className="faq-search-container">
+        <div className="faq-search-box">
+          <Search size={20} color="#64748b" style={{marginRight: '0.5rem'}} />
+          <input 
+            type="text" 
+            className="faq-search-input" 
+            placeholder="Search questions by topic, engineering standard, or keyword..."
+            value={searchQuery}
+            onChange={e => setSearchQuery(e.target.value)}
+          />
+          {searchQuery && (
+            <button 
+              onClick={() => setSearchQuery('')} 
+              style={{background: 'none', border: 'none', cursor: 'pointer', color: '#9ca3af', padding: '0.25rem'}}
+            >
+              <X size={18} />
             </button>
-          </div>
-
+          )}
         </div>
-      </section>
+      </div>
 
-      {/* =========================================================
-          3. SITE FOOTER INTEGRATION
-         ========================================================= */}
+      {/* Category Filter Pills */}
+      <div className="faq-categories-bar">
+        {CATEGORIES.map(cat => (
+          <button
+            key={cat}
+            className={`faq-category-btn ${selectedCategory === cat ? 'active' : ''}`}
+            onClick={() => setSelectedCategory(cat)}
+          >
+            {cat === 'Architectural Design' && <Building2 size={15} />}
+            {cat === 'Engineering & Construction' && <CheckCircle2 size={15} />}
+            {cat === 'Project Timelines & Cost' && <Clock size={15} />}
+            {cat === 'Sustainability' && <Leaf size={15} />}
+            {cat === 'Client Process' && <HelpCircle size={15} />}
+            {cat}
+          </button>
+        ))}
+      </div>
+
+      {/* Accordion Questions List */}
+      <div className="faq-accordion-container">
+        {filteredFAQs.length === 0 ? (
+          <div style={{textAlign: 'center', padding: '4rem 2rem', background: 'white', borderRadius: '16px', border: '1px solid #e2e8f0'}}>
+            <HelpCircle size={48} color="#9ca3af" style={{margin: '0 auto 1rem'}} />
+            <h3 style={{fontSize: '1.4rem', color: 'var(--color-dark)', marginBottom: '0.5rem'}}>
+              No questions found
+            </h3>
+            <p style={{color: '#64748b', maxWidth: '450px', margin: '0 auto'}}>
+              We couldn't find an answer matching your search. Please try another keyword or contact our engineering team directly.
+            </p>
+          </div>
+        ) : (
+          filteredFAQs.map(item => {
+            const isOpen = openItems.includes(item.id);
+            return (
+              <div 
+                key={item.id} 
+                className={`faq-accordion-item ${isOpen ? 'open' : ''}`}
+              >
+                <div 
+                  className="faq-accordion-header"
+                  onClick={() => toggleAccordion(item.id)}
+                >
+                  <div className="faq-question-left">
+                    <span className="faq-category-badge">{item.category}</span>
+                    <span className="faq-question-title">{item.question}</span>
+                  </div>
+                  <div className="faq-accordion-toggle-icon">
+                    <ChevronDown size={20} />
+                  </div>
+                </div>
+
+                {isOpen && (
+                  <div className="faq-accordion-body">
+                    <p style={{margin: 0}}>{item.answer}</p>
+                  </div>
+                )}
+              </div>
+            );
+          })
+        )}
+      </div>
+
+      {/* Still Have Questions Heading ABOVE the Blue Frame */}
+      <h2 className="faq-cta-section-title">Still Have Questions?</h2>
+
+      {/* Blue Frame Call-to-Action Banner */}
+      <div className="faq-cta-banner">
+        <p>
+          Our principal architects and structural engineers are ready to discuss your custom project vision, evaluate your site, or answer any technical inquiries.
+        </p>
+        <div style={{display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center'}}>
+          <button 
+            className="btn" 
+            style={{background: 'var(--color-primary)', color: 'white', padding: '0.85rem 2rem', fontWeight: '700', borderRadius: '30px', display: 'flex', alignItems: 'center', gap: '0.5rem'}}
+            onClick={() => navigate('/contact')}
+          >
+            Schedule Consultation <ArrowRight size={18} />
+          </button>
+          <button 
+            className="btn" 
+            style={{background: 'rgba(255,255,255,0.15)', color: 'white', padding: '0.85rem 2rem', fontWeight: '700', borderRadius: '30px', border: '1px solid rgba(255,255,255,0.3)', display: 'flex', alignItems: 'center', gap: '0.5rem'}}
+            onClick={() => navigate('/contact')}
+          >
+            <PhoneCall size={18} /> Call Kigali Office
+          </button>
+        </div>
+      </div>
       <Footer />
     </div>
   );
