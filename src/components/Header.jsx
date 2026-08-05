@@ -19,7 +19,7 @@ const Header = () => {
   return (
     <header className="header">
       <div className="header-logo" style={{display: 'flex', alignItems: 'center', gap: '10px'}}>
-        <img src={logoImg} alt="ND Build & Design" style={{height: '45px', objectFit: 'contain'}} />
+        <img src={logoImg} alt="NTD Build & Design Solutions" style={{height: '65px', objectFit: 'contain'}} />
       </div>
 
       {/* Desktop Navigation (Removed, using Hamburger only now) */}

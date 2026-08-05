@@ -62,27 +62,27 @@ const Contact = () => {
 
                 <div className="contact-info-item">
                   <strong>WhatsApp</strong>
-                  <p>(+250) 788 000 000</p>
+                  <p>(+250) 780 754 701</p>
                 </div>
 
                 <div className="contact-info-item">
                   <strong>Technical Support</strong>
-                  <p>(+250) 788 000 001</p>
+                  <p>(+250) 780 754 701</p>
                 </div>
 
                 <div className="contact-info-item">
                   <strong>Customer Support</strong>
-                  <p>(+250) 788 000 000/0793898671</p>
+                  <p>(+250) 780 754 701</p>
                 </div>
 
                 <div className="contact-info-item">
                   <strong>Email</strong>
-                  <p>info@ndbuilddesign.rw</p>
+                  <p>ntdbuilddesignsolution@gmail.com</p>
                 </div>
 
                 <div className="contact-info-item">
                   <strong>Our Address</strong>
-                  <p>Kigali Innovation City, KG 7 Ave</p>
+                  <p>KG 18 Ave, Remera, Kigali, Rwanda</p>
                   <p>Building, Kigali – Gasabo</p>
                   <p>P.O Box 1234, Kigali–Rwanda</p>
                 </div>
@@ -91,19 +91,13 @@ const Contact = () => {
 
             {/* Social Icons Row */}
             <div className="contact-social-row">
-              <a href="https://x.com" target="_blank" rel="noreferrer" className="contact-social-btn" title="X (Twitter)">
-                X
-              </a>
-              <a href="https://instagram.com" target="_blank" rel="noreferrer" className="contact-social-btn" title="Instagram">
+              <a href="https://instagram.com/ntdbuild_designsolution?igsh=MWJyaHVnODdodzB0aw==" target="_blank" rel="noreferrer" className="contact-social-btn" title="Instagram">
                 IG
               </a>
-              <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="contact-social-btn" title="LinkedIn">
+              <a href="https://www.linkedin.com/company/ntdbuilddesignsolution/?viewAsMember=true" target="_blank" rel="noreferrer" className="contact-social-btn" title="LinkedIn">
                 in
               </a>
-              <a href="https://facebook.com" target="_blank" rel="noreferrer" className="contact-social-btn" title="Facebook">
-                f
-              </a>
-              <a href="https://tiktok.com" target="_blank" rel="noreferrer" className="contact-social-btn" title="TikTok" style={{ fontFamily: 'sans-serif', fontSize: '0.75rem', fontWeight: 800 }}>
+              <a href="https://www.tiktok.com/@ntdbuild_designsolution?_r=1&_t=ZS-98dCmusOUau" target="_blank" rel="noreferrer" className="contact-social-btn" title="TikTok" style={{ fontFamily: 'sans-serif', fontSize: '0.75rem', fontWeight: 800 }}>
                 TT
               </a>
             </div>
@@ -118,7 +112,7 @@ const Contact = () => {
                   Message Sent Successfully
                 </h3>
                 <p style={{ color: '#64748b', maxWidth: '400px', margin: '0 auto 2rem' }}>
-                  Thank you for contacting ND Build & Design. Our team will get back to you shortly.
+                  Thank you for contacting NTD BUILD & DESIGN SOLUTIONS. Our team will get back to you shortly.
                 </p>
                 <button
                   className="contact-send-btn"

@@ -10,7 +10,7 @@ const SkylineSection = () => {
       <div className="section-header">
         <span className="badge">KIGALI'S PREMIER FIRM</span>
         <h2>Defining the Skyline of Modern Rwanda</h2>
-        <p>Since 2012, NTD Construction has been at the forefront of Rwanda's architectural evolution. We specialize in transforming complex engineering challenges into iconic landmarks that stand the test of time. Our portfolio spans from luxury residential estates to cutting-edge commercial hubs, reflecting our commitment to sustainable development and world-class craftsmanship. By integrating local context with international standards, we don't just build structures—we engineer the future of our communities.</p>
+        <p>Since 2022, NTD BUILD & DESIGN SOLUTIONS has been at the forefront of Rwanda's architectural evolution. We specialize in transforming complex engineering challenges into iconic landmarks that stand the test of time. Our portfolio spans from luxury residential estates to cutting-edge commercial hubs, reflecting our commitment to sustainable development and world-class craftsmanship. By integrating local context with international standards, we don't just build structures—we engineer the future of our communities.</p>
       </div>
       <div className="grid-4">
         <div className="card">
