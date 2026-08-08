@@ -20,6 +20,7 @@ const AdminDashboard = () => {
 
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [token, setToken] = useState(localStorage.getItem('token'));
   const navigate = useNavigate();
 
 
@@ -27,14 +28,23 @@ const AdminDashboard = () => {
   useEffect(() => {
 
     // Check for authentication
-
-    const token = localStorage.getItem('token');
-
-    if (!token) {
-
+    const storedToken = localStorage.getItem('token');
+    if (!storedToken) {
       navigate('/login');
-
+      return;
     }
+    setToken(storedToken);
+
+    // Verify the token is still valid by making a test request
+    fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/admin/contact-messages`, {
+      headers: { 'Authorization': `Bearer ${storedToken}` }
+    }).then(res => {
+      if (res.status === 403 || res.status === 401) {
+        // Token is expired or invalid — force re-login
+        localStorage.removeItem('token');
+        navigate('/login');
+      }
+    }).catch(() => {});
 
   }, [navigate]);
 
@@ -118,15 +128,15 @@ const AdminDashboard = () => {
 
       <div className="admin-content">
 
-        {activeTab === 'dashboard' && <AdminOverview token={localStorage.getItem('token')} />}
-        {activeTab === 'messages' && <AdminMessages token={localStorage.getItem('token')} />}
-        {activeTab === 'projects' && <AdminProjects token={localStorage.getItem('token')} />}
+        {activeTab === 'dashboard' && <AdminOverview token={token} />}
+        {activeTab === 'messages' && <AdminMessages token={token} />}
+        {activeTab === 'projects' && <AdminProjects token={token} />}
 
-        {activeTab === 'team' && <AdminTeam token={localStorage.getItem('token')} />}
+        {activeTab === 'team' && <AdminTeam token={token} />}
 
-        {activeTab === 'blogs' && <AdminBlogs token={localStorage.getItem('token')} />}
-        {activeTab === 'faqs' && <AdminFaqs token={localStorage.getItem('token')} />}
-        {activeTab === 'reports' && <AdminReports token={localStorage.getItem('token')} />}
+        {activeTab === 'blogs' && <AdminBlogs token={token} />}
+        {activeTab === 'faqs' && <AdminFaqs token={token} />}
+        {activeTab === 'reports' && <AdminReports token={token} />}
 
       </div>
 

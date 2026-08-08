@@ -64,6 +64,7 @@ const AdminTeam = ({ token }) => {
         setFormData({ name: '', role: '', quote: '', imageUrl: '' });
         setImageFile(null);
         fetchTeam();
+        alert('Team member successfully saved!');
       }
     } catch (e) { console.error(e); }
   };
@@ -103,7 +104,12 @@ const AdminTeam = ({ token }) => {
                 style={{padding: '0.5rem'}}
                 onChange={e => setImageFile(e.target.files[0])} 
               />
-              {imageFile && <p style={{fontSize: '0.8rem', color: '#10b981', marginTop: '0.5rem'}}>Selected: {imageFile.name}</p>}
+              {imageFile && (
+                <div style={{marginTop: '0.5rem'}}>
+                  <p style={{fontSize: '0.8rem', color: '#10b981', marginBottom: '0.5rem'}}>Selected: {imageFile.name}</p>
+                  <img src={URL.createObjectURL(imageFile)} alt="Preview" style={{ width: '120px', height: '120px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #eee' }} />
+                </div>
+              )}
             </div>
             <button type="submit" className="btn btn-dark">Save Team Member</button>
           </form>

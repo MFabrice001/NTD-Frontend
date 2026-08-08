@@ -4,7 +4,7 @@ const AdminProjects = ({ token }) => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
-  const [formData, setFormData] = useState({ title: '', category: '', location: '', year: '', imageUrl: '', videoUrl: '' });
+  const [formData, setFormData] = useState({ title: '', category: '', location: '', year: '', imageUrl: '', videoUrl: '', description: '' });
   const [imageFile, setImageFile] = useState(null);
   const [videoFile, setVideoFile] = useState(null);
 
@@ -68,10 +68,11 @@ const AdminProjects = ({ token }) => {
       });
       if (res.ok) {
         setShowForm(false);
-        setFormData({ title: '', category: '', location: '', year: '', imageUrl: '', videoUrl: '' });
+        setFormData({ title: '', category: '', location: '', year: '', imageUrl: '', videoUrl: '', description: '' });
         setImageFile(null);
         setVideoFile(null);
         fetchProjects();
+        alert('Project successfully saved!');
       }
     } catch (e) { console.error(e); }
   };
@@ -106,6 +107,16 @@ const AdminProjects = ({ token }) => {
                 <input className="login-input" value={formData.year} onChange={e => setFormData({...formData, year: e.target.value})} required />
               </div>
             </div>
+            <div style={{marginBottom: '1.5rem'}}>
+              <label>Description</label>
+              <textarea 
+                className="login-input" 
+                value={formData.description} 
+                onChange={e => setFormData({...formData, description: e.target.value})} 
+                rows="4" 
+                required 
+              />
+            </div>
             <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.5rem'}}>
               <div>
                 <label>Feature Image</label>
@@ -116,7 +127,12 @@ const AdminProjects = ({ token }) => {
                   style={{padding: '0.5rem'}}
                   onChange={e => setImageFile(e.target.files[0])} 
                 />
-                {imageFile && <p style={{fontSize: '0.8rem', color: '#10b981', marginTop: '0.5rem'}}>Selected: {imageFile.name}</p>}
+                {imageFile && (
+                  <div style={{marginTop: '0.5rem'}}>
+                    <p style={{fontSize: '0.8rem', color: '#10b981', marginBottom: '0.5rem'}}>Selected: {imageFile.name}</p>
+                    <img src={URL.createObjectURL(imageFile)} alt="Preview" style={{ width: '120px', height: '120px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #eee' }} />
+                  </div>
+                )}
               </div>
               <div>
                 <label>Feature Video</label>
@@ -127,7 +143,12 @@ const AdminProjects = ({ token }) => {
                   style={{padding: '0.5rem'}}
                   onChange={e => setVideoFile(e.target.files[0])} 
                 />
-                {videoFile && <p style={{fontSize: '0.8rem', color: '#10b981', marginTop: '0.5rem'}}>Selected: {videoFile.name}</p>}
+                {videoFile && (
+                  <div style={{marginTop: '0.5rem'}}>
+                    <p style={{fontSize: '0.8rem', color: '#10b981', marginBottom: '0.5rem'}}>Selected: {videoFile.name}</p>
+                    <video src={URL.createObjectURL(videoFile)} style={{ width: '120px', height: '120px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #eee' }} controls />
+                  </div>
+                )}
               </div>
             </div>
             <button type="submit" className="btn btn-dark">Save Project</button>

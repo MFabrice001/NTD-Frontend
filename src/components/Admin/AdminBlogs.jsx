@@ -76,6 +76,7 @@ const AdminBlogs = ({ token }) => {
         setImageFile(null);
         setVideoFile(null);
         fetchBlogs();
+        alert('Article successfully published!');
       }
     } catch (e) { 
       console.error(e); 
@@ -184,8 +185,11 @@ const AdminBlogs = ({ token }) => {
                   />
                 </label>
                 {imageFile && (
-                  <div style={{marginTop: '0.75rem', fontSize: '0.85rem', color: '#10b981', fontWeight: '600'}}>
-                    ✓ {imageFile.name} ready for upload
+                  <div style={{marginTop: '0.75rem', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                    <div style={{fontSize: '0.85rem', color: '#10b981', fontWeight: '600', marginBottom: '0.5rem'}}>
+                      ✓ {imageFile.name} ready
+                    </div>
+                    <img src={URL.createObjectURL(imageFile)} alt="Preview" style={{ width: '100%', maxWidth: '200px', height: '120px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #eee' }} />
                   </div>
                 )}
               </div>
@@ -212,8 +216,11 @@ const AdminBlogs = ({ token }) => {
                   />
                 </label>
                 {videoFile && (
-                  <div style={{marginTop: '0.75rem', fontSize: '0.85rem', color: '#10b981', fontWeight: '600'}}>
-                    ✓ {videoFile.name} ready for upload
+                  <div style={{marginTop: '0.75rem', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                    <div style={{fontSize: '0.85rem', color: '#10b981', fontWeight: '600', marginBottom: '0.5rem'}}>
+                      ✓ {videoFile.name} ready
+                    </div>
+                    <video src={URL.createObjectURL(videoFile)} style={{ width: '100%', maxWidth: '200px', height: '120px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #eee' }} controls />
                   </div>
                 )}
               </div>
