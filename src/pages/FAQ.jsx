@@ -7,7 +7,7 @@ const DEFAULT_FAQ_DATA = [
   {
     id: 'd-1',
     category: 'Architectural Design',
-    question: 'What is ND Build & Design\'s philosophy for architectural commissions?',
+    question: 'What is NTD BUILD & DESIGN SOLUTION\'s philosophy for architectural commissions?',
     answer: 'We merge cutting-edge modern aesthetics with sustainable engineering principles. Our philosophy centers on creating timeless landmarks that harmonize with local landscapes—specifically designed for the climate, topography, and cultural fabric of East Africa—while upholding international structural and energy-efficiency standards.'
   },
   {
@@ -19,7 +19,7 @@ const DEFAULT_FAQ_DATA = [
   {
     id: 'd-3',
     category: 'Engineering & Construction',
-    question: 'Can ND Build & Design handle end-to-end turnkey construction?',
+    question: 'Can NTD BUILD & DESIGN SOLUTION handle end-to-end turnkey construction?',
     answer: 'Absolutely. We provide full turnkey engineering and construction management. From initial soil testing and structural engineering to procurement, on-site construction, MEP (Mechanical, Electrical, Plumbing) installation, and luxury interior fit-outs, we manage the entire lifecycle under one unified contract.'
   },
   {
@@ -43,7 +43,7 @@ const DEFAULT_FAQ_DATA = [
   {
     id: 'd-7',
     category: 'Sustainability',
-    question: 'How does ND Build & Design incorporate green building practices?',
+    question: 'How does NTD BUILD & DESIGN SOLUTION incorporate green building practices?',
     answer: 'We integrate passive solar orientation, natural ventilation, rainwater harvesting, high-performance thermal glazing, and locally sourced sustainable materials into our blueprints. We also consult on LEED and EDGE green building certifications to reduce operational energy costs.'
   },
   {
@@ -120,8 +120,8 @@ const FAQ = () => {
     return combinedFaqs.filter(item => {
       const matchesCategory = selectedCategory === 'All' || item.category === selectedCategory;
       const query = searchQuery.toLowerCase();
-      const matchesSearch = !query || 
-        item.question.toLowerCase().includes(query) || 
+      const matchesSearch = !query ||
+        item.question.toLowerCase().includes(query) ||
         item.answer.toLowerCase().includes(query) ||
         item.category.toLowerCase().includes(query);
       return matchesCategory && matchesSearch;
@@ -132,10 +132,10 @@ const FAQ = () => {
     <div className="faq-page">
       {/* Hero Header */}
       <div className="faq-hero">
-        <span style={{fontSize: '0.85rem', fontWeight: '700', letterSpacing: '2px', color: 'var(--color-primary)', textTransform: 'uppercase'}}>
+        <span style={{ fontSize: '0.85rem', fontWeight: '700', letterSpacing: '2px', color: 'var(--color-primary)', textTransform: 'uppercase' }}>
           Knowledge & Transparency
         </span>
-        <h1 style={{marginTop: '0.5rem'}}>Frequently Asked Questions</h1>
+        <h1 style={{ marginTop: '0.5rem' }}>Frequently Asked Questions</h1>
         <p>
           Everything you need to know about our architectural commissions, engineering standards, project timelines, and engagement process.
         </p>
@@ -144,18 +144,18 @@ const FAQ = () => {
       {/* Interactive Search Bar */}
       <div className="faq-search-container">
         <div className="faq-search-box">
-          <Search size={20} color="#64748b" style={{marginRight: '0.5rem'}} />
-          <input 
-            type="text" 
-            className="faq-search-input" 
+          <Search size={20} color="#64748b" style={{ marginRight: '0.5rem' }} />
+          <input
+            type="text"
+            className="faq-search-input"
             placeholder="Search questions by topic, engineering standard, or keyword..."
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
           />
           {searchQuery && (
-            <button 
-              onClick={() => setSearchQuery('')} 
-              style={{background: 'none', border: 'none', cursor: 'pointer', color: '#9ca3af', padding: '0.25rem'}}
+            <button
+              onClick={() => setSearchQuery('')}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9ca3af', padding: '0.25rem' }}
             >
               <X size={18} />
             </button>
@@ -184,12 +184,12 @@ const FAQ = () => {
       {/* Accordion Questions List */}
       <div className="faq-accordion-container">
         {filteredFAQs.length === 0 ? (
-          <div style={{textAlign: 'center', padding: '4rem 2rem', background: 'white', borderRadius: '16px', border: '1px solid #e2e8f0'}}>
-            <HelpCircle size={48} color="#9ca3af" style={{margin: '0 auto 1rem'}} />
-            <h3 style={{fontSize: '1.4rem', color: 'var(--color-dark)', marginBottom: '0.5rem'}}>
+          <div style={{ textAlign: 'center', padding: '4rem 2rem', background: 'white', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+            <HelpCircle size={48} color="#9ca3af" style={{ margin: '0 auto 1rem' }} />
+            <h3 style={{ fontSize: '1.4rem', color: 'var(--color-dark)', marginBottom: '0.5rem' }}>
               No questions found
             </h3>
-            <p style={{color: '#64748b', maxWidth: '450px', margin: '0 auto'}}>
+            <p style={{ color: '#64748b', maxWidth: '450px', margin: '0 auto' }}>
               We couldn't find an answer matching your search. Please try another keyword or contact our engineering team directly.
             </p>
           </div>
@@ -197,11 +197,11 @@ const FAQ = () => {
           filteredFAQs.map(item => {
             const isOpen = openItems.includes(item.id);
             return (
-              <div 
-                key={item.id} 
+              <div
+                key={item.id}
                 className={`faq-accordion-item ${isOpen ? 'open' : ''}`}
               >
-                <div 
+                <div
                   className="faq-accordion-header"
                   onClick={() => toggleAccordion(item.id)}
                 >
@@ -216,7 +216,7 @@ const FAQ = () => {
 
                 {isOpen && (
                   <div className="faq-accordion-body">
-                    <p style={{margin: 0}}>{item.answer}</p>
+                    <p style={{ margin: 0 }}>{item.answer}</p>
                   </div>
                 )}
               </div>
@@ -233,17 +233,17 @@ const FAQ = () => {
         <p>
           Our principal architects and structural engineers are ready to discuss your custom project vision, evaluate your site, or answer any technical inquiries.
         </p>
-        <div style={{display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center'}}>
-          <button 
-            className="btn" 
-            style={{background: 'var(--color-primary)', color: 'white', padding: '0.85rem 2rem', fontWeight: '700', borderRadius: '30px', display: 'flex', alignItems: 'center', gap: '0.5rem'}}
+        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+          <button
+            className="btn"
+            style={{ background: 'var(--color-primary)', color: 'white', padding: '0.85rem 2rem', fontWeight: '700', borderRadius: '30px', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
             onClick={() => navigate('/contact')}
           >
             Schedule Consultation <ArrowRight size={18} />
           </button>
-          <button 
-            className="btn" 
-            style={{background: 'rgba(255,255,255,0.15)', color: 'white', padding: '0.85rem 2rem', fontWeight: '700', borderRadius: '30px', border: '1px solid rgba(255,255,255,0.3)', display: 'flex', alignItems: 'center', gap: '0.5rem'}}
+          <button
+            className="btn"
+            style={{ background: 'rgba(255,255,255,0.15)', color: 'white', padding: '0.85rem 2rem', fontWeight: '700', borderRadius: '30px', border: '1px solid rgba(255,255,255,0.3)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
             onClick={() => navigate('/contact')}
           >
             <PhoneCall size={18} /> Call Kigali Office
