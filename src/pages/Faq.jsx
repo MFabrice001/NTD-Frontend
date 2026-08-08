@@ -7,7 +7,7 @@ const DEFAULT_FAQ_DATA = [
   {
     id: 'd-1',
     category: 'Architectural Design',
-    question: 'What is ND Build & Design\'s philosophy for architectural commissions?',
+    question: 'What is NTD BUILD & DESIGN SOLUTION\'s philosophy for architectural commissions?',
     answer: 'We merge cutting-edge modern aesthetics with sustainable engineering principles. Our philosophy centers on creating timeless landmarks that harmonize with local landscapes—specifically designed for the climate, topography, and cultural fabric of East Africa—while upholding international structural and energy-efficiency standards.'
   },
   {
@@ -19,7 +19,7 @@ const DEFAULT_FAQ_DATA = [
   {
     id: 'd-3',
     category: 'Engineering & Construction',
-    question: 'Can ND Build & Design handle end-to-end turnkey construction?',
+    question: 'Can NTD BUILD & DESIGN SOLUTION handle end-to-end turnkey construction?',
     answer: 'Absolutely. We provide full turnkey engineering and construction management. From initial soil testing and structural engineering to procurement, on-site construction, MEP (Mechanical, Electrical, Plumbing) installation, and luxury interior fit-outs, we manage the entire lifecycle under one unified contract.'
   },
   {
@@ -43,7 +43,7 @@ const DEFAULT_FAQ_DATA = [
   {
     id: 'd-7',
     category: 'Sustainability',
-    question: 'How does ND Build & Design incorporate green building practices?',
+    question: 'How does NTD BUILD & DESIGN SOLUTION incorporate green building practices?',
     answer: 'We integrate passive solar orientation, natural ventilation, rainwater harvesting, high-performance thermal glazing, and locally sourced sustainable materials into our blueprints. We also consult on LEED and EDGE green building certifications to reduce operational energy costs.'
   },
   {

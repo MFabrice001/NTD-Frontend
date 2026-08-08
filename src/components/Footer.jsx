@@ -37,16 +37,16 @@ const Footer = () => {
         <div>
           <h4>CONTACT</h4>
           <ul className="footer-links" style={{color: 'var(--color-dark)', fontWeight: 700}}>
-            <li style={{marginBottom: '0.75rem'}}>KIGALI INNOVATION CITY</li>
+            <li style={{marginBottom: '0.75rem'}}>KIGALI CITY</li>
             <li style={{marginBottom: '0.75rem'}}>P.O. BOX 1234</li>
             <li style={{marginBottom: '0.75rem'}}>KIGALI, RWANDA</li>
-            <li>TEL: +250 788 000 000</li>
+            <li>TEL: +250 780 754 701</li>
           </ul>
         </div>
       </div>
       
       <div className="footer-bottom">
-        <span>&copy; 2026 NTD CONSTRUCTION</span>
+        <span>&copy; 2026 NTD BUILD & DESIGN SOLUTIONS</span>
         <span>NTD PLATFORM CREATION</span>
       </div>
     </footer>

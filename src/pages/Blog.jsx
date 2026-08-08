@@ -51,7 +51,7 @@ const Blog = () => {
       <div className="blog-hero">
         <div className="blog-hero-content">
           <span style={{ fontSize: '0.85rem', fontWeight: '700', letterSpacing: '2px', color: 'var(--color-primary)', textTransform: 'uppercase' }}>
-            ND Build & Design Editorial
+            NTD BUILD & DESIGN SOLUTIONS Editorial
           </span>
           <h1 style={{ marginTop: '0.5rem' }}>Architectural Perspectives</h1>
           <p>Explore our deep-dive articles, project documentaries, visual showcases, and industry insights.</p>
