@@ -13,7 +13,7 @@ const PerspectivesSection = () => {
           <div className="card-body" style={{padding: '1.5rem 0'}}>
             <span className="date-tag">October 14, 2024</span>
             <h3 className="card-title">Sustainable Concrete: The Future of Kigali's Urban Growth</h3>
-            <p className="card-text">How NTD Build & Design Solutions is integrating eco-friendly concrete solutions in our latest commercial projects to...</p>
+            <p className="card-text">How NTD Build & Design Solution is integrating eco-friendly concrete solutions in our latest commercial projects to...</p>
           </div>
         </div>
         <div className="card" style={{boxShadow: 'none', background: 'transparent'}}>
