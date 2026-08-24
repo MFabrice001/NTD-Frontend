@@ -33,10 +33,35 @@ const LandmarksSection = () => {
   const categories = ['All Projects', ...new Set(projects.map(p => p.category))];
 
   return (
-    <section className="section">
-      <div className="section-header">
-        <h2>Impactful Landmarks</h2>
-        <p>A selection of our most recent structural achievements.</p>
+    <section className="section" style={{ backgroundColor: '#0F172A', padding: '3rem 5%' }}>
+      <style>{`
+        .landmark-card {
+          cursor: pointer;
+          display: flex;
+          flex-direction: column;
+          transition: transform 0.3s ease;
+        }
+        .landmark-card:hover {
+          transform: translateY(-8px);
+        }
+        .landmark-image-wrapper {
+          overflow: hidden;
+          border-radius: 8px;
+          margin-bottom: 1.5rem;
+        }
+        .landmark-card img {
+          width: 100%;
+          height: 350px;
+          object-fit: cover;
+          transition: transform 0.5s ease;
+        }
+        .landmark-card:hover img {
+          transform: scale(1.08);
+        }
+      `}</style>
+      <div className="section-header" style={{ color: '#FFFFFF' }}>
+        <h2 style={{ color: '#FFFFFF' }}>Impactful Landmarks</h2>
+        <p style={{ color: '#94A3B8' }}>A selection of our most recent structural achievements.</p>
       </div>
       
       {categories.length > 1 && (
@@ -58,27 +83,30 @@ const LandmarksSection = () => {
       ) : projects.length === 0 ? (
         <div style={{ textAlign: 'center', padding: '2rem', color: '#64748b' }}>No projects available.</div>
       ) : (
-        <div className="grid-3">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '2.5rem' }}>
           {filteredProjects.map(project => (
-            <div className="card" key={project.id} onClick={() => setSelectedProject(project)} style={{ cursor: 'pointer' }}>
-              <div style={{position: 'relative'}}>
-                <span className="landmark-tag" style={{
-                  background: project.category?.toLowerCase() === 'residential' ? 'var(--color-blue)' : 
-                             project.category?.toLowerCase() === 'civil works' ? 'var(--color-dark)' : 'var(--color-primary)', 
-                  color: 'white'
-                }}>
-                  {project.category?.toUpperCase() || 'PROJECT'}
-                </span>
+            <div key={project.id} onClick={() => setSelectedProject(project)} className="landmark-card">
+              <div className="landmark-image-wrapper">
                 <img 
                   src={project.imageUrl || 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop'} 
                   alt={project.title} 
-                  className="card-img" 
-                  style={{height: '350px'}} 
                 />
               </div>
-              <div className="card-body">
-                <h3 className="card-title">{project.title}</h3>
-                <p className="card-text">{project.location} • {project.year}</p>
+              <div>
+                <h4 style={{ fontSize: '1rem', fontWeight: '800', textTransform: 'uppercase', color: 'var(--color-primary)', marginBottom: '0.2rem', letterSpacing: '1px' }}>
+                  {project.category || 'PROJECT'}
+                </h4>
+                <h3 style={{ fontSize: '1.4rem', fontWeight: '600', color: '#FFFFFF', marginBottom: '0.5rem' }}>
+                  {project.title}
+                </h3>
+                {project.description && (
+                  <p style={{ color: '#CBD5E1', fontSize: '0.85rem', lineHeight: '1.6', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', marginBottom: '0.8rem' }}>
+                    {project.description}
+                  </p>
+                )}
+                <p style={{ color: '#94A3B8', fontSize: '0.9rem', margin: 0 }}>
+                  {project.location} • {project.year}
+                </p>
               </div>
             </div>
           ))}

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@400;500;600;700;800;900&display=swap');
 
 :root {
   /* Colors */
@@ -13,8 +13,8 @@
   --color-text: #1a1a1a;
   --color-text-muted: #6B7280;
 
-  /* Typography - Using Inter to match the clean look of the new screenshots */
-  --font-heading: 'Inter', sans-serif;
+  /* Typography - Using Poppins for headings and Inter for body to match BSC */
+  --font-heading: 'Poppins', sans-serif;
   --font-body: 'Inter', sans-serif;
 
   /* Transitions */
@@ -34,6 +34,8 @@ body {
   /* Aligning with the white Kolla theme */
   color: var(--color-text);
   -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  font-weight: 300;
 }
 
 a {
@@ -55,6 +57,7 @@ h6 {
   font-family: var(--font-heading);
   line-height: 1.2;
   color: var(--color-dark);
+  font-weight: 600;
 }
 
 .highlight {
@@ -117,20 +120,17 @@ h6 {
 /* Header - Floating Pill like Kolla */
 .header {
   position: fixed;
-  top: 1.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  max-width: 1100px;
+  top: 0;
+  left: 0;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.75rem 2rem;
+  padding: 0.5rem 5%;
   background: var(--color-white);
   color: var(--color-dark);
   z-index: 1000;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
 .header-logo {
@@ -146,14 +146,28 @@ h6 {
 }
 
 .nav-link {
-  font-weight: 500;
-  font-size: 0.9rem;
-  color: var(--color-text);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--color-dark);
+  text-decoration: none;
+  text-transform: uppercase;
 }
 
 .nav-link.active,
 .nav-link:hover {
   color: var(--color-primary);
+}
+
+/* Hide desktop nav on mobile, hide mobile hamburger on desktop */
+@media (max-width: 900px) {
+  .header-desktop-nav {
+    display: none !important;
+  }
+}
+@media (min-width: 901px) {
+  .mobile-menu-btn {
+    display: none !important;
+  }
 }
 
 /* Hero Section */
@@ -279,11 +293,11 @@ h6 {
 .waves {
   position: relative;
   width: 100%;
-  height: 15vh;
+  height: 8vh;
   margin-bottom: -7px;
   /* Fix for safari gap */
-  min-height: 100px;
-  max-height: 150px;
+  min-height: 40px;
+  max-height: 80px;
 }
 
 .wave1 use {
@@ -314,8 +328,8 @@ h6 {
 
 /* Sections General */
 .section {
-  padding: 4rem 5%;
-  /* Tighter vertical padding */
+  padding: 6rem 5%;
+  /* Spacious vertical padding based on reference */
   background-color: var(--color-white);
 }
 
@@ -364,15 +378,15 @@ h6 {
 .grid-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-  /* Tighter gap */
+  gap: 2.5rem;
+  /* Spacious gap */
 }
 
 .grid-3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  /* Tighter gap */
+  gap: 2rem;
+  /* Spacious gap */
 }
 
 .grid-4 {
@@ -605,11 +619,10 @@ h6 {
 
 /* Footer */
 .footer {
-  background: var(--color-white);
-  /* Following Kolla's white footer */
-  color: var(--color-dark);
+  background: #0F172A;
+  color: var(--color-white);
   padding: 4rem 5% 2rem;
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid #1E293B;
 }
 
 .footer-grid {
@@ -617,12 +630,12 @@ h6 {
   grid-template-columns: 2fr 1fr 1fr;
   gap: 2rem;
   margin-bottom: 2rem;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid #1E293B;
   padding-bottom: 2rem;
 }
 
 .footer h4 {
-  color: var(--color-dark);
+  color: var(--color-white);
   margin-bottom: 1rem;
   font-size: 0.9rem;
   text-transform: uppercase;
@@ -630,7 +643,7 @@ h6 {
 }
 
 .footer p {
-  color: var(--color-text-muted);
+  color: #94A3B8;
   font-size: 0.9rem;
 }
 
@@ -639,7 +652,7 @@ h6 {
 }
 
 .footer-links a {
-  color: var(--color-text-muted);
+  color: #94A3B8;
   font-size: 0.9rem;
   font-weight: 500;
 }
@@ -651,7 +664,7 @@ h6 {
 .footer-bottom {
   display: flex;
   justify-content: space-between;
-  color: var(--color-text-muted);
+  color: #94A3B8;
   font-size: 0.8rem;
   font-weight: 600;
   text-transform: uppercase;

@@ -6,7 +6,7 @@ const Footer = () => {
       <div className="footer-grid">
         <div>
           <h4>NEWSLETTER</h4>
-          <h2 style={{fontSize: '1rem', fontWeight: 800, marginTop: '1rem', marginBottom: '1.5rem', maxWidth: '350px'}}>WANT TO BE THE FIRST TO KNOW ABOUT THE LATEST JOB OPPORTUNITIES, INDUSTRY INSIGHTS, AND PLATFORM UPDATES?</h2>
+          <h2 style={{fontSize: '1rem', fontWeight: 800, marginTop: '1rem', marginBottom: '1.5rem', maxWidth: '350px', color: '#FFFFFF'}}>WANT TO BE THE FIRST TO KNOW ABOUT THE LATEST JOB OPPORTUNITIES, INDUSTRY INSIGHTS, AND PLATFORM UPDATES?</h2>
           <h4 style={{marginBottom: '1.5rem'}}>SIGN UP NOW FOR THE NTD NEWSLETTER</h4>
           
           <form style={{maxWidth: '400px'}}>
@@ -36,11 +36,12 @@ const Footer = () => {
         
         <div>
           <h4>CONTACT</h4>
-          <ul className="footer-links" style={{color: 'var(--color-dark)', fontWeight: 700}}>
-            <li style={{marginBottom: '0.75rem'}}>KIGALI CITY</li>
-            <li style={{marginBottom: '0.75rem'}}>P.O. BOX 1234</li>
-            <li style={{marginBottom: '0.75rem'}}>KIGALI, RWANDA</li>
-            <li>TEL: +250 780 754 701</li>
+          <ul className="footer-links" style={{color: '#FFFFFF', fontWeight: 700}}>
+            <li style={{marginBottom: '0.75rem'}}>KG 18 Ave, Remera</li>
+            <li style={{marginBottom: '0.75rem'}}>Kigali - Gasabo</li>
+            <li style={{marginBottom: '0.75rem'}}>P.O Box 1234, Kigali - Rwanda</li>
+            <li style={{marginBottom: '0.75rem'}}>TEL: +250 780 754 701</li>
+            <li>ntdbuilddesignsolution@gmail.com</li>
           </ul>
         </div>
       </div>

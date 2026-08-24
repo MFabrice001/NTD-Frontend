@@ -41,8 +41,9 @@ const Home = () => {
               Precision-engineered infrastructure and world-class architectural solutions, crafted for the heart of Africa.
             </p>
             <div className="hero-buttons">
-              <button className="btn btn-primary" onClick={() => navigate('/portfolio')}>OUR PORTFOLIO &rarr;</button>
-              <button className="btn btn-outline" onClick={() => navigate('/contact')}>CONTACT ENGINEERING</button>
+              <button className="btn btn-primary" onClick={() => navigate('/about')}>READ MORE</button>
+              <button className="btn btn-outline" onClick={() => navigate('/portfolio')}>OUR PORTFOLIO &rarr;</button>
+              <button className="btn btn-outline" onClick={() => navigate('/contact')}>CONTACT US</button>
             </div>
           </div>
           

@@ -1,108 +1,137 @@
-import React from 'react';
-import { Building2, ShieldCheck, Users, ArrowRight } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import excellenceImg from '../images/P image2.avif'; // Using local image
+import React, { useRef } from 'react';
+import img1 from '../images/C image 5.jpeg';
+import img2 from '../images/P image4.jpeg';
+import img3 from '../images/P image3.jpg';
+import img4 from '../images/co image.jpg';
+
+const services = [
+  {
+    id: 1,
+    title: 'Commercial Construction',
+    description: 'Delivering state-of-the-art office buildings and retail centers with uncompromising quality.',
+    image: img1
+  },
+  {
+    id: 2,
+    title: 'Residential Development',
+    description: 'Crafting luxury homes and multi-family residential complexes built for modern living.',
+    image: img2
+  },
+  {
+    id: 3,
+    title: 'Civil Engineering',
+    description: 'Expertise in robust infrastructure, roads, bridges, and public works projects.',
+    image: img3
+  },
+  {
+    id: 4,
+    title: 'Architectural Design',
+    description: 'Innovative design solutions that blend aesthetics with functional sustainability.',
+    image: img4
+  }
+];
 
 const ExcellenceSection = () => {
-  const navigate = useNavigate();
+  const scrollContainerRef = useRef(null);
 
   return (
-    <section className="section" style={{ padding: '6rem 2rem', background: '#ffffff' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
-        
-        {/* Left Column */}
-        <div>
-          <span style={{ 
-            background: 'var(--color-blue-light)', 
-            color: 'var(--color-primary-dark)',
-            padding: '0.4rem 1rem', 
-            borderRadius: '20px', 
-            fontSize: '0.85rem', 
-            fontWeight: '700',
-            letterSpacing: '1px'
-          }}>
-            Our Value Proposition
-          </span>
-          <h2 style={{ fontSize: '3rem', marginTop: '1.5rem', marginBottom: '1rem', lineHeight: '1.2', color: 'var(--color-dark)' }}>
-            Engineering Excellence
-          </h2>
-          <p style={{ color: 'var(--color-text-muted)', fontSize: '1.1rem', marginBottom: '2.5rem', lineHeight: '1.6' }}>
-            We combine the best of African engineering talent, modern structural innovation, and proven methodologies to deliver exceptional construction solutions that drive urban growth.
-          </p>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', marginBottom: '3rem' }}>
-            {/* Item 1 */}
-            <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-start' }}>
-              <div style={{ background: 'var(--color-blue-light)', padding: '1rem', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Building2 size={24} color="var(--color-primary-dark)" />
-              </div>
-              <div>
-                <h3 style={{ fontSize: '1.2rem', marginBottom: '0.3rem', color: 'var(--color-dark)' }}>Commercial Construction</h3>
-                <p style={{ color: 'var(--color-text-muted)', fontSize: '0.95rem', margin: 0, lineHeight: '1.5' }}>High-rise office complexes, robust retail hubs, and state-of-the-art facilities designed for maximum utility. We integrate advanced HVAC and smart-building systems to optimize operational efficiency.</p>
-              </div>
-            </div>
-            
-            {/* Item 2 */}
-            <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-start' }}>
-              <div style={{ background: 'var(--color-blue-light)', padding: '1rem', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <ShieldCheck size={24} color="var(--color-primary-dark)" />
-              </div>
-              <div>
-                <h3 style={{ fontSize: '1.2rem', marginBottom: '0.3rem', color: 'var(--color-dark)' }}>Quality Assurance</h3>
-                <p style={{ color: 'var(--color-text-muted)', fontSize: '0.95rem', margin: 0, lineHeight: '1.5' }}>Rigorous structural testing ensuring seismic safety and multi-decade durability. We strictly adhere to ISO quality control frameworks and employ continuous site inspections at critical milestones.</p>
-              </div>
-            </div>
-
-            {/* Item 3 */}
-            <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-start' }}>
-              <div style={{ background: 'var(--color-blue-light)', padding: '1rem', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Users size={24} color="var(--color-primary-dark)" />
-              </div>
-              <div>
-                <h3 style={{ fontSize: '1.2rem', marginBottom: '0.3rem', color: 'var(--color-dark)' }}>Project Management</h3>
-                <p style={{ color: 'var(--color-text-muted)', fontSize: '0.95rem', margin: 0, lineHeight: '1.5' }}>End-to-end oversight ensuring on-time delivery and strict cost efficiency. Our dedicated quantity surveyors utilize BIM for conflict detection to eliminate unforeseen scope creep.</p>
-              </div>
-            </div>
-          </div>
-
-          <button 
-            className="btn btn-dark" 
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.8rem 2rem', fontWeight: 'bold' }}
-            onClick={() => navigate('/services')}
-          >
-            Learn More <ArrowRight size={18} />
-          </button>
-        </div>
-
-        {/* Right Column (Image) */}
-        <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <img 
-            src={excellenceImg} 
-            alt="Engineering Excellence" 
-            style={{ 
-              width: '100%', 
-              height: '650px', 
-              objectFit: 'cover', 
-              borderRadius: '24px', 
-              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.1)',
-            }} 
-          />
-        </div>
-        
+    <section style={{ padding: '4rem 5%', backgroundColor: '#1E293B', overflow: 'hidden' }}>
+      <div style={{ marginBottom: '2rem', textAlign: 'center' }}>
+        <h2 style={{
+          color: 'var(--color-primary)',
+          fontSize: '1.5rem',
+          fontWeight: '900',
+          letterSpacing: '3px',
+          textTransform: 'uppercase',
+          margin: 0
+        }}>
+          OUR SERVICES
+        </h2>
+        <p style={{ fontSize: '1.2rem', marginTop: '0.5rem', color: '#FFFFFF', fontWeight: '400', letterSpacing: '1px' }}>
+          What We Do
+        </p>
       </div>
-      
-      {/* Mobile responsiveness in index.css will handle the grid layout on smaller screens */}
+
+      {/* CSS for Hover Animations */}
       <style>{`
-        @media (max-width: 900px) {
-          .section > div {
-            grid-template-columns: 1fr !important;
-          }
-          .section img {
-            height: 400px !important;
-            margin-top: 2rem;
-          }
+        .hide-scrollbar::-webkit-scrollbar { 
+          display: none; 
+        }
+        .service-card {
+          position: relative;
+          min-width: 400px;
+          height: 380px;
+          scroll-snap-align: start;
+          border-radius: 12px;
+          overflow: hidden;
+          cursor: pointer;
+        }
+        .service-card img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.5s ease;
+        }
+        .service-card:hover img {
+          transform: scale(1.08);
+        }
+        .service-card-overlay {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 70%;
+          background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 50%, transparent 100%);
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          align-items: center;
+          text-align: center;
+          padding: 2rem;
+          color: white;
+          transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+        .service-card-desc {
+          opacity: 0;
+          transform: translateY(20px);
+          transition: opacity 0.4s ease, transform 0.4s ease;
+          max-height: 0;
+        }
+        .service-card:hover .service-card-desc {
+          opacity: 1;
+          transform: translateY(0);
+          max-height: 100px;
+          margin-top: 0.5rem;
         }
       `}</style>
+
+      {/* Horizontal Scroll Container */}
+      <div
+        ref={scrollContainerRef}
+        style={{
+          display: 'flex',
+          gap: '2rem',
+          overflowX: 'auto',
+          scrollSnapType: 'x mandatory',
+          scrollbarWidth: 'none', // hide scrollbar Firefox
+          msOverflowStyle: 'none' // hide scrollbar IE
+        }}
+        className="hide-scrollbar"
+      >
+        {services.map(service => (
+          <div key={service.id} className="service-card">
+            <img src={service.image} alt={service.title} />
+            <div className="service-card-overlay">
+              <h3 style={{ color: 'var(--color-primary)', fontSize: '1.5rem', fontWeight: '800', textTransform: 'uppercase', margin: 0, textShadow: '1px 1px 3px rgba(0,0,0,0.8)' }}>
+                {service.title}
+              </h3>
+              <p className="service-card-desc" style={{ color: '#E2E8F0', fontSize: '1rem', lineHeight: '1.5', margin: 0 }}>
+                {service.description}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
     </section>
   );
 };

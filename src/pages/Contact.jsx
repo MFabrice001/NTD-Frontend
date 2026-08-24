@@ -222,6 +222,19 @@ const Contact = () => {
             )}
           </div>
         </div>
+        
+        {/* Google Maps Embed */}
+        <div style={{ marginTop: '4rem', width: '100%', maxWidth: '1200px', margin: '4rem auto 0', padding: '0 5%' }}>
+          <iframe 
+            src="https://maps.google.com/maps?q=Ministry%20of%20Infrastructure,%20Kigali&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+            width="100%" 
+            height="400" 
+            style={{ border: 0, borderRadius: '16px', boxShadow: '0 10px 30px rgba(0,0,0,0.08)' }} 
+            allowFullScreen 
+            loading="lazy"
+            title="Google Maps Location"
+          ></iframe>
+        </div>
       </div>
 
       {/* Professional Footer matching Home Page */}
