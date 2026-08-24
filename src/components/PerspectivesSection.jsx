@@ -11,9 +11,15 @@ const PerspectivesSection = () => {
         <div className="card" style={{boxShadow: 'none', background: 'transparent'}}>
           <img src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?q=80&w=800&auto=format&fit=crop" alt="Concrete" className="card-img" style={{borderRadius: '16px'}} />
           <div className="card-body" style={{padding: '1.5rem 0'}}>
+<<<<<<< HEAD
             <span className="date-tag" style={{ color: 'var(--color-primary)' }}>October 14, 2024</span>
             <h3 className="card-title" style={{ color: '#FFFFFF', marginTop: '0.5rem', marginBottom: '0.5rem' }}>Sustainable Concrete: The Future of Kigali's Urban Growth</h3>
             <p className="card-text" style={{ color: '#94A3B8' }}>How NTD Build & Design Solutions is integrating eco-friendly concrete solutions in our latest commercial projects to...</p>
+=======
+            <span className="date-tag">October 14, 2024</span>
+            <h3 className="card-title">Sustainable Concrete: The Future of Kigali's Urban Growth</h3>
+            <p className="card-text">How NTD Build & Design Solution is integrating eco-friendly concrete solutions in our latest commercial projects to...</p>
+>>>>>>> 95c969ae723c4d809063f9807bca9d4c103aa849
           </div>
         </div>
         <div className="card" style={{boxShadow: 'none', background: 'transparent'}}>
