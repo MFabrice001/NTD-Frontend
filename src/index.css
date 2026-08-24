@@ -1567,7 +1567,7 @@ h6 {
 /* Still Have Questions CTA Banner */
 .faq-cta-banner {
   max-width: 900px;
-  margin: 4rem auto 0;
+  margin: 4rem auto 6rem;
   padding: 3rem 5%;
   background: linear-gradient(135deg, #0f172a, #1e293b);
   border-radius: 24px;
@@ -1604,7 +1604,7 @@ h6 {
 
 .faq-cta-banner {
   max-width: 900px;
-  margin: 0 auto 0;
+  margin: 0 auto 6rem;
   padding: 3rem 5%;
   background: linear-gradient(135deg, #0f172a, #1e293b);
   border-radius: 24px;
