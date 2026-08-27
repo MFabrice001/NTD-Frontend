@@ -79,80 +79,77 @@ const AdminOverview = ({ token }) => {
       </div>
 
       {/* Metric Cards */}
-      <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.75rem', marginBottom: '1rem'}}>
-        <div className="premium-admin-card" style={{display: 'flex', alignItems: 'center', gap: '1rem', borderLeft: '4px solid #3b82f6'}}>
-          <div style={{background: 'linear-gradient(135deg, #eff6ff, #dbeafe)', padding: '1rem', borderRadius: '12px', color: '#3b82f6', boxShadow: 'inset 0 2px 4px rgba(255,255,255,0.5)'}}>
-            <Building2 size={24} />
+      <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.5rem', marginBottom: '2rem'}}>
+        {/* Dark Hero Card */}
+        <div className="premium-admin-card" style={{ background: '#1E293B', color: 'white', position: 'relative', overflow: 'hidden', borderRadius: '24px', padding: '1.5rem', boxShadow: '0 10px 20px rgba(0,0,0,0.1)' }}>
+          <div style={{ position: 'absolute', top: '1rem', right: '1rem', background: 'rgba(56, 189, 248, 0.15)', color: '#38BDF8', padding: '0.25rem 0.75rem', borderRadius: '50px', fontSize: '0.75rem', fontWeight: '700' }}>
+            ● Live
           </div>
-          <div>
-            <h3 style={{fontSize: '1.75rem', margin: 0, fontWeight: '800', color: 'var(--color-dark)'}}>{stats.projects}</h3>
-            <p style={{margin: 0, color: 'var(--color-text-muted)', fontSize: '0.85rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px'}}>Total Projects</p>
+          <h3 style={{fontSize: '2.5rem', margin: '0 0 0.5rem', fontWeight: '800', color: 'white', letterSpacing: '-1px'}}>{stats.projects}</h3>
+          <p style={{margin: '0 0 1.5rem', color: '#94A3B8', fontSize: '0.9rem', fontWeight: '500'}}>Total Projects</p>
+          <div style={{ color: '#38BDF8', fontSize: '0.85rem', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+            ↗ +12% from last month
           </div>
-        </div>
-
-        <div className="premium-admin-card" style={{display: 'flex', alignItems: 'center', gap: '1rem', borderLeft: '4px solid #10b981'}}>
-          <div style={{background: 'linear-gradient(135deg, #ecfdf5, #d1fae5)', padding: '1rem', borderRadius: '12px', color: '#10b981', boxShadow: 'inset 0 2px 4px rgba(255,255,255,0.5)'}}>
-            <Users size={24} />
-          </div>
-          <div>
-            <h3 style={{fontSize: '1.75rem', margin: 0, fontWeight: '800', color: 'var(--color-dark)'}}>{stats.team}</h3>
-            <p style={{margin: 0, color: 'var(--color-text-muted)', fontSize: '0.85rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px'}}>Team Members</p>
+          {/* Decorative Spark Logo Element */}
+          <div style={{ position: 'absolute', bottom: '-20px', right: '-20px', color: 'rgba(56, 189, 248, 0.95)' }}>
+            <Building2 size={120} strokeWidth={1} />
           </div>
         </div>
 
-        <div className="premium-admin-card" style={{display: 'flex', alignItems: 'center', gap: '1rem', borderLeft: '4px solid #f59e0b'}}>
-          <div style={{background: 'linear-gradient(135deg, #fffbeb, #fef3c7)', padding: '1rem', borderRadius: '12px', color: '#f59e0b', boxShadow: 'inset 0 2px 4px rgba(255,255,255,0.5)'}}>
-            <FileText size={24} />
-          </div>
-          <div>
-            <h3 style={{fontSize: '1.75rem', margin: 0, fontWeight: '800', color: 'var(--color-dark)'}}>{stats.blogs}</h3>
-            <p style={{margin: 0, color: 'var(--color-text-muted)', fontSize: '0.85rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px'}}>Blog Posts</p>
+        {/* Standard White Cards */}
+        <div className="premium-admin-card" style={{ borderRadius: '24px', padding: '1.5rem', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>
+          <h3 style={{fontSize: '2.5rem', margin: '0 0 0.5rem', fontWeight: '800', color: '#0B130F', letterSpacing: '-1px'}}>{stats.team}</h3>
+          <p style={{margin: '0 0 1.5rem', color: '#6C7E75', fontSize: '0.9rem', fontWeight: '500'}}>Team Members</p>
+          <div style={{ color: '#22C55E', fontSize: '0.85rem', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+            ↗ +4% from last month
           </div>
         </div>
 
-        <div className="premium-admin-card" style={{display: 'flex', alignItems: 'center', gap: '1rem', borderLeft: '4px solid #8b5cf6'}}>
-          <div style={{background: 'linear-gradient(135deg, #f5f3ff, #ede9fe)', padding: '1rem', borderRadius: '12px', color: '#8b5cf6', boxShadow: 'inset 0 2px 4px rgba(255,255,255,0.5)'}}>
-            <Mail size={24} />
+        <div className="premium-admin-card" style={{ borderRadius: '24px', padding: '1.5rem', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>
+          <h3 style={{fontSize: '2.5rem', margin: '0 0 0.5rem', fontWeight: '800', color: '#0B130F', letterSpacing: '-1px'}}>{stats.blogs}</h3>
+          <p style={{margin: '0 0 1.5rem', color: '#6C7E75', fontSize: '0.9rem', fontWeight: '500'}}>Published Blogs</p>
+          <div style={{ color: '#22C55E', fontSize: '0.85rem', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+            ↗ +2 new this week
           </div>
-          <div>
-            <h3 style={{fontSize: '1.75rem', margin: 0, fontWeight: '800', color: 'var(--color-dark)'}}>{stats.messages}</h3>
-            <p style={{margin: 0, color: 'var(--color-text-muted)', fontSize: '0.85rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px'}}>Messages</p>
+        </div>
+
+        <div className="premium-admin-card" style={{ borderRadius: '24px', padding: '1.5rem', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>
+          <h3 style={{fontSize: '2.5rem', margin: '0 0 0.5rem', fontWeight: '800', color: '#0B130F', letterSpacing: '-1px'}}>{stats.messages}</h3>
+          <p style={{margin: '0 0 1.5rem', color: '#6C7E75', fontSize: '0.9rem', fontWeight: '500'}}>Unread Messages</p>
+          <div style={{ color: '#EF4444', fontSize: '0.85rem', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+            ↘ -10% from last month
           </div>
         </div>
       </div>
 
       {/* Charts Section */}
-      <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '0.75rem', marginBottom: '1rem'}}>
+      <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', marginBottom: '2rem'}}>
         {/* Bar Chart: Content Distribution */}
-        <div className="premium-admin-card">
-          <h3 style={{marginBottom: '1rem', color: 'var(--color-dark)', fontSize: '1.1rem', fontWeight: '700'}}>Content Distribution</h3>
-          <div style={{height: '220px'}}>
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={barData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#eee" />
-                <XAxis dataKey="name" tick={{fill: '#6b7280'}} axisLine={false} tickLine={false} />
-                <YAxis tick={{fill: '#6b7280'}} axisLine={false} tickLine={false} />
-                <Tooltip cursor={{fill: '#f9fafb'}} contentStyle={{borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'}} />
-                <Bar dataKey="count" radius={[4, 4, 0, 0]} barSize={40} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
+        <div className="premium-admin-card" style={{ height: '350px', background: '#FFFFFF', padding: '1.5rem' }}>
+          <h3 style={{fontSize: '1.1rem', marginBottom: '1.5rem', color: '#0B130F'}}>Overview Metrics</h3>
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={barData}>
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E9EFEF" />
+              <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#6C7E75', fontSize: 12}} dy={10} />
+              <YAxis axisLine={false} tickLine={false} tick={{fill: '#6C7E75', fontSize: 12}} dx={-10} />
+              <Tooltip cursor={{fill: '#F4F6F5'}} contentStyle={{borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px rgba(0,0,0,0.1)'}} />
+              <Bar dataKey="count" fill="#B4F105" radius={[4, 4, 0, 0]} barSize={32} />
+            </BarChart>
+          </ResponsiveContainer>
         </div>
 
         {/* Line Chart: Visitor Traffic */}
-        <div className="premium-admin-card">
-          <h3 style={{marginBottom: '1rem', color: 'var(--color-dark)', fontSize: '1.1rem', fontWeight: '700'}}>Visitor Traffic (This Week)</h3>
-          <div style={{height: '220px'}}>
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={lineData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#eee" />
-                <XAxis dataKey="name" tick={{fill: '#6b7280'}} axisLine={false} tickLine={false} />
-                <YAxis tick={{fill: '#6b7280'}} axisLine={false} tickLine={false} />
-                <Tooltip contentStyle={{borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'}} />
-                <Line type="monotone" dataKey="visitors" stroke="#3b82f6" strokeWidth={3} dot={{r: 4, fill: '#3b82f6', strokeWidth: 2, stroke: 'white'}} activeDot={{r: 6}} />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
+        <div className="premium-admin-card" style={{ height: '350px', background: '#FFFFFF', padding: '1.5rem' }}>
+          <h3 style={{fontSize: '1.1rem', marginBottom: '1.5rem', color: '#0B130F'}}>Traffic Trends</h3>
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={lineData}>
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E9EFEF" />
+              <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#6C7E75', fontSize: 12}} dy={10} />
+              <YAxis axisLine={false} tickLine={false} tick={{fill: '#6C7E75', fontSize: 12}} dx={-10} />
+              <Tooltip contentStyle={{borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px rgba(0,0,0,0.1)'}} />
+              <Line type="monotone" dataKey="visitors" stroke="#051C12" strokeWidth={3} dot={{r: 4, fill: '#B4F105', strokeWidth: 2}} activeDot={{r: 6}} />
+            </LineChart>
+          </ResponsiveContainer>
         </div>
       </div>
 

@@ -12,7 +12,7 @@ import AdminOverview from '../components/Admin/AdminOverview';
 
 import AdminReports from '../components/Admin/AdminReports';
 import AdminMessages from '../components/Admin/AdminMessages';
-import { Menu, Mail, LayoutDashboard, FolderKanban, Users, FileText, HelpCircle, BarChart2 } from 'lucide-react';
+import { Menu, Mail, LayoutDashboard, FolderKanban, Users, FileText, HelpCircle, BarChart2, Search, Bell, Maximize, Plus, User } from 'lucide-react';
 
 
 
@@ -64,15 +64,19 @@ const AdminDashboard = () => {
 
     <div className="admin-page">
       <div className="admin-sidebar" style={{ width: isSidebarOpen ? '260px' : '70px', transition: 'width 0.25s ease' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-          {isSidebarOpen && <h2 style={{ color: 'white', margin: 0, fontSize: '1.3rem' }}>Admin Panel</h2>}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.5rem' }}>
+          {isSidebarOpen && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <div style={{ color: '#38BDF8' }}><Menu size={24} /></div>
+              <h2 style={{ color: 'white', margin: 0, fontSize: '1.35rem', fontWeight: '700' }}>NTD Admin</h2>
+            </div>
+          )}
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', padding: '0.5rem', margin: isSidebarOpen ? '0' : '0 auto' }}
+            style={{ background: 'none', border: 'none', color: '#879A91', cursor: 'pointer', padding: '0.5rem', margin: isSidebarOpen ? '0' : '0 auto' }}
           >
             <Menu size={22} />
           </button>
-
         </div>
 
 
@@ -80,39 +84,68 @@ const AdminDashboard = () => {
         {isSidebarOpen ? (
 
           <>
-            <ul className="admin-nav" style={{ gap: '0.25rem' }}>
-              <li className={activeTab === 'dashboard' ? 'active' : ''} onClick={() => setActiveTab('dashboard')}>
-                Dashboard
-              </li>
-              <li className={activeTab === 'messages' ? 'active' : ''} onClick={() => setActiveTab('messages')} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span>Contact Messages</span>
-              </li>
-              <li className={activeTab === 'projects' ? 'active' : ''} onClick={() => setActiveTab('projects')}>
-                Projects
-              </li>
-              <li className={activeTab === 'team' ? 'active' : ''} onClick={() => setActiveTab('team')}>
-                Team Members
-              </li>
-              <li className={activeTab === 'blogs' ? 'active' : ''} onClick={() => setActiveTab('blogs')}>
-                Blogs
-              </li>
-              <li className={activeTab === 'faqs' ? 'active' : ''} onClick={() => setActiveTab('faqs')}>
-                FAQs
-              </li>
-              <li className={activeTab === 'reports' ? 'active' : ''} onClick={() => setActiveTab('reports')}>
-                Reports
-              </li>
-            </ul>
-            <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-              <button onClick={() => navigate('/')} className="btn" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', color: 'white', width: '100%', padding: '0.5rem', fontSize: '0.85rem' }}>
-                &larr; Public Website
+            <div style={{ overflowY: 'auto', flex: 1, paddingRight: '0.5rem', margin: '0 -0.5rem', paddingLeft: '0.5rem' }}>
+              {/* Menu Group */}
+              <div style={{ marginBottom: '1.5rem' }}>
+                <div style={{ color: '#6C7E75', fontSize: '0.75rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.75rem', paddingLeft: '0.5rem' }}>Menu</div>
+                <ul className="admin-nav" style={{ gap: '0.25rem' }}>
+                  <li className={activeTab === 'dashboard' ? 'active' : ''} onClick={() => setActiveTab('dashboard')} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <LayoutDashboard size={18} /> <span>Dashboard</span>
+                  </li>
+                </ul>
+              </div>
 
+              {/* Components Group */}
+              <div style={{ marginBottom: '1.5rem' }}>
+                <div style={{ color: '#6C7E75', fontSize: '0.75rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.75rem', paddingLeft: '0.5rem' }}>Components</div>
+                <ul className="admin-nav" style={{ gap: '0.25rem' }}>
+                  <li className={activeTab === 'projects' ? 'active' : ''} onClick={() => setActiveTab('projects')} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <FolderKanban size={18} /> <span>Projects</span>
+                  </li>
+                  <li className={activeTab === 'blogs' ? 'active' : ''} onClick={() => setActiveTab('blogs')} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <FileText size={18} /> <span>Blogs</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Pages Group */}
+              <div style={{ marginBottom: '1.5rem' }}>
+                <div style={{ color: '#6C7E75', fontSize: '0.75rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.75rem', paddingLeft: '0.5rem' }}>Pages</div>
+                <ul className="admin-nav" style={{ gap: '0.25rem' }}>
+                  <li className={activeTab === 'messages' ? 'active' : ''} onClick={() => setActiveTab('messages')} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                      <Mail size={18} /> <span>Contact Messages</span>
+                    </div>
+                  </li>
+                  <li className={activeTab === 'team' ? 'active' : ''} onClick={() => setActiveTab('team')} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <Users size={18} /> <span>Team Members</span>
+                  </li>
+                  <li className={activeTab === 'faqs' ? 'active' : ''} onClick={() => setActiveTab('faqs')} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <HelpCircle size={18} /> <span>FAQs</span>
+                  </li>
+                  <li className={activeTab === 'reports' ? 'active' : ''} onClick={() => setActiveTab('reports')} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <BarChart2 size={18} /> <span>Reports</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '0.5rem', background: 'rgba(255,255,255,0.03)', padding: '1rem', borderRadius: '18px', border: '1px solid rgba(255,255,255,0.1)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
+                <div style={{ width: '42px', height: '42px', borderRadius: '14px', background: '#1E293B', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#38BDF8' }}>
+                  <User size={20} />
+                </div>
+                <div>
+                  <div style={{ color: 'white', fontWeight: '600', fontSize: '0.9rem' }}>Administrator</div>
+                  <div style={{ color: '#879A91', fontSize: '0.8rem' }}>admin@ntd.rw</div>
+                </div>
+              </div>
+              <button onClick={() => navigate('/')} style={{ background: 'transparent', border: 'none', color: '#879A91', textAlign: 'left', padding: '0.25rem 0', fontSize: '0.85rem', cursor: 'pointer' }}>
+                &larr; Return to Website
               </button>
-              <button onClick={handleLogout} className="btn" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', color: 'white', width: '100%', padding: '0.5rem', fontSize: '0.85rem' }}>
+              <button onClick={handleLogout} style={{ background: 'transparent', border: 'none', color: '#EF4444', textAlign: 'left', padding: '0.25rem 0', fontSize: '0.85rem', cursor: 'pointer' }}>
                 Logout
-
               </button>
-
             </div>
 
           </>
@@ -127,21 +160,45 @@ const AdminDashboard = () => {
       </div>
 
       <div className="admin-content">
+        {/* TOP NAVBAR */}
+        <header className="admin-top-navbar">
+          <div className="admin-search-wrapper">
+            <Search size={18} color="#6C7E75" />
+            <input type="text" placeholder="Search anything in Admin..." />
+          </div>
+          
+          <div className="admin-action-icons">
+            <button className="admin-action-btn" title="Create New" style={{ background: '#0B1120', color: 'white', borderRadius: '8px', padding: '0.5rem 1rem', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: '600', fontSize: '0.85rem' }}>
+              <Plus size={16} /> Create
+            </button>
+            <button className="admin-action-btn" title="Fullscreen">
+              <Maximize size={20} />
+            </button>
+            <button className="admin-action-btn" title="Notifications">
+              <Bell size={20} />
+            </button>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginLeft: '0.5rem', paddingLeft: '1rem', borderLeft: '1px solid #E9EFEF', cursor: 'pointer' }}>
+              <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#F4F6F5', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0B1120' }}>
+                <User size={18} />
+              </div>
+              <div style={{ fontWeight: '600', color: '#0B130F', fontSize: '0.9rem' }}>Administrator <span style={{ color: '#6C7E75', fontSize: '0.75rem', marginLeft: '0.25rem' }}>▼</span></div>
+            </div>
+          </div>
+        </header>
 
-        {activeTab === 'dashboard' && <AdminOverview token={token} />}
-        {activeTab === 'messages' && <AdminMessages token={token} />}
-        {activeTab === 'projects' && <AdminProjects token={token} />}
+        {/* MAIN VIEW */}
+        <div className="admin-main-view">
+          {activeTab === 'dashboard' && <AdminOverview token={token} />}
+          {activeTab === 'messages' && <AdminMessages token={token} />}
+          {activeTab === 'projects' && <AdminProjects token={token} />}
+          {activeTab === 'team' && <AdminTeam token={token} />}
 
-        {activeTab === 'team' && <AdminTeam token={token} />}
-
-        {activeTab === 'blogs' && <AdminBlogs token={token} />}
-        {activeTab === 'faqs' && <AdminFaqs token={token} />}
-        {activeTab === 'reports' && <AdminReports token={token} />}
-
+          {activeTab === 'blogs' && <AdminBlogs token={token} />}
+          {activeTab === 'faqs' && <AdminFaqs token={token} />}
+          {activeTab === 'reports' && <AdminReports token={token} />}
+        </div>
       </div>
-
     </div>
-
   );
 
 };

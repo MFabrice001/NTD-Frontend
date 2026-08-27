@@ -23,7 +23,7 @@ const VisionariesSection = () => {
   return (
     <section style={{ backgroundColor: '#1E293B', padding: '5rem 5%' }}>
       <div className="section-header" style={{ marginBottom: '4rem', textAlign: 'center' }}>
-        <h2 style={{ color: '#FFFFFF', fontSize: '2.5rem', fontWeight: '800', marginBottom: '1rem' }}>Led by Visionaries in Engineering</h2>
+        <h2 style={{ color: '#FFFFFF', fontSize: '2.0rem', fontWeight: '700', marginBottom: '1rem' }}>Led by Visionaries in Engineering</h2>
         <p style={{ color: '#94A3B8', fontSize: '1.1rem', maxWidth: '600px', margin: '0 auto' }}>
           Our leadership team combines local expertise with global standards to deliver unmatched quality.
         </p>
@@ -79,17 +79,17 @@ const VisionariesSection = () => {
           line-height: 1.5;
         }
       `}</style>
-      
+
       {loading ? (
         <div style={{ textAlign: 'center', padding: '2rem', color: '#6B7280' }}>Loading team members...</div>
       ) : (
-        <div style={{ 
+        <div style={{
           display: 'flex',
           flexWrap: 'wrap',
           justifyContent: 'center',
-          gap: '2.5rem', 
-          maxWidth: '1200px', 
-          margin: '0 auto' 
+          gap: '2.5rem',
+          maxWidth: '1200px',
+          margin: '0 auto'
         }}>
           {teamMembers.map(member => (
             <div key={member.id} className="screenshot-card">
