@@ -73,13 +73,13 @@ const AdminTeam = ({ token }) => {
     <div>
       <div className="admin-header">
         <h1>Team Management</h1>
-        <button className="btn btn-dark" onClick={() => setShowForm(!showForm)}>
+        <button className="btn" style={{background: "var(--orbit-primary)", color: "#f1f5f9", border: "none"}} onClick={() => setShowForm(!showForm)}>
           {showForm ? 'Cancel' : 'Add New Member'}
         </button>
       </div>
 
       {showForm && (
-        <div className="admin-card" style={{marginBottom: '2rem'}}>
+        <div className="premium-admin-card" style={{marginBottom: '2rem'}}>
           <form onSubmit={handleSubmit}>
             <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem'}}>
               <div>
@@ -107,20 +107,20 @@ const AdminTeam = ({ token }) => {
               {imageFile && (
                 <div style={{marginTop: '0.5rem'}}>
                   <p style={{fontSize: '0.8rem', color: '#10b981', marginBottom: '0.5rem'}}>Selected: {imageFile.name}</p>
-                  <img src={URL.createObjectURL(imageFile)} alt="Preview" style={{ width: '120px', height: '120px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #eee' }} />
+                  <img src={URL.createObjectURL(imageFile)} alt="Preview" style={{ width: '120px', height: '120px', objectFit: 'cover', borderRadius: '8px', border: '1px solid var(--orbit-border)' }} />
                 </div>
               )}
             </div>
-            <button type="submit" className="btn btn-dark">Save Team Member</button>
+            <button type="submit" className="btn" style={{background: "var(--orbit-primary)", color: "#f1f5f9", border: "none"}}>Save Team Member</button>
           </form>
         </div>
       )}
 
-      <div className="admin-card">
+      <div className="premium-admin-card">
         {loading ? <p>Loading...</p> : (
           <table style={{width: '100%', textAlign: 'left', borderCollapse: 'collapse'}}>
             <thead>
-              <tr style={{borderBottom: '2px solid #eee'}}>
+              <tr style={{borderBottom: '1px solid var(--orbit-border)'}}>
                 <th style={{padding: '1rem 0'}}>Name</th>
                 <th>Role</th>
                 <th>Quote</th>
@@ -130,12 +130,12 @@ const AdminTeam = ({ token }) => {
             <tbody>
               {team.length === 0 ? <tr><td colSpan="4" style={{padding: '1rem 0'}}>No team members found.</td></tr> : null}
               {team.map(m => (
-                <tr key={m.id} style={{borderBottom: '1px solid #eee'}}>
+                <tr key={m.id} style={{borderBottom: '1px solid var(--orbit-border)'}}>
                   <td style={{padding: '1rem 0', fontWeight: 'bold'}}>{m.name}</td>
                   <td>{m.role}</td>
                   <td>{m.quote.length > 50 ? m.quote.substring(0,50) + '...' : m.quote}</td>
                   <td>
-                    <button onClick={() => handleDelete(m.id)} style={{color: 'red', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 'bold'}}>Delete</button>
+                    <button onClick={() => handleDelete(m.id)} style={{color: '#EF4444', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 'bold'}}>Delete</button>
                   </td>
                 </tr>
               ))}

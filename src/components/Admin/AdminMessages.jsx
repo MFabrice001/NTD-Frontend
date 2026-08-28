@@ -77,9 +77,9 @@ const AdminMessages = ({ token }) => {
       )}
 
       {messages.length === 0 ? (
-        <div style={{background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '4rem 2rem', textAlign: 'center'}}>
+        <div style={{background: 'var(--orbit-surface2)', border: '1px solid var(--orbit-border)', borderRadius: '16px', padding: '4rem 2rem', textAlign: 'center'}}>
           <Mail size={48} color="#94a3b8" style={{margin: '0 auto 1rem'}} />
-          <h3 style={{fontSize: '1.3rem', color: '#334155', marginBottom: '0.5rem'}}>No Contact Messages Yet</h3>
+          <h3 style={{fontSize: '1.3rem', color: '#f1f5f9', marginBottom: '0.5rem'}}>No Contact Messages Yet</h3>
           <p style={{color: '#64748b', maxWidth: '400px', margin: '0 auto'}}>
             When prospective clients submit inquiries on the Contact Us page, they will appear here automatically.
           </p>
@@ -91,7 +91,7 @@ const AdminMessages = ({ token }) => {
               key={msg.id}
               style={{
                 background: 'white',
-                border: '1px solid #e2e8f0',
+                border: '1px solid var(--orbit-border)',
                 borderRadius: '16px',
                 padding: '1.5rem',
                 boxShadow: '0 4px 15px rgba(0, 0, 0, 0.03)',
@@ -102,7 +102,7 @@ const AdminMessages = ({ token }) => {
               }}
             >
               <div>
-                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem', borderBottom: '1px solid #f1f5f9', paddingBottom: '0.75rem'}}>
+                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem', borderBottom: '1px solid var(--orbit-border)', paddingBottom: '0.75rem'}}>
                   <div>
                     <strong style={{fontSize: '1.1rem', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
                       <User size={16} color="#3b82f6" /> {msg.firstName} {msg.lastName}
@@ -140,10 +140,10 @@ const AdminMessages = ({ token }) => {
                 )}
 
                 <div style={{
-                  background: '#f8fafc',
+                  background: 'var(--orbit-surface2)',
                   padding: '1rem',
                   borderRadius: '10px',
-                  color: '#334155',
+                  color: '#f1f5f9',
                   fontSize: '0.95rem',
                   lineHeight: '1.6',
                   whiteSpace: 'pre-wrap',

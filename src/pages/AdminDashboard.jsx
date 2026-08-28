@@ -63,7 +63,8 @@ const AdminDashboard = () => {
   return (
 
     <div className="admin-page">
-      <div className="admin-sidebar" style={{ width: isSidebarOpen ? '260px' : '70px', transition: 'width 0.25s ease' }}>
+      <div className="orbit-glow-bg"></div>
+      <div className="admin-sidebar" style={{ width: isSidebarOpen ? '250px' : '70px', transition: 'width 0.25s ease' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.5rem' }}>
           {isSidebarOpen && (
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -87,7 +88,7 @@ const AdminDashboard = () => {
             <div style={{ overflowY: 'auto', flex: 1, paddingRight: '0.5rem', margin: '0 -0.5rem', paddingLeft: '0.5rem' }}>
               {/* Menu Group */}
               <div style={{ marginBottom: '1.5rem' }}>
-                <div style={{ color: '#6C7E75', fontSize: '0.75rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.75rem', paddingLeft: '0.5rem' }}>Menu</div>
+                <div style={{ color: '#64748b', fontSize: '10px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.5rem', paddingLeft: '0.75rem' }}>Overview</div>
                 <ul className="admin-nav" style={{ gap: '0.25rem' }}>
                   <li className={activeTab === 'dashboard' ? 'active' : ''} onClick={() => setActiveTab('dashboard')} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                     <LayoutDashboard size={18} /> <span>Dashboard</span>
@@ -97,7 +98,7 @@ const AdminDashboard = () => {
 
               {/* Components Group */}
               <div style={{ marginBottom: '1.5rem' }}>
-                <div style={{ color: '#6C7E75', fontSize: '0.75rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.75rem', paddingLeft: '0.5rem' }}>Components</div>
+                <div style={{ color: '#64748b', fontSize: '10px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.5rem', paddingLeft: '0.75rem' }}>Apps</div>
                 <ul className="admin-nav" style={{ gap: '0.25rem' }}>
                   <li className={activeTab === 'projects' ? 'active' : ''} onClick={() => setActiveTab('projects')} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                     <FolderKanban size={18} /> <span>Projects</span>
@@ -110,7 +111,7 @@ const AdminDashboard = () => {
 
               {/* Pages Group */}
               <div style={{ marginBottom: '1.5rem' }}>
-                <div style={{ color: '#6C7E75', fontSize: '0.75rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.75rem', paddingLeft: '0.5rem' }}>Pages</div>
+                <div style={{ color: '#64748b', fontSize: '10px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.5rem', paddingLeft: '0.75rem' }}>Settings</div>
                 <ul className="admin-nav" style={{ gap: '0.25rem' }}>
                   <li className={activeTab === 'messages' ? 'active' : ''} onClick={() => setActiveTab('messages')} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -130,14 +131,14 @@ const AdminDashboard = () => {
               </div>
             </div>
 
-            <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '0.5rem', background: 'rgba(255,255,255,0.03)', padding: '1rem', borderRadius: '18px', border: '1px solid rgba(255,255,255,0.1)' }}>
+            <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '0.5rem', background: 'var(--orbit-surface2)', padding: '1rem', borderRadius: '12px', border: '1px solid var(--orbit-border)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
                 <div style={{ width: '42px', height: '42px', borderRadius: '14px', background: '#1E293B', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#38BDF8' }}>
                   <User size={20} />
                 </div>
                 <div>
-                  <div style={{ color: 'white', fontWeight: '600', fontSize: '0.9rem' }}>Administrator</div>
-                  <div style={{ color: '#879A91', fontSize: '0.8rem' }}>admin@ntd.rw</div>
+                  <div style={{ color: '#f1f5f9', fontWeight: '500', fontSize: '0.85rem' }}>Administrator</div>
+                  <div style={{ color: '#64748b', fontSize: '0.75rem' }}>admin@ntd.rw</div>
                 </div>
               </div>
               <button onClick={() => navigate('/')} style={{ background: 'transparent', border: 'none', color: '#879A91', textAlign: 'left', padding: '0.25rem 0', fontSize: '0.85rem', cursor: 'pointer' }}>
@@ -161,27 +162,20 @@ const AdminDashboard = () => {
 
       <div className="admin-content">
         {/* TOP NAVBAR */}
-        <header className="admin-top-navbar">
-          <div className="admin-search-wrapper">
-            <Search size={18} color="#6C7E75" />
-            <input type="text" placeholder="Search anything in Admin..." />
-          </div>
+        <header className="admin-top-navbar" style={{ justifyContent: 'flex-end' }}>
           
           <div className="admin-action-icons">
-            <button className="admin-action-btn" title="Create New" style={{ background: '#0B1120', color: 'white', borderRadius: '8px', padding: '0.5rem 1rem', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: '600', fontSize: '0.85rem' }}>
-              <Plus size={16} /> Create
-            </button>
             <button className="admin-action-btn" title="Fullscreen">
               <Maximize size={20} />
             </button>
             <button className="admin-action-btn" title="Notifications">
               <Bell size={20} />
             </button>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginLeft: '0.5rem', paddingLeft: '1rem', borderLeft: '1px solid #E9EFEF', cursor: 'pointer' }}>
-              <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#F4F6F5', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0B1120' }}>
-                <User size={18} />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginLeft: '0.5rem', paddingLeft: '1rem', borderLeft: '1px solid var(--orbit-border)', cursor: 'pointer' }}>
+              <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--orbit-surface2)', border: '1px solid var(--orbit-border)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#f1f5f9' }}>
+                <User size={16} />
               </div>
-              <div style={{ fontWeight: '600', color: '#0B130F', fontSize: '0.9rem' }}>Administrator <span style={{ color: '#6C7E75', fontSize: '0.75rem', marginLeft: '0.25rem' }}>▼</span></div>
+              <div style={{ fontWeight: '500', color: '#f1f5f9', fontSize: '0.85rem' }}>Administrator</div>
             </div>
           </div>
         </header>

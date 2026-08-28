@@ -60,17 +60,17 @@ const AdminReports = ({ token }) => {
           <h1>System Reports</h1>
           <p style={{color: '#6b7280', margin: 0}}>Review recent system activity and export data.</p>
         </div>
-        <button className="btn btn-dark" style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}} onClick={handleDownloadCSV}>
+        <button className="btn" style={{background: "var(--orbit-primary)", color: "#f1f5f9", border: "none"}} style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}} onClick={handleDownloadCSV}>
           <Download size={18} />
           Export to CSV
         </button>
       </div>
 
-      <div className="admin-card">
+      <div className="premium-admin-card">
         {loading ? <p>Loading report data...</p> : (
           <table style={{width: '100%', textAlign: 'left', borderCollapse: 'collapse'}}>
             <thead>
-              <tr style={{borderBottom: '2px solid #eee'}}>
+              <tr style={{borderBottom: '1px solid var(--orbit-border)'}}>
                 <th style={{padding: '1rem 0'}}>Date</th>
                 <th>Action Type</th>
                 <th>Details</th>
@@ -80,7 +80,7 @@ const AdminReports = ({ token }) => {
             <tbody>
               {logs.length === 0 ? <tr><td colSpan="4" style={{padding: '1rem 0'}}>No activity found to report.</td></tr> : null}
               {logs.map(log => (
-                <tr key={log.id} style={{borderBottom: '1px solid #eee'}}>
+                <tr key={log.id} style={{borderBottom: '1px solid var(--orbit-border)'}}>
                   <td style={{padding: '1rem 0', color: '#6b7280'}}>
                     {new Date(log.date).toLocaleString()}
                   </td>

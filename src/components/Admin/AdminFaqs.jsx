@@ -138,7 +138,7 @@ const AdminFaqs = ({ token }) => {
     <div className="admin-section">
       <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem'}}>
         <div>
-          <h2 style={{fontSize: '1.8rem', fontWeight: 800, color: 'var(--color-dark)', margin: 0}}>
+          <h2 style={{fontSize: '1.8rem', fontWeight: 800, color: '#f1f5f9', margin: 0}}>
             Knowledge Base & FAQ Studio
           </h2>
           <p style={{color: '#64748b', margin: '0.35rem 0 0'}}>
@@ -159,14 +159,14 @@ const AdminFaqs = ({ token }) => {
       ) : error ? (
         <div className="error-state">{error}</div>
       ) : faqs.length === 0 ? (
-        <div style={{textAlign: 'center', padding: '4rem', background: 'white', borderRadius: '16px', border: '1px solid #e2e8f0'}}>
+        <div style={{textAlign: 'center', padding: '4rem', background: 'white', borderRadius: '16px', border: '1px solid var(--orbit-border)'}}>
           <HelpCircle size={48} color="#9ca3af" style={{margin: '0 auto 1rem'}} />
           <h3>No Custom FAQs Created Yet</h3>
           <p style={{color: '#64748b', maxWidth: '450px', margin: '0.5rem auto 1.5rem'}}>
             Add your first custom FAQ entry to display it at the top of your public Knowledge Base!
           </p>
           <button 
-            className="btn btn-dark"
+            className="btn" style={{background: "var(--orbit-primary)", color: "#f1f5f9", border: "none"}}
             onClick={openNewModal}
             style={{padding: '0.65rem 1.5rem', borderRadius: '30px'}}
           >
@@ -174,10 +174,10 @@ const AdminFaqs = ({ token }) => {
           </button>
         </div>
       ) : (
-        <div style={{background: 'white', borderRadius: '16px', border: '1px solid #e2e8f0', overflow: 'hidden'}}>
+        <div style={{background: 'white', borderRadius: '16px', border: '1px solid var(--orbit-border)', overflow: 'hidden'}}>
           <table style={{width: '100%', borderCollapse: 'collapse'}}>
             <thead>
-              <tr style={{background: '#f8fafc', borderBottom: '1px solid #e2e8f0', textAlign: 'left'}}>
+              <tr style={{background: 'var(--orbit-surface2)', borderBottom: '1px solid var(--orbit-border)', textAlign: 'left'}}>
                 <th style={{padding: '1rem 1.5rem', fontSize: '0.85rem', color: '#64748b', textTransform: 'uppercase'}}>Category</th>
                 <th style={{padding: '1rem 1.5rem', fontSize: '0.85rem', color: '#64748b', textTransform: 'uppercase'}}>Question</th>
                 <th style={{padding: '1rem 1.5rem', fontSize: '0.85rem', color: '#64748b', textTransform: 'uppercase'}}>Answer Snippet</th>
@@ -194,13 +194,13 @@ const AdminFaqs = ({ token }) => {
                 }
 
                 return (
-                  <tr key={faq.id} style={{borderBottom: '1px solid #f1f5f9'}}>
+                  <tr key={faq.id} style={{borderBottom: '1px solid var(--orbit-border)'}}>
                     <td style={{padding: '1rem 1.5rem'}}>
-                      <span style={{background: '#f1f5f9', color: '#475569', padding: '0.25rem 0.65rem', borderRadius: '8px', fontSize: '0.75rem', fontWeight: 700}}>
+                      <span style={{background: 'var(--orbit-surface2)', color: '#f1f5f9', padding: '0.25rem 0.65rem', borderRadius: '8px', fontSize: '0.75rem', fontWeight: 700}}>
                         {cat}
                       </span>
                     </td>
-                    <td style={{padding: '1rem 1.5rem', fontWeight: 700, color: 'var(--color-dark)'}}>
+                    <td style={{padding: '1rem 1.5rem', fontWeight: 700, color: '#f1f5f9'}}>
                       {qText}
                     </td>
                     <td style={{padding: '1rem 1.5rem', color: '#64748b', maxWidth: '350px'}}>
@@ -210,7 +210,7 @@ const AdminFaqs = ({ token }) => {
                       <div style={{display: 'flex', gap: '0.5rem', justifyContent: 'flex-end'}}>
                         <button 
                           onClick={() => openEditModal(faq)}
-                          style={{background: '#f8fafc', border: '1px solid #e2e8f0', padding: '0.45rem', borderRadius: '8px', cursor: 'pointer', color: '#475569'}}
+                          style={{background: 'var(--orbit-surface2)', border: '1px solid var(--orbit-border)', padding: '0.45rem', borderRadius: '8px', cursor: 'pointer', color: '#f1f5f9'}}
                           title="Edit Question"
                         >
                           <Edit2 size={16} />
@@ -264,7 +264,7 @@ const AdminFaqs = ({ token }) => {
               <X size={22} />
             </button>
 
-            <h3 style={{fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-dark)', margin: '0 0 0.5rem'}}>
+            <h3 style={{fontSize: '1.5rem', fontWeight: 800, color: '#f1f5f9', margin: '0 0 0.5rem'}}>
               {editingFaq ? 'Edit FAQ Entry' : 'Create New FAQ Entry'}
             </h3>
             <p style={{color: '#64748b', fontSize: '0.9rem', marginBottom: '1.5rem'}}>
@@ -273,7 +273,7 @@ const AdminFaqs = ({ token }) => {
 
             <form onSubmit={handleSave}>
               <div style={{marginBottom: '1.25rem'}}>
-                <label style={{display: 'block', fontWeight: 700, fontSize: '0.85rem', color: 'var(--color-dark)', marginBottom: '0.4rem'}}>
+                <label style={{display: 'block', fontWeight: 700, fontSize: '0.85rem', color: '#f1f5f9', marginBottom: '0.4rem'}}>
                   Category
                 </label>
                 <select
@@ -285,7 +285,7 @@ const AdminFaqs = ({ token }) => {
                     border: '1px solid #cbd5e1',
                     borderRadius: '10px',
                     fontSize: '0.95rem',
-                    color: 'var(--color-dark)',
+                    color: '#f1f5f9',
                     background: 'white'
                   }}
                 >
@@ -296,7 +296,7 @@ const AdminFaqs = ({ token }) => {
               </div>
 
               <div style={{marginBottom: '1.25rem'}}>
-                <label style={{display: 'block', fontWeight: 700, fontSize: '0.85rem', color: 'var(--color-dark)', marginBottom: '0.4rem'}}>
+                <label style={{display: 'block', fontWeight: 700, fontSize: '0.85rem', color: '#f1f5f9', marginBottom: '0.4rem'}}>
                   Question Title *
                 </label>
                 <input
@@ -311,13 +311,13 @@ const AdminFaqs = ({ token }) => {
                     border: '1px solid #cbd5e1',
                     borderRadius: '10px',
                     fontSize: '0.95rem',
-                    color: 'var(--color-dark)'
+                    color: '#f1f5f9'
                   }}
                 />
               </div>
 
               <div style={{marginBottom: '2rem'}}>
-                <label style={{display: 'block', fontWeight: 700, fontSize: '0.85rem', color: 'var(--color-dark)', marginBottom: '0.4rem'}}>
+                <label style={{display: 'block', fontWeight: 700, fontSize: '0.85rem', color: '#f1f5f9', marginBottom: '0.4rem'}}>
                   Comprehensive Answer *
                 </label>
                 <textarea
@@ -332,7 +332,7 @@ const AdminFaqs = ({ token }) => {
                     border: '1px solid #cbd5e1',
                     borderRadius: '10px',
                     fontSize: '0.95rem',
-                    color: 'var(--color-dark)',
+                    color: '#f1f5f9',
                     fontFamily: 'inherit'
                   }}
                 />
@@ -343,7 +343,7 @@ const AdminFaqs = ({ token }) => {
                   type="button"
                   className="btn"
                   onClick={() => setShowModal(false)}
-                  style={{background: '#f1f5f9', color: '#475569', padding: '0.75rem 1.5rem', borderRadius: '30px', fontWeight: 700}}
+                  style={{background: 'var(--orbit-surface2)', color: '#f1f5f9', padding: '0.75rem 1.5rem', borderRadius: '30px', fontWeight: 700}}
                 >
                   Cancel
                 </button>

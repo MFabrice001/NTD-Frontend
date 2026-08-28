@@ -89,7 +89,7 @@ const AdminBlogs = ({ token }) => {
     <div>
       <div className="admin-header" style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem'}}>
         <div>
-          <h1 style={{fontSize: '1.8rem', fontWeight: '800', color: 'var(--color-dark)', marginBottom: '0.25rem'}}>
+          <h1 style={{fontSize: '1.8rem', fontWeight: '800', color: '#f1f5f9', marginBottom: '0.25rem'}}>
             Perspectives & Editorial Studio
           </h1>
           <p style={{color: 'var(--color-text-muted)', fontSize: '0.95rem'}}>
@@ -97,7 +97,7 @@ const AdminBlogs = ({ token }) => {
           </p>
         </div>
         <button 
-          className="btn btn-dark" 
+          className="btn" style={{background: "var(--orbit-primary)", color: "#f1f5f9", border: "none"}} 
           style={{display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.25rem'}}
           onClick={() => setShowForm(!showForm)}
         >
@@ -111,7 +111,7 @@ const AdminBlogs = ({ token }) => {
           <div className="admin-studio-header">
             <div style={{display: 'flex', alignItems: 'center', gap: '0.75rem'}}>
               <FileText size={22} color="var(--color-primary)" />
-              <h2 style={{fontSize: '1.3rem', fontWeight: '700', color: 'var(--color-dark)'}}>
+              <h2 style={{fontSize: '1.3rem', fontWeight: '700', color: '#f1f5f9'}}>
                 Article Composer
               </h2>
             </div>
@@ -121,7 +121,7 @@ const AdminBlogs = ({ token }) => {
           <form onSubmit={handleSubmit}>
             <div style={{display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1.5rem', marginBottom: '1.5rem'}}>
               <div>
-                <label style={{display: 'block', fontWeight: '600', marginBottom: '0.5rem', color: 'var(--color-dark)'}}>
+                <label style={{display: 'block', fontWeight: '600', marginBottom: '0.5rem', color: '#f1f5f9'}}>
                   Article Title *
                 </label>
                 <input 
@@ -134,7 +134,7 @@ const AdminBlogs = ({ token }) => {
                 />
               </div>
               <div>
-                <label style={{display: 'block', fontWeight: '600', marginBottom: '0.5rem', color: 'var(--color-dark)'}}>
+                <label style={{display: 'block', fontWeight: '600', marginBottom: '0.5rem', color: '#f1f5f9'}}>
                   Author Name *
                 </label>
                 <input 
@@ -149,7 +149,7 @@ const AdminBlogs = ({ token }) => {
             </div>
 
             <div style={{marginBottom: '1.75rem'}}>
-              <label style={{display: 'block', fontWeight: '600', marginBottom: '0.5rem', color: 'var(--color-dark)'}}>
+              <label style={{display: 'block', fontWeight: '600', marginBottom: '0.5rem', color: '#f1f5f9'}}>
                 Article Content & Description *
               </label>
               <textarea 
@@ -170,7 +170,7 @@ const AdminBlogs = ({ token }) => {
                     <div style={{width: '44px', height: '44px', borderRadius: '50%', background: '#e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                       <ImageIcon size={22} color="#475569" />
                     </div>
-                    <span style={{fontWeight: '700', color: 'var(--color-dark)', fontSize: '0.95rem'}}>
+                    <span style={{fontWeight: '700', color: '#f1f5f9', fontSize: '0.95rem'}}>
                       Upload Featured Image
                     </span>
                     <span style={{fontSize: '0.8rem', color: '#64748b'}}>
@@ -189,7 +189,7 @@ const AdminBlogs = ({ token }) => {
                     <div style={{fontSize: '0.85rem', color: '#10b981', fontWeight: '600', marginBottom: '0.5rem'}}>
                       ✓ {imageFile.name} ready
                     </div>
-                    <img src={URL.createObjectURL(imageFile)} alt="Preview" style={{ width: '100%', maxWidth: '200px', height: '120px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #eee' }} />
+                    <img src={URL.createObjectURL(imageFile)} alt="Preview" style={{ width: '100%', maxWidth: '200px', height: '120px', objectFit: 'cover', borderRadius: '8px', border: '1px solid var(--orbit-border)' }} />
                   </div>
                 )}
               </div>
@@ -201,7 +201,7 @@ const AdminBlogs = ({ token }) => {
                     <div style={{width: '44px', height: '44px', borderRadius: '50%', background: '#e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                       <VideoIcon size={22} color="#e11d48" />
                     </div>
-                    <span style={{fontWeight: '700', color: 'var(--color-dark)', fontSize: '0.95rem'}}>
+                    <span style={{fontWeight: '700', color: '#f1f5f9', fontSize: '0.95rem'}}>
                       Upload Featured Video (Optional)
                     </span>
                     <span style={{fontSize: '0.8rem', color: '#64748b'}}>
@@ -220,7 +220,7 @@ const AdminBlogs = ({ token }) => {
                     <div style={{fontSize: '0.85rem', color: '#10b981', fontWeight: '600', marginBottom: '0.5rem'}}>
                       ✓ {videoFile.name} ready
                     </div>
-                    <video src={URL.createObjectURL(videoFile)} style={{ width: '100%', maxWidth: '200px', height: '120px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #eee' }} controls />
+                    <video src={URL.createObjectURL(videoFile)} style={{ width: '100%', maxWidth: '200px', height: '120px', objectFit: 'cover', borderRadius: '8px', border: '1px solid var(--orbit-border)' }} controls />
                   </div>
                 )}
               </div>
@@ -230,14 +230,14 @@ const AdminBlogs = ({ token }) => {
               <button 
                 type="button" 
                 className="btn" 
-                style={{background: '#f1f5f9', color: '#475569', fontWeight: '600'}}
+                style={{background: 'var(--orbit-surface2)', color: '#f1f5f9', fontWeight: '600'}}
                 onClick={() => setShowForm(false)}
               >
                 Cancel
               </button>
               <button 
                 type="submit" 
-                className="btn btn-dark" 
+                className="btn" style={{background: "var(--orbit-primary)", color: "#f1f5f9", border: "none"}} 
                 style={{padding: '0.75rem 2rem', fontWeight: '700'}}
                 disabled={uploading}
               >
@@ -249,13 +249,13 @@ const AdminBlogs = ({ token }) => {
       )}
 
       <div className="premium-admin-card">
-        <h3 style={{fontSize: '1.2rem', fontWeight: '700', marginBottom: '1.5rem', color: 'var(--color-dark)'}}>
+        <h3 style={{fontSize: '1.2rem', fontWeight: '700', marginBottom: '1.5rem', color: '#f1f5f9'}}>
           Published Perspectives ({blogs.length})
         </h3>
         {loading ? <p>Loading articles...</p> : (
           <table style={{width: '100%', textAlign: 'left', borderCollapse: 'collapse'}}>
             <thead>
-              <tr style={{borderBottom: '2px solid #e2e8f0', color: '#64748b', fontSize: '0.85rem', textTransform: 'uppercase'}}>
+              <tr style={{borderBottom: '1px solid var(--orbit-border)', color: '#64748b', fontSize: '0.85rem', textTransform: 'uppercase'}}>
                 <th style={{padding: '1rem 0'}}>Date</th>
                 <th>Media</th>
                 <th>Title</th>
@@ -273,33 +273,33 @@ const AdminBlogs = ({ token }) => {
                 </tr>
               ) : null}
               {blogs.map(b => (
-                <tr key={b.id} style={{borderBottom: '1px solid #f1f5f9', transition: 'background 0.2s ease'}}>
+                <tr key={b.id} style={{borderBottom: '1px solid var(--orbit-border)', transition: 'background 0.2s ease'}}>
                   <td style={{padding: '1.25rem 0', color: '#64748b', fontSize: '0.9rem'}}>
                     {new Date(b.createdAt).toLocaleDateString()}
                   </td>
                   <td>
                     <div style={{display: 'flex', gap: '0.4rem'}}>
                       {b.videoUrl && (
-                        <span style={{background: '#ffe4e6', color: '#be123c', padding: '0.2rem 0.6rem', borderRadius: '12px', fontSize: '0.75rem', fontWeight: '700', display: 'inline-flex', alignItems: 'center', gap: '0.25rem'}}>
+                        <span style={{background: 'rgba(244, 63, 94, 0.15)', color: '#F43F5E', padding: '0.2rem 0.6rem', borderRadius: '12px', fontSize: '0.75rem', fontWeight: '700', display: 'inline-flex', alignItems: 'center', gap: '0.25rem'}}>
                           <VideoIcon size={12} /> Video
                         </span>
                       )}
                       {b.imageUrl && (
-                        <span style={{background: '#e0f2fe', color: '#0369a1', padding: '0.2rem 0.6rem', borderRadius: '12px', fontSize: '0.75rem', fontWeight: '700', display: 'inline-flex', alignItems: 'center', gap: '0.25rem'}}>
+                        <span style={{background: 'rgba(14, 165, 233, 0.15)', color: '#0EA5E9', padding: '0.2rem 0.6rem', borderRadius: '12px', fontSize: '0.75rem', fontWeight: '700', display: 'inline-flex', alignItems: 'center', gap: '0.25rem'}}>
                           <ImageIcon size={12} /> Image
                         </span>
                       )}
                       {!b.videoUrl && !b.imageUrl && (
-                        <span style={{background: '#f1f5f9', color: '#64748b', padding: '0.2rem 0.6rem', borderRadius: '12px', fontSize: '0.75rem', fontWeight: '700'}}>
+                        <span style={{background: 'var(--orbit-surface2)', color: '#64748b', padding: '0.2rem 0.6rem', borderRadius: '12px', fontSize: '0.75rem', fontWeight: '700'}}>
                           Text
                         </span>
                       )}
                     </div>
                   </td>
-                  <td style={{fontWeight: '700', color: 'var(--color-dark)', maxWidth: '250px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>
+                  <td style={{fontWeight: '700', color: '#f1f5f9', maxWidth: '250px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>
                     {b.title}
                   </td>
-                  <td style={{color: '#475569'}}>{b.author}</td>
+                  <td style={{color: '#f1f5f9'}}>{b.author}</td>
                   <td style={{color: '#64748b', maxWidth: '250px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: '0.9rem'}}>
                     {b.content}
                   </td>
@@ -308,14 +308,14 @@ const AdminBlogs = ({ token }) => {
                       <button 
                         onClick={() => setPreviewModal(b)} 
                         title="Preview Article"
-                        style={{background: '#f1f5f9', color: '#334155', border: 'none', padding: '0.4rem 0.8rem', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.85rem'}}
+                        style={{background: 'var(--orbit-surface2)', color: '#f1f5f9', border: 'none', padding: '0.4rem 0.8rem', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.85rem'}}
                       >
                         <Eye size={14} /> Preview
                       </button>
                       <button 
                         onClick={() => handleDelete(b.id)} 
                         title="Delete Article"
-                        style={{background: '#fee2e2', color: '#dc2626', border: 'none', padding: '0.4rem 0.8rem', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.85rem'}}
+                        style={{background: 'rgba(239, 68, 68, 0.15)', color: '#EF4444', border: 'none', padding: '0.4rem 0.8rem', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.85rem'}}
                       >
                         <Trash2 size={14} /> Delete
                       </button>
