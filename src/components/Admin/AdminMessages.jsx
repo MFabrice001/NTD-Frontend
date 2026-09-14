@@ -85,76 +85,74 @@ const AdminMessages = ({ token }) => {
           </p>
         </div>
       ) : (
-        <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))', gap: '1.5rem'}}>
+        <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
           {messages.map((msg) => (
             <div
               key={msg.id}
               style={{
                 background: 'white',
                 border: '1px solid var(--orbit-border)',
-                borderRadius: '16px',
-                padding: '1.5rem',
-                boxShadow: '0 4px 15px rgba(0, 0, 0, 0.03)',
+                borderRadius: '8px',
+                padding: '0.75rem 1rem',
                 display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                gap: '1.25rem'
+                alignItems: 'flex-start',
+                gap: '1.5rem',
+                boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)'
               }}
             >
-              <div>
-                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem', borderBottom: '1px solid var(--orbit-border)', paddingBottom: '0.75rem'}}>
-                  <div>
-                    <strong style={{fontSize: '1.1rem', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
-                      <User size={16} color="#3b82f6" /> {msg.firstName} {msg.lastName}
-                    </strong>
-                    <div style={{fontSize: '0.85rem', color: '#64748b', display: 'flex', alignItems: 'center', gap: '0.4rem', marginTop: '0.25rem'}}>
-                      <Mail size={14} /> {msg.email}
-                    </div>
-                    <div style={{fontSize: '0.85rem', color: '#64748b', display: 'flex', alignItems: 'center', gap: '0.4rem', marginTop: '0.2rem'}}>
-                      <Phone size={14} /> {msg.number}
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => handleDelete(msg.id)}
-                    style={{
-                      background: '#fef2f2',
-                      color: '#ef4444',
-                      border: 'none',
-                      borderRadius: '8px',
-                      padding: '0.5rem',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}
-                    title="Delete Message"
-                  >
-                    <Trash2 size={18} />
-                  </button>
+              <div style={{ flex: '0 0 220px', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+                <strong style={{fontSize: '0.9rem', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.4rem'}}>
+                  <User size={14} color="#3b82f6" /> {msg.firstName} {msg.lastName}
+                </strong>
+                <div style={{fontSize: '0.8rem', color: '#64748b', display: 'flex', alignItems: 'center', gap: '0.4rem'}}>
+                  <Mail size={12} /> {msg.email}
                 </div>
+                <div style={{fontSize: '0.8rem', color: '#64748b', display: 'flex', alignItems: 'center', gap: '0.4rem'}}>
+                  <Phone size={12} /> {msg.number}
+                </div>
+                <div style={{fontSize: '0.75rem', color: '#94a3b8', display: 'flex', alignItems: 'center', gap: '0.4rem', marginTop: '0.2rem'}}>
+                  <Calendar size={12} /> {msg.createdAt ? new Date(msg.createdAt).toLocaleDateString() : 'Recently'}
+                </div>
+              </div>
 
+              <div style={{ flex: '1', minWidth: 0, paddingLeft: '1.5rem', borderLeft: '2px solid #e2e8f0' }}>
                 {msg.subject && (
-                  <div style={{fontWeight: '700', color: '#1e293b', fontSize: '0.95rem', marginBottom: '0.5rem'}}>
-                    Subject: {msg.subject}
+                  <div style={{fontWeight: '700', color: '#1e293b', fontSize: '0.85rem', marginBottom: '0.35rem'}}>
+                    {msg.subject}
                   </div>
                 )}
-
                 <div style={{
-                  background: 'var(--orbit-surface2)',
-                  padding: '1rem',
-                  borderRadius: '10px',
-                  color: '#f1f5f9',
-                  fontSize: '0.95rem',
-                  lineHeight: '1.6',
+                  color: '#334155',
+                  fontSize: '0.85rem',
+                  lineHeight: '1.5',
                   whiteSpace: 'pre-wrap',
-                  borderLeft: '3px solid #3b82f6'
+                  maxHeight: '4.5rem',
+                  overflowY: 'auto'
                 }}>
                   {msg.message}
                 </div>
               </div>
 
-              <div style={{display: 'flex', justifyContent: 'flex-end', fontSize: '0.75rem', color: '#94a3b8', alignItems: 'center', gap: '0.35rem', borderTop: '1px solid #f8fafc', paddingTop: '0.75rem'}}>
-                <Calendar size={13} /> {msg.createdAt ? new Date(msg.createdAt).toLocaleString() : 'Recently'}
+              <div style={{ flexShrink: 0 }}>
+                <button
+                  onClick={() => handleDelete(msg.id)}
+                  style={{
+                    background: 'transparent',
+                    color: '#ef4444',
+                    border: 'none',
+                    padding: '0.5rem',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderRadius: '4px',
+                  }}
+                  onMouseOver={e => e.currentTarget.style.background = '#fef2f2'}
+                  onMouseOut={e => e.currentTarget.style.background = 'transparent'}
+                  title="Delete Message"
+                >
+                  <Trash2 size={16} />
+                </button>
               </div>
             </div>
           ))}

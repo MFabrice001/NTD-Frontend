@@ -4,7 +4,7 @@ import SkylineSection from '../components/SkylineSection';
 import ExcellenceSection from '../components/ExcellenceSection';
 import LandmarksSection from '../components/LandmarksSection';
 import VisionariesSection from '../components/VisionariesSection';
-import PerspectivesSection from '../components/PerspectivesSection';
+
 import LegacySection from '../components/LegacySection';
 import Footer from '../components/Footer';
 
@@ -95,7 +95,7 @@ const Home = () => {
       <ExcellenceSection />
       <LandmarksSection />
       <VisionariesSection />
-      <PerspectivesSection />
+
       <LegacySection />
       <Footer />
     </div>

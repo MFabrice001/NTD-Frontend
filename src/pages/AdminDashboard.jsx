@@ -12,7 +12,9 @@ import AdminOverview from '../components/Admin/AdminOverview';
 
 import AdminReports from '../components/Admin/AdminReports';
 import AdminMessages from '../components/Admin/AdminMessages';
-import { Menu, Mail, LayoutDashboard, FolderKanban, Users, FileText, HelpCircle, BarChart2, Search, Bell, Maximize, Plus, User } from 'lucide-react';
+import AdminServices from '../components/Admin/AdminServices';
+import AdminProfile from '../components/Admin/AdminProfile';
+import { Menu, Mail, LayoutDashboard, FolderKanban, Users, FileText, HelpCircle, BarChart2, Search, Bell, Maximize, Plus, User, Layers, Settings } from 'lucide-react';
 
 
 
@@ -100,6 +102,9 @@ const AdminDashboard = () => {
               <div style={{ marginBottom: '1.5rem' }}>
                 <div style={{ color: '#64748b', fontSize: '10px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.5rem', paddingLeft: '0.75rem' }}>Apps</div>
                 <ul className="admin-nav" style={{ gap: '0.25rem' }}>
+                  <li className={activeTab === 'services' ? 'active' : ''} onClick={() => setActiveTab('services')} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <Layers size={18} /> <span>Services</span>
+                  </li>
                   <li className={activeTab === 'projects' ? 'active' : ''} onClick={() => setActiveTab('projects')} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                     <FolderKanban size={18} /> <span>Projects</span>
                   </li>
@@ -126,6 +131,9 @@ const AdminDashboard = () => {
                   </li>
                   <li className={activeTab === 'reports' ? 'active' : ''} onClick={() => setActiveTab('reports')} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                     <BarChart2 size={18} /> <span>Reports</span>
+                  </li>
+                  <li className={activeTab === 'profile' ? 'active' : ''} onClick={() => setActiveTab('profile')} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <Settings size={18} /> <span>Profile</span>
                   </li>
                 </ul>
               </div>
@@ -171,9 +179,13 @@ const AdminDashboard = () => {
             <button className="admin-action-btn" title="Notifications">
               <Bell size={20} />
             </button>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginLeft: '0.5rem', paddingLeft: '1rem', borderLeft: '1px solid var(--orbit-border)', cursor: 'pointer' }}>
-              <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--orbit-surface2)', border: '1px solid var(--orbit-border)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#f1f5f9' }}>
-                <User size={16} />
+            <div
+              onClick={() => setActiveTab('profile')}
+              style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginLeft: '0.5rem', paddingLeft: '1rem', borderLeft: '1px solid var(--orbit-border)', cursor: 'pointer' }}
+              title="Go to Profile"
+            >
+              <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)', border: '2px solid var(--orbit-border)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: '700', fontSize: '0.9rem' }}>
+                A
               </div>
               <div style={{ fontWeight: '500', color: '#f1f5f9', fontSize: '0.85rem' }}>Administrator</div>
             </div>
@@ -184,12 +196,14 @@ const AdminDashboard = () => {
         <div className="admin-main-view">
           {activeTab === 'dashboard' && <AdminOverview token={token} />}
           {activeTab === 'messages' && <AdminMessages token={token} />}
+          {activeTab === 'services' && <AdminServices token={token} />}
           {activeTab === 'projects' && <AdminProjects token={token} />}
           {activeTab === 'team' && <AdminTeam token={token} />}
 
           {activeTab === 'blogs' && <AdminBlogs token={token} />}
           {activeTab === 'faqs' && <AdminFaqs token={token} />}
           {activeTab === 'reports' && <AdminReports token={token} />}
+          {activeTab === 'profile' && <AdminProfile token={token} />}
         </div>
       </div>
     </div>

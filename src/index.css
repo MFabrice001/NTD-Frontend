@@ -13,6 +13,27 @@
   --color-text: #1a1a1a;
   --color-text-muted: #6B7280;
 
+  /* Deep Dark Theme Variables */
+  --bg: #09090e;
+  --surface: #0f0f17;
+  --surface2: #14141e;
+  --surface3: #1a1a26;
+  --border: #1e1e2e;
+  --border2: #262636;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-subtle: #64748b;
+  --hover-bg: #ffffff0d;
+  --hover-bg2: #ffffff14;
+  
+  --orbit-bg: #09090e;
+  --orbit-surface: #0f0f17;
+  --orbit-surface2: #14141e;
+  --orbit-border: #1e1e2e;
+  --orbit-text: #f1f5f9;
+  --orbit-primary: #3b82f6;
+
   /* Typography - Using Poppins for headings and Inter for body to match BSC */
   --font-heading: 'Poppins', sans-serif;
   --font-body: 'Inter', sans-serif;

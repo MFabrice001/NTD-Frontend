@@ -13,7 +13,12 @@ import Services from './pages/Services';
 import Quote from './pages/Quote';
 
 
+import { useEffect } from 'react';
+
 const AppContent = () => {
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/public/visit`, { method: 'POST' }).catch(() => {});
+  }, []);
   const location = useLocation();
   const hideHeaderRoutes = ['/login', '/admin'];
   const shouldHideHeader = hideHeaderRoutes.includes(location.pathname);

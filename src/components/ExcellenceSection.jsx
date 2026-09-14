@@ -34,6 +34,27 @@ const services = [
 const ExcellenceSection = () => {
   const scrollContainerRef = useRef(null);
 
+  const [servicesData, setServicesData] = React.useState(services); // default to mock
+
+  React.useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/public/services`)
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.length > 0) {
+          // Map backend services to include images dynamically
+          const images = [img1, img2, img3, img4];
+          const mapped = data.map((srv, idx) => ({
+            id: srv.id,
+            title: srv.title,
+            description: srv.description,
+            image: srv.icon || images[idx % images.length]
+          }));
+          setServicesData(mapped);
+        }
+      })
+      .catch(err => console.error(err));
+  }, []);
+
   return (
     <section style={{ padding: '4rem 5%', backgroundColor: '#1E293B', overflow: 'hidden' }}>
       <div style={{ marginBottom: '2rem', textAlign: 'center' }}>
@@ -118,7 +139,7 @@ const ExcellenceSection = () => {
         }}
         className="hide-scrollbar"
       >
-        {services.map(service => (
+        {servicesData.map(service => (
           <div key={service.id} className="service-card">
             <img src={service.image} alt={service.title} />
             <div className="service-card-overlay">

@@ -35,7 +35,8 @@ const AdminOverview = ({ token }) => {
         // Combine into recent activity feed
         const combined = [
           ...projData.map(p => ({ id: `p-${p.id}`, type: 'Project Added', details: p.title, date: new Date().toISOString() })), // Mock date
-          ...blogData.map(b => ({ id: `b-${b.id}`, type: 'Blog Published', details: b.title, date: b.createdAt }))
+          ...blogData.map(b => ({ id: `b-${b.id}`, type: 'Blog Published', details: b.title, date: b.createdAt })),
+          ...msgData.map(m => ({ id: `m-${m.id}`, type: 'Message Received', details: `From ${m.firstName} - ${m.subject}`, date: m.createdAt || new Date().toISOString() }))
         ];
         
         combined.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -217,7 +218,7 @@ const AdminOverview = ({ token }) => {
         <div className="premium-admin-card" style={{ height: '420px', display: 'flex', flexDirection: 'column' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
             <div>
-              <h3 style={{fontSize: '1.05rem', color: '#f1f5f9', margin: '0 0 0.25rem'}}>Revenue Overview</h3>
+              <h3 style={{fontSize: '1.05rem', color: '#f1f5f9', margin: '0 0 0.25rem'}}>AdSense Revenue</h3>
               <p style={{color: '#64748b', fontSize: '0.85rem', margin: 0}}>Monthly revenue vs expenses</p>
             </div>
             <div style={{ display: 'flex', gap: '0.5rem' }}>
