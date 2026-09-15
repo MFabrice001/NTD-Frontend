@@ -84,7 +84,7 @@ const LandmarksSection = () => {
       ) : projects.length === 0 ? (
         <div style={{ textAlign: 'center', padding: '2rem', color: '#64748b' }}>No projects available.</div>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '2.5rem' }}>
+        <div className="projects-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '2.5rem' }}>
           {filteredProjects.map(project => (
             <div key={project.id} onClick={() => setSelectedProject(project)} className="landmark-card">
               <div className="landmark-image-wrapper">

@@ -69,7 +69,7 @@ const Header = () => {
           )}
         </div>
 
-        <button className="mobile-menu-btn" onClick={toggleMobileMenu} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent', border: 'none', cursor: 'pointer' }}>
+        <button className="mobile-menu-btn" onClick={toggleMobileMenu} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent', border: 'none', cursor: 'pointer', color: '#FFFFFF' }}>
           {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
       </div>
