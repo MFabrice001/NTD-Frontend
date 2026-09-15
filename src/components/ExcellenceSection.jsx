@@ -1,58 +1,25 @@
-import React, { useRef } from 'react';
-import img1 from '../images/C image 5.jpeg';
-import img2 from '../images/P image4.jpeg';
-import img3 from '../images/P image3.jpg';
-import img4 from '../images/co image.jpg';
-
-const services = [
-  {
-    id: 1,
-    title: 'Commercial Construction',
-    description: 'Delivering state-of-the-art office buildings and retail centers with uncompromising quality.',
-    image: img1
-  },
-  {
-    id: 2,
-    title: 'Residential Development',
-    description: 'Crafting luxury homes and multi-family residential complexes built for modern living.',
-    image: img2
-  },
-  {
-    id: 3,
-    title: 'Civil Engineering',
-    description: 'Expertise in robust infrastructure, roads, bridges, and public works projects.',
-    image: img3
-  },
-  {
-    id: 4,
-    title: 'Architectural Design',
-    description: 'Innovative design solutions that blend aesthetics with functional sustainability.',
-    image: img4
-  }
-];
+import React, { useRef, useState, useEffect } from 'react';
+import defaultImg from '../images/co image.jpg';
 
 const ExcellenceSection = () => {
   const scrollContainerRef = useRef(null);
+  const [servicesData, setServicesData] = useState([]);
 
-  const [servicesData, setServicesData] = React.useState(services); // default to mock
-
-  React.useEffect(() => {
+  useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/public/services`)
       .then(res => res.json())
       .then(data => {
-        if (data && data.length > 0) {
-          // Map backend services to include images dynamically
-          const images = [img1, img2, img3, img4];
-          const mapped = data.map((srv, idx) => ({
+        if (data && Array.isArray(data)) {
+          const mapped = data.map(srv => ({
             id: srv.id,
             title: srv.title,
             description: srv.description,
-            image: srv.icon || images[idx % images.length]
+            image: srv.icon || defaultImg
           }));
           setServicesData(mapped);
         }
       })
-      .catch(err => console.error(err));
+      .catch(err => console.error("Failed to fetch services:", err));
   }, []);
 
   return (
