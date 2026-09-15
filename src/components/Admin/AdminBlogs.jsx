@@ -1,3 +1,4 @@
+import { getImageUrl } from '../../utils/imageUrl';
 import React, { useState, useEffect } from 'react';
 import { Plus, Trash2, Image as ImageIcon, Video as VideoIcon, FileText, Eye, X, Upload } from 'lucide-react';
 

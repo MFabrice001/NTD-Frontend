@@ -1,3 +1,4 @@
+import { getImageUrl } from '../utils/imageUrl';
 import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 
@@ -88,7 +89,7 @@ const LandmarksSection = () => {
             <div key={project.id} onClick={() => setSelectedProject(project)} className="landmark-card">
               <div className="landmark-image-wrapper">
                 <img 
-                  src={project.imageUrl || 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop'} 
+                  src={project.imageUrl ? getImageUrl(project.imageUrl) : 'https://images.unsplash.com/photo-1541888081622-df8d9c572baf?q=80&w=800&auto=format&fit=crop'} 
                   alt={project.title} 
                 />
               </div>

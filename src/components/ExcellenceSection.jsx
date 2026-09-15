@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import defaultImg from '../images/co image.jpg';
+import { getImageUrl } from '../utils/imageUrl';
 
 const ExcellenceSection = () => {
   const scrollContainerRef = useRef(null);
@@ -14,7 +15,7 @@ const ExcellenceSection = () => {
             id: srv.id,
             title: srv.title,
             description: srv.description,
-            image: srv.icon || defaultImg
+            image: srv.icon ? getImageUrl(srv.icon) : defaultImg
           }));
           setServicesData(mapped);
         }

@@ -1,3 +1,4 @@
+import { getImageUrl } from '../../utils/imageUrl';
 import React, { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, X, CheckCircle, Search } from 'lucide-react';
 
