@@ -200,7 +200,7 @@ const AdminFaqs = ({ token }) => {
                         {cat}
                       </span>
                     </td>
-                    <td style={{padding: '1rem 1.5rem', fontWeight: 700, color: '#f1f5f9'}}>
+                    <td style={{padding: '1rem 1.5rem', fontWeight: 700, color: '#0f172a'}}>
                       {qText}
                     </td>
                     <td style={{padding: '1rem 1.5rem', color: '#64748b', maxWidth: '350px'}}>
@@ -264,7 +264,7 @@ const AdminFaqs = ({ token }) => {
               <X size={22} />
             </button>
 
-            <h3 style={{fontSize: '1.5rem', fontWeight: 800, color: '#f1f5f9', margin: '0 0 0.5rem'}}>
+            <h3 style={{fontSize: '1.5rem', fontWeight: 800, color: '#0f172a', margin: '0 0 0.5rem'}}>
               {editingFaq ? 'Edit FAQ Entry' : 'Create New FAQ Entry'}
             </h3>
             <p style={{color: '#64748b', fontSize: '0.9rem', marginBottom: '1.5rem'}}>
@@ -273,7 +273,7 @@ const AdminFaqs = ({ token }) => {
 
             <form onSubmit={handleSave}>
               <div style={{marginBottom: '1.25rem'}}>
-                <label style={{display: 'block', fontWeight: 700, fontSize: '0.85rem', color: '#f1f5f9', marginBottom: '0.4rem'}}>
+                <label style={{display: 'block', fontWeight: 700, fontSize: '0.85rem', color: '#0f172a', marginBottom: '0.4rem'}}>
                   Category
                 </label>
                 <select
@@ -285,7 +285,7 @@ const AdminFaqs = ({ token }) => {
                     border: '1px solid #cbd5e1',
                     borderRadius: '10px',
                     fontSize: '0.95rem',
-                    color: '#f1f5f9',
+                    color: '#0f172a',
                     background: 'white'
                   }}
                 >
@@ -296,7 +296,7 @@ const AdminFaqs = ({ token }) => {
               </div>
 
               <div style={{marginBottom: '1.25rem'}}>
-                <label style={{display: 'block', fontWeight: 700, fontSize: '0.85rem', color: '#f1f5f9', marginBottom: '0.4rem'}}>
+                <label style={{display: 'block', fontWeight: 700, fontSize: '0.85rem', color: '#0f172a', marginBottom: '0.4rem'}}>
                   Question Title *
                 </label>
                 <input
@@ -311,13 +311,14 @@ const AdminFaqs = ({ token }) => {
                     border: '1px solid #cbd5e1',
                     borderRadius: '10px',
                     fontSize: '0.95rem',
-                    color: '#f1f5f9'
+                    color: '#0f172a',
+                    background: 'white'
                   }}
                 />
               </div>
 
               <div style={{marginBottom: '2rem'}}>
-                <label style={{display: 'block', fontWeight: 700, fontSize: '0.85rem', color: '#f1f5f9', marginBottom: '0.4rem'}}>
+                <label style={{display: 'block', fontWeight: 700, fontSize: '0.85rem', color: '#0f172a', marginBottom: '0.4rem'}}>
                   Comprehensive Answer *
                 </label>
                 <textarea
@@ -332,7 +333,8 @@ const AdminFaqs = ({ token }) => {
                     border: '1px solid #cbd5e1',
                     borderRadius: '10px',
                     fontSize: '0.95rem',
-                    color: '#f1f5f9',
+                    color: '#0f172a',
+                    background: 'white',
                     fontFamily: 'inherit'
                   }}
                 />

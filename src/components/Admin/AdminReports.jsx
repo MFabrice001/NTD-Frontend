@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Download, Filter } from 'lucide-react';
-import jsPDF from 'jspdf';
+import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 
 const AdminReports = ({ token }) => {
@@ -10,6 +10,14 @@ const AdminReports = ({ token }) => {
     blogs: 0,
     messages: 0,
     visits: 0
+  });
+
+  const [rawData, setRawData] = useState({
+    users: [],
+    projects: [],
+    blogs: [],
+    messages: [],
+    totalVisits: 0
   });
   
   const [adminName, setAdminName] = useState('System Administrator');
@@ -46,12 +54,12 @@ const AdminReports = ({ token }) => {
         const visitsCount = visitRes.ok ? await visitRes.json() : 0;
         const team = teamRes.ok ? await teamRes.json() : [];
 
-        setMetrics({
-          users: team.length,
-          projects: projects.length,
-          blogs: blogs.length,
-          messages: messages.length,
-          visits: visitsCount
+        setRawData({
+          users: team,
+          projects: projects,
+          blogs: blogs,
+          messages: messages,
+          totalVisits: visitsCount
         });
 
       } catch (e) {
@@ -63,6 +71,40 @@ const AdminReports = ({ token }) => {
     
     fetchData();
   }, [token]);
+
+  useEffect(() => {
+    const filterByDate = (items) => {
+      if (!startDate && !endDate) return items;
+      
+      return items.filter(item => {
+        if (!item.createdAt) return true;
+        
+        const itemDate = new Date(item.createdAt);
+        itemDate.setHours(0, 0, 0, 0); 
+        
+        let isValid = true;
+        if (startDate) {
+          const sDate = new Date(startDate);
+          sDate.setHours(0, 0, 0, 0);
+          if (itemDate < sDate) isValid = false;
+        }
+        if (endDate) {
+          const eDate = new Date(endDate);
+          eDate.setHours(23, 59, 59, 999);
+          if (itemDate > eDate) isValid = false;
+        }
+        return isValid;
+      });
+    };
+
+    setMetrics({
+      users: filterByDate(rawData.users || []).length,
+      projects: filterByDate(rawData.projects || []).length,
+      blogs: filterByDate(rawData.blogs || []).length,
+      messages: filterByDate(rawData.messages || []).length,
+      visits: rawData.totalVisits || 0
+    });
+  }, [startDate, endDate, rawData]);
 
   const generatePDF = () => {
     const doc = new jsPDF();
