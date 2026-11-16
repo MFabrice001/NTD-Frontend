@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Download, Filter, Calendar, RotateCcw } from 'lucide-react';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import logoImg from '../../images/88567.png';
 
 const AdminReports = ({ token }) => {
   const [metrics, setMetrics] = useState({
@@ -120,28 +121,40 @@ const AdminReports = ({ token }) => {
     setEndDate('');
   };
 
-  const generatePDF = () => {
+  const generatePDF = async () => {
     const doc = new jsPDF({
       orientation: 'portrait',
       unit: 'mm',
       format: 'a4'
     });
 
-    // 1. Circular Logo Badge (Left)
-    doc.setFillColor(235, 246, 240); // Soft pastel green
-    doc.circle(38, 30, 13, 'F');
-    
-    // Text inside circular badge
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(13);
-    doc.setTextColor(60, 70, 85);
-    doc.text("NTD", 38, 34.5, { align: 'center' });
+    // 1. Company Logo (Official NTD Build Logo)
+    try {
+      const img = await new Promise((resolve) => {
+        const imageObj = new Image();
+        imageObj.src = logoImg;
+        if (imageObj.complete) {
+          resolve(imageObj);
+        } else {
+          imageObj.onload = () => resolve(imageObj);
+          imageObj.onerror = () => resolve(null);
+        }
+      });
 
-    // Green text below circle
-    doc.setFontSize(8);
-    doc.setTextColor(22, 101, 52); // Forest green
-    doc.text("NTD BUILD", 38, 47, { align: 'center' });
-    doc.text("& DESIGN", 38, 51, { align: 'center' });
+      if (img) {
+        doc.addImage(img, 'PNG', 20, 16, 34, 26);
+      } else {
+        // Fallback in case image loading fails
+        doc.setFillColor(235, 246, 240);
+        doc.circle(37, 29, 12, 'F');
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(12);
+        doc.setTextColor(60, 70, 85);
+        doc.text("NTD", 37, 33.5, { align: 'center' });
+      }
+    } catch (err) {
+      console.warn("Failed to render logo in PDF:", err);
+    }
 
     // 2. Company Info (Right of Logo)
     doc.setTextColor(0, 0, 0);
