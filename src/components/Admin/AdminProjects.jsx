@@ -258,14 +258,14 @@ const AdminProjects = ({ token }) => {
 
       {showForm && (
         <div className="premium-admin-card" style={{ marginBottom: '2.5rem', border: '1px solid var(--orbit-border)' }}>
-          <h2 style={{ fontSize: '1.25rem', marginBottom: '1.5rem', color: 'var(--orbit-text)' }}>
+          <h2 style={{ fontSize: '1.25rem', marginBottom: '1.5rem', color: '#ffffff' }}>
             {editingId ? 'Edit Project' : 'Add New Project with Multi-Image Gallery'}
           </h2>
           
           <form onSubmit={handleSubmit}>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.25rem', marginBottom: '1.25rem' }}>
               <div>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.85rem', fontWeight: 600 }}>Project Title *</label>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.85rem', fontWeight: 600, color: '#ffffff' }}>Project Title *</label>
                 <input 
                   className="login-input" 
                   value={formData.title} 
@@ -275,7 +275,7 @@ const AdminProjects = ({ token }) => {
                 />
               </div>
               <div>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.85rem', fontWeight: 600 }}>Category *</label>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.85rem', fontWeight: 600, color: '#ffffff' }}>Category *</label>
                 <input 
                   className="login-input" 
                   value={formData.category} 
@@ -285,7 +285,7 @@ const AdminProjects = ({ token }) => {
                 />
               </div>
               <div>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.85rem', fontWeight: 600 }}>Location *</label>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.85rem', fontWeight: 600, color: '#ffffff' }}>Location *</label>
                 <input 
                   className="login-input" 
                   value={formData.location} 
@@ -295,7 +295,7 @@ const AdminProjects = ({ token }) => {
                 />
               </div>
               <div>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.85rem', fontWeight: 600 }}>Year *</label>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.85rem', fontWeight: 600, color: '#ffffff' }}>Year *</label>
                 <input 
                   className="login-input" 
                   value={formData.year} 
@@ -307,7 +307,7 @@ const AdminProjects = ({ token }) => {
             </div>
 
             <div style={{ marginBottom: '1.5rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.85rem', fontWeight: 600 }}>Project Description *</label>
+              <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.85rem', fontWeight: 600, color: '#ffffff' }}>Project Description *</label>
               <textarea 
                 className="login-input" 
                 value={formData.description} 
@@ -322,10 +322,10 @@ const AdminProjects = ({ token }) => {
             <div style={{ marginBottom: '1.75rem', background: 'var(--orbit-surface2)', padding: '1.5rem', borderRadius: '12px', border: '1px solid var(--orbit-border)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
                 <div>
-                  <h3 style={{ margin: 0, fontSize: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <h3 style={{ margin: 0, fontSize: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#ffffff' }}>
                     <Images size={18} color="var(--orbit-primary)" /> Project Images Gallery (Upload Multiple)
                   </h3>
-                  <p style={{ margin: '0.25rem 0 0', fontSize: '0.8rem', color: '#64748b' }}>
+                  <p style={{ margin: '0.25rem 0 0', fontSize: '0.8rem', color: '#94a3b8' }}>
                     Select multiple high-resolution photos. The first image will be the primary cover on the landing page.
                   </p>
                 </div>
@@ -461,7 +461,7 @@ const AdminProjects = ({ token }) => {
 
             {/* Optional Feature Video */}
             <div style={{ marginBottom: '2rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.85rem', fontWeight: 600 }}>
+              <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.85rem', fontWeight: 600, color: '#ffffff' }}>
                 Optional Feature Video
               </label>
               <input 
