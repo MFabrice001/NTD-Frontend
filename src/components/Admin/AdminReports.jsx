@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Download, Filter } from 'lucide-react';
+import { Download, Filter, Calendar, RotateCcw } from 'lucide-react';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
@@ -23,7 +23,8 @@ const AdminReports = ({ token }) => {
   const [adminName, setAdminName] = useState('Musengimana Fabrice');
   const [loading, setLoading] = useState(true);
 
-  // Filters state
+  // Filters state - dates are 100% optional (defaults to all-time)
+  const [dateMode, setDateMode] = useState('all'); // 'all' or 'custom'
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [reportType, setReportType] = useState('Overview');
@@ -79,7 +80,8 @@ const AdminReports = ({ token }) => {
   }, [token]);
 
   const filterByDate = (items) => {
-    if (!startDate && !endDate) return items;
+    // If in "all" mode, return all items without any date filtering
+    if (dateMode === 'all' || (!startDate && !endDate)) return items;
     
     return items.filter(item => {
       if (!item.createdAt) return true;
@@ -110,7 +112,13 @@ const AdminReports = ({ token }) => {
       messages: filterByDate(rawData.messages || []).length,
       visits: rawData.totalVisits || 0
     });
-  }, [startDate, endDate, rawData]);
+  }, [dateMode, startDate, endDate, rawData]);
+
+  const resetToAllTime = () => {
+    setDateMode('all');
+    setStartDate('');
+    setEndDate('');
+  };
 
   const generatePDF = () => {
     const doc = new jsPDF({
@@ -120,7 +128,6 @@ const AdminReports = ({ token }) => {
     });
 
     // 1. Circular Logo Badge (Left)
-    // Draw subtle soft-green filled circle
     doc.setFillColor(235, 246, 240); // Soft pastel green
     doc.circle(38, 30, 13, 'F');
     
@@ -197,7 +204,7 @@ const AdminReports = ({ token }) => {
         m.createdAt ? new Date(m.createdAt).toLocaleDateString() : 'N/A'
       ]);
       if (body.length === 0) {
-        body = [['-', 'No messages found for this period', '', '']];
+        body = [['-', 'No messages recorded', '', '']];
       }
     } else if (reportType === 'Blogs') {
       head = [['No.', 'Blog Title', 'Author', 'Date']];
@@ -215,7 +222,7 @@ const AdminReports = ({ token }) => {
         b.createdAt ? new Date(b.createdAt).toLocaleDateString() : 'N/A'
       ]);
       if (body.length === 0) {
-        body = [['-', 'No blogs found for this period', '', '']];
+        body = [['-', 'No blogs recorded', '', '']];
       }
     } else if (reportType === 'Projects') {
       head = [['No.', 'Project Title', 'Category', 'Date']];
@@ -233,7 +240,7 @@ const AdminReports = ({ token }) => {
         p.createdAt ? new Date(p.createdAt).toLocaleDateString() : 'N/A'
       ]);
       if (body.length === 0) {
-        body = [['-', 'No projects found for this period', '', '']];
+        body = [['-', 'No projects recorded', '', '']];
       }
     }
 
@@ -322,7 +329,7 @@ const AdminReports = ({ token }) => {
       <div className="admin-header">
         <div>
           <h1>System Reports</h1>
-          <p style={{ color: '#6b7280', margin: 0 }}>Filter and generate PDF reports of system activity.</p>
+          <p style={{ color: '#6b7280', margin: 0 }}>Generate one-click reports or filter optionally by date.</p>
         </div>
         <button 
           className="btn" 
@@ -346,11 +353,50 @@ const AdminReports = ({ token }) => {
       </div>
 
       <div className="premium-admin-card" style={{ marginBottom: '2rem' }}>
-        <h3 style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <Filter size={18} /> Filters
-        </h3>
-        <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
-          <div style={{ flex: 1, minWidth: '200px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '1rem' }}>
+          <h3 style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <Filter size={18} /> Report Options
+          </h3>
+          
+          {/* Quick Period Selector */}
+          <div style={{ display: 'flex', gap: '0.5rem', background: 'var(--orbit-surface2)', padding: '0.25rem', borderRadius: '8px', border: '1px solid var(--orbit-border)' }}>
+            <button
+              type="button"
+              onClick={resetToAllTime}
+              style={{
+                padding: '0.4rem 0.85rem',
+                borderRadius: '6px',
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: '0.82rem',
+                fontWeight: 600,
+                background: dateMode === 'all' ? 'var(--orbit-primary)' : 'transparent',
+                color: dateMode === 'all' ? '#ffffff' : 'var(--orbit-text)'
+              }}
+            >
+              All Time (Default)
+            </button>
+            <button
+              type="button"
+              onClick={() => setDateMode('custom')}
+              style={{
+                padding: '0.4rem 0.85rem',
+                borderRadius: '6px',
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: '0.82rem',
+                fontWeight: 600,
+                background: dateMode === 'custom' ? 'var(--orbit-primary)' : 'transparent',
+                color: dateMode === 'custom' ? '#ffffff' : 'var(--orbit-text)'
+              }}
+            >
+              Custom Date Range (Optional)
+            </button>
+          </div>
+        </div>
+
+        <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap', alignItems: 'flex-end' }}>
+          <div style={{ flex: 1, minWidth: '220px' }}>
             <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.85rem', fontWeight: 500 }}>Report Type</label>
             <select 
               value={reportType} 
@@ -363,24 +409,59 @@ const AdminReports = ({ token }) => {
               <option value="Projects">Projects</option>
             </select>
           </div>
-          <div style={{ flex: 1, minWidth: '200px' }}>
-            <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.85rem', fontWeight: 500 }}>Date From</label>
-            <input 
-              type="date" 
-              value={startDate}
-              onChange={e => setStartDate(e.target.value)}
-              style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--orbit-border)', background: 'var(--orbit-surface)', color: 'var(--orbit-text)' }}
-            />
-          </div>
-          <div style={{ flex: 1, minWidth: '200px' }}>
-            <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.85rem', fontWeight: 500 }}>Date To</label>
-            <input 
-              type="date" 
-              value={endDate}
-              onChange={e => setEndDate(e.target.value)}
-              style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--orbit-border)', background: 'var(--orbit-surface)', color: 'var(--orbit-text)' }}
-            />
-          </div>
+
+          {dateMode === 'custom' ? (
+            <>
+              <div style={{ flex: 1, minWidth: '180px' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.85rem', fontWeight: 500 }}>
+                  Date From <span style={{ color: '#94a3b8', fontSize: '0.78rem' }}>(Optional)</span>
+                </label>
+                <input 
+                  type="date" 
+                  value={startDate}
+                  onChange={e => setStartDate(e.target.value)}
+                  style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--orbit-border)', background: 'var(--orbit-surface)', color: 'var(--orbit-text)' }}
+                />
+              </div>
+              <div style={{ flex: 1, minWidth: '180px' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.85rem', fontWeight: 500 }}>
+                  Date To <span style={{ color: '#94a3b8', fontSize: '0.78rem' }}>(Optional)</span>
+                </label>
+                <input 
+                  type="date" 
+                  value={endDate}
+                  onChange={e => setEndDate(e.target.value)}
+                  style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--orbit-border)', background: 'var(--orbit-surface)', color: 'var(--orbit-text)' }}
+                />
+              </div>
+              <div>
+                <button
+                  type="button"
+                  onClick={resetToAllTime}
+                  title="Clear date filter and include all records"
+                  style={{
+                    padding: '0.75rem 1rem',
+                    borderRadius: '8px',
+                    border: '1px solid var(--orbit-border)',
+                    background: 'var(--orbit-surface2)',
+                    color: 'var(--orbit-text)',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.4rem',
+                    fontSize: '0.85rem'
+                  }}
+                >
+                  <RotateCcw size={14} /> Clear
+                </button>
+              </div>
+            </>
+          ) : (
+            <div style={{ flex: 2, minWidth: '220px', padding: '0.75rem 1rem', background: 'var(--orbit-surface2)', borderRadius: '8px', border: '1px dashed var(--orbit-border)', display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#64748b', fontSize: '0.85rem' }}>
+              <Calendar size={16} />
+              <span><strong>All-Time data:</strong> All records are included automatically. No date input needed.</span>
+            </div>
+          )}
         </div>
       </div>
 
@@ -457,7 +538,7 @@ const AdminReports = ({ token }) => {
 
               {reportType === 'Messages' && (
                 filteredMessages.length === 0 ? (
-                  <tr><td colSpan={4} style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>No messages recorded for this period.</td></tr>
+                  <tr><td colSpan={4} style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>No messages recorded.</td></tr>
                 ) : (
                   filteredMessages.map((m, idx) => (
                     <tr key={m.id || idx} style={{ borderBottom: '1px solid var(--orbit-border)' }}>
@@ -472,7 +553,7 @@ const AdminReports = ({ token }) => {
 
               {reportType === 'Blogs' && (
                 filteredBlogs.length === 0 ? (
-                  <tr><td colSpan={4} style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>No blogs recorded for this period.</td></tr>
+                  <tr><td colSpan={4} style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>No blogs recorded.</td></tr>
                 ) : (
                   filteredBlogs.map((b, idx) => (
                     <tr key={b.id || idx} style={{ borderBottom: '1px solid var(--orbit-border)' }}>
@@ -487,7 +568,7 @@ const AdminReports = ({ token }) => {
 
               {reportType === 'Projects' && (
                 filteredProjects.length === 0 ? (
-                  <tr><td colSpan={4} style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>No projects recorded for this period.</td></tr>
+                  <tr><td colSpan={4} style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>No projects recorded.</td></tr>
                 ) : (
                   filteredProjects.map((p, idx) => (
                     <tr key={p.id || idx} style={{ borderBottom: '1px solid var(--orbit-border)' }}>
