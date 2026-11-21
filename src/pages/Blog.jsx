@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Search, Play, ArrowRight, X, Calendar, User, Film, Image as ImageIcon } from 'lucide-react';
+import { getImageUrl, getFallbackImage } from '../utils/imageUrl';
 import Footer from '../components/Footer';
 
 const Blog = () => {
@@ -104,7 +105,7 @@ const Blog = () => {
         <div
           className="blog-featured-media"
           style={{
-            backgroundImage: featuredBlog.imageUrl ? `url(${featuredBlog.imageUrl})` : undefined
+            backgroundImage: `url(${getImageUrl(featuredBlog.imageUrl)})`
           }}
         >
           {featuredBlog.videoUrl && (
@@ -175,7 +176,7 @@ const Blog = () => {
 
                   <div 
                     className="blog-card-img" 
-                    style={{ backgroundImage: blog.imageUrl ? `url(${blog.imageUrl})` : undefined }}
+                    style={{ backgroundImage: `url(${getImageUrl(blog.imageUrl)})` }}
                   />
                 </div>
 

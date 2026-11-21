@@ -1,4 +1,4 @@
-import { getImageUrl } from '../utils/imageUrl';
+import { getImageUrl, getFallbackImage } from '../utils/imageUrl';
 import React, { useState, useEffect } from 'react';
 
 const VisionariesSection = () => {
@@ -95,7 +95,14 @@ const VisionariesSection = () => {
           {teamMembers.map(member => (
             <div key={member.id} className="screenshot-card">
               <div className="screenshot-image-wrapper">
-                <img src={member.imageUrl ? getImageUrl(member.imageUrl) : 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=600&auto=format&fit=crop'} alt={member.name} />
+                <img 
+                  src={member.imageUrl ? getImageUrl(member.imageUrl) : getFallbackImage()} 
+                  alt={member.name} 
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = getFallbackImage();
+                  }}
+                />
               </div>
               <div className="screenshot-text-wrapper">
                 <h4 className="screenshot-name">{member.name}</h4>

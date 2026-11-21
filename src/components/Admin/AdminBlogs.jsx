@@ -32,6 +32,41 @@ const AdminBlogs = ({ token }) => {
     } catch (e) { console.error(e); }
   };
 
+  const compressImageFile = (file) => {
+    return new Promise((resolve) => {
+      if (!file || !file.type.startsWith('image/')) return resolve(null);
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          const maxDim = 1280;
+          let width = img.width;
+          let height = img.height;
+          if (width > maxDim || height > maxDim) {
+            if (width > height) {
+              height = Math.round((height * maxDim) / width);
+              width = maxDim;
+            } else {
+              width = Math.round((width * maxDim) / height);
+              height = maxDim;
+            }
+          }
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
+          resolve(dataUrl);
+        };
+        img.onerror = () => resolve(e.target.result);
+        img.src = e.target.result;
+      };
+      reader.onerror = () => resolve(null);
+      reader.readAsDataURL(file);
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setUploading(true);
@@ -39,16 +74,14 @@ const AdminBlogs = ({ token }) => {
       let finalImageUrl = formData.imageUrl;
       let finalVideoUrl = formData.videoUrl;
 
-      // Upload Image
+      // Process Image: compress to permanent data URL
       if (imageFile) {
-        const fileData = new FormData();
-        fileData.append('file', imageFile);
-        const uploadRes = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/admin/images/upload`, {
-          method: 'POST',
-          headers: { 'Authorization': `Bearer ${token}` },
-          body: fileData
-        });
-        if (uploadRes.ok) finalImageUrl = (await uploadRes.json()).url;
+        try {
+          const dataUrl = await compressImageFile(imageFile);
+          if (dataUrl) finalImageUrl = dataUrl;
+        } catch (compErr) {
+          console.error("Image compression error", compErr);
+        }
       }
 
       // Upload Video

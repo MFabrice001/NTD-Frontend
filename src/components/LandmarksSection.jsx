@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getImageUrl, getFallbackImage } from '../utils/imageUrl';
-import { X, Images, ChevronLeft, ChevronRight, Play, ArrowRight, Calendar, MapPin, Tag } from 'lucide-react';
+import { Images, ChevronLeft, ChevronRight, Play } from 'lucide-react';
 
 const LandmarksSection = () => {
+  const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState('All Projects');
-  const [selectedProject, setSelectedProject] = useState(null);
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [pageIndex, setPageIndex] = useState(0);
   const [showAll, setShowAll] = useState(false);
 
@@ -55,9 +55,8 @@ const LandmarksSection = () => {
     setPageIndex(prev => (prev === totalPages - 1 ? 0 : prev + 1));
   };
 
-  const openProjectModal = (project) => {
-    setSelectedProject(project);
-    setActiveImageIndex(0);
+  const handleProjectClick = (projectId) => {
+    navigate(`/project/${projectId}`);
   };
 
   return (
@@ -248,10 +247,6 @@ const LandmarksSection = () => {
         .more-projects-btn:active {
           transform: scale(0.98);
         }
-        .project-modal-thumb:hover {
-          opacity: 1 !important;
-          transform: translateY(-2px);
-        }
       `}</style>
 
       <div className="landmarks-wrapper">
@@ -332,7 +327,7 @@ const LandmarksSection = () => {
                 <div 
                   key={project.id} 
                   className="project-card" 
-                  onClick={() => openProjectModal(project)}
+                  onClick={() => handleProjectClick(project.id)}
                 >
                   {/* Landscape Image Box */}
                   <div className="project-card-image-box">
@@ -433,281 +428,6 @@ const LandmarksSection = () => {
           </div>
         )}
       </div>
-
-      {/* Full Interactive Project Modal (Displays Multi-Image Gallery + Description) */}
-      {selectedProject && (() => {
-        const modalImages = selectedProject.imageUrls && selectedProject.imageUrls.length > 0
-          ? selectedProject.imageUrls
-          : (selectedProject.imageUrl ? [selectedProject.imageUrl] : []);
-
-        const activeImgSrc = modalImages.length > 0 
-          ? getImageUrl(modalImages[activeImageIndex]) 
-          : getFallbackImage();
-
-        return (
-          <div 
-            onClick={() => setSelectedProject(null)}
-            style={{
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              width: '100vw',
-              height: '100vh',
-              backgroundColor: 'rgba(0, 0, 0, 0.85)',
-              backdropFilter: 'blur(5px)',
-              zIndex: 99999,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: '1.25rem'
-            }}
-          >
-            <div 
-              onClick={e => e.stopPropagation()}
-              style={{
-                background: '#FFFFFF',
-                borderRadius: '12px',
-                width: '100%',
-                maxWidth: '960px',
-                maxHeight: '92vh',
-                overflowY: 'auto',
-                display: 'flex',
-                flexDirection: 'column',
-                position: 'relative',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
-              }}
-            >
-              {/* Close Button */}
-              <button 
-                onClick={() => setSelectedProject(null)}
-                title="Close"
-                style={{
-                  position: 'absolute',
-                  top: '1rem',
-                  right: '1rem',
-                  background: 'rgba(15, 23, 42, 0.75)',
-                  color: '#FFFFFF',
-                  border: 'none',
-                  borderRadius: '50%',
-                  width: '38px',
-                  height: '38px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: 'pointer',
-                  zIndex: 30,
-                  transition: 'background 0.2s'
-                }}
-              >
-                <X size={20} />
-              </button>
-
-              {/* Main Image Viewer */}
-              <div 
-                style={{ 
-                  position: 'relative', 
-                  width: '100%', 
-                  height: '460px', 
-                  background: '#090D16', 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'center',
-                  overflow: 'hidden'
-                }}
-              >
-                <img 
-                  src={activeImgSrc} 
-                  alt={`${selectedProject.title} ${activeImageIndex + 1}`} 
-                  onError={(e) => {
-                    e.currentTarget.onerror = null;
-                    e.currentTarget.src = getFallbackImage();
-                  }}
-                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                />
-
-                {/* Left/Right Carousel Controls if multiple images */}
-                {modalImages.length > 1 && (
-                  <>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setActiveImageIndex(prev => (prev === 0 ? modalImages.length - 1 : prev - 1));
-                      }}
-                      title="Previous Image"
-                      style={{
-                        position: 'absolute',
-                        left: '1rem',
-                        top: '50%',
-                        transform: 'translateY(-50%)',
-                        background: 'rgba(15, 23, 42, 0.8)',
-                        color: '#FFFFFF',
-                        border: 'none',
-                        borderRadius: '50%',
-                        width: '42px',
-                        height: '42px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        cursor: 'pointer',
-                        boxShadow: '0 4px 6px rgba(0,0,0,0.3)',
-                        transition: 'all 0.2s'
-                      }}
-                    >
-                      <ChevronLeft size={24} />
-                    </button>
-
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setActiveImageIndex(prev => (prev === modalImages.length - 1 ? 0 : prev + 1));
-                      }}
-                      title="Next Image"
-                      style={{
-                        position: 'absolute',
-                        right: '1rem',
-                        top: '50%',
-                        transform: 'translateY(-50%)',
-                        background: 'rgba(15, 23, 42, 0.8)',
-                        color: '#FFFFFF',
-                        border: 'none',
-                        borderRadius: '50%',
-                        width: '42px',
-                        height: '42px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        cursor: 'pointer',
-                        boxShadow: '0 4px 6px rgba(0,0,0,0.3)',
-                        transition: 'all 0.2s'
-                      }}
-                    >
-                      <ChevronRight size={24} />
-                    </button>
-
-                    {/* Image Counter Badge */}
-                    <span 
-                      style={{
-                        position: 'absolute',
-                        bottom: '1rem',
-                        right: '1rem',
-                        background: 'rgba(15, 23, 42, 0.85)',
-                        backdropFilter: 'blur(4px)',
-                        color: '#FFFFFF',
-                        padding: '4px 12px',
-                        borderRadius: '20px',
-                        fontSize: '0.8rem',
-                        fontWeight: 600,
-                        border: '1px solid rgba(255, 255, 255, 0.2)'
-                      }}
-                    >
-                      {activeImageIndex + 1} / {modalImages.length} Photos
-                    </span>
-                  </>
-                )}
-              </div>
-
-              {/* Thumbnail Strip (if multiple images uploaded) */}
-              {modalImages.length > 1 && (
-                <div 
-                  style={{
-                    display: 'flex',
-                    gap: '0.75rem',
-                    padding: '0.85rem 1.5rem',
-                    background: '#F8FAFC',
-                    borderBottom: '1px solid #E2E8F0',
-                    overflowX: 'auto'
-                  }}
-                >
-                  {modalImages.map((imgUrl, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => setActiveImageIndex(idx)}
-                      className="project-modal-thumb"
-                      style={{
-                        width: '80px',
-                        height: '56px',
-                        borderRadius: '6px',
-                        overflow: 'hidden',
-                        padding: 0,
-                        border: activeImageIndex === idx ? '2px solid #0284C7' : '1px solid #CBD5E1',
-                        background: '#0F172A',
-                        cursor: 'pointer',
-                        flexShrink: 0,
-                        opacity: activeImageIndex === idx ? 1 : 0.65,
-                        transition: 'all 0.2s'
-                      }}
-                    >
-                      <img 
-                        src={getImageUrl(imgUrl)} 
-                        alt={`Thumb ${idx + 1}`} 
-                        onError={(e) => {
-                          e.currentTarget.onerror = null;
-                          e.currentTarget.src = getFallbackImage();
-                        }}
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
-                      />
-                    </button>
-                  ))}
-                </div>
-              )}
-
-              {/* Project Content Description & Information */}
-              <div style={{ padding: '2rem 2.25rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem', flexWrap: 'wrap' }}>
-                  <span 
-                    style={{ 
-                      background: '#0284C7', 
-                      color: '#FFFFFF', 
-                      padding: '4px 12px', 
-                      borderRadius: '4px', 
-                      fontSize: '0.75rem', 
-                      fontWeight: '700', 
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.5px'
-                    }}
-                  >
-                    {selectedProject.category || 'PROJECT'}
-                  </span>
-                  <span style={{ fontSize: '0.88rem', color: '#64748B', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                    <MapPin size={14} /> {selectedProject.location || 'Rwanda'}
-                  </span>
-                  <span style={{ fontSize: '0.88rem', color: '#64748B', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                    <Calendar size={14} /> {selectedProject.year || '2025'}
-                  </span>
-                </div>
-
-                <h2 style={{ fontSize: '1.8rem', margin: '0 0 1rem 0', color: '#0F172A', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1.3 }}>
-                  {selectedProject.title}
-                </h2>
-
-                {selectedProject.description ? (
-                  <div style={{ whiteSpace: 'pre-wrap', lineHeight: '1.75', color: '#334155', fontSize: '1rem', marginBottom: '1.5rem' }}>
-                    {selectedProject.description}
-                  </div>
-                ) : (
-                  <p style={{ color: '#94A3B8', fontStyle: 'italic', marginBottom: '1.5rem' }}>
-                    No detailed description provided for this project.
-                  </p>
-                )}
-
-                {/* Optional Project Video Tour */}
-                {selectedProject.videoUrl && (
-                  <div style={{ marginTop: '1.5rem', borderTop: '1px solid #E2E8F0', paddingTop: '1.25rem' }}>
-                    <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '0.75rem', color: '#0F172A', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <Play size={16} color="#0284C7" /> Project Video Tour
-                    </h4>
-                    <video 
-                      src={getImageUrl(selectedProject.videoUrl)} 
-                      controls 
-                      style={{ width: '100%', maxHeight: '420px', borderRadius: '8px', background: '#000000' }} 
-                    />
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        );
-      })()}
     </section>
   );
 };

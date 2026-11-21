@@ -109,7 +109,14 @@ const ExcellenceSection = () => {
       >
         {servicesData.map(service => (
           <div key={service.id} className="service-card">
-            <img src={service.image} alt={service.title} />
+            <img 
+              src={service.image} 
+              alt={service.title} 
+              onError={(e) => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = defaultImg;
+              }}
+            />
             <div className="service-card-overlay">
               <h3 style={{ color: 'var(--color-primary)', fontSize: '1.5rem', fontWeight: '800', textTransform: 'uppercase', margin: 0, textShadow: '1px 1px 3px rgba(0,0,0,0.8)' }}>
                 {service.title}

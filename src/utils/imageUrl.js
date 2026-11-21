@@ -1,8 +1,8 @@
-const FALLBACK_PROJECT_IMAGE = 'https://images.unsplash.com/photo-1541888081622-df8d9c572baf?q=80&w=1200&auto=format&fit=crop';
+import localFallbackImg from '../images/P image3.jpg';
 
 export const getImageUrl = (url) => {
   if (!url || typeof url !== 'string' || !url.trim()) {
-    return FALLBACK_PROJECT_IMAGE;
+    return localFallbackImg;
   }
 
   const trimmed = url.trim();
@@ -21,7 +21,7 @@ export const getImageUrl = (url) => {
     return trimmed.replace(/https?:\/\/localhost:8080/, apiUrl);
   }
 
-  // If already absolute http/https URL (Unsplash, external hosting, etc.)
+  // If already absolute http/https URL (external hosting, etc.)
   if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
     return trimmed;
   }
@@ -31,4 +31,4 @@ export const getImageUrl = (url) => {
   return `${apiUrl}${cleanPath}`;
 };
 
-export const getFallbackImage = () => FALLBACK_PROJECT_IMAGE;
+export const getFallbackImage = () => localFallbackImg;

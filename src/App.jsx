@@ -11,6 +11,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import Portfolio from './pages/Portfolio';
 import Services from './pages/Services';
 import Quote from './pages/Quote';
+import ProjectDetails from './pages/ProjectDetails';
 
 
 import { useEffect } from 'react';
@@ -37,6 +38,8 @@ const AppContent = () => {
         <Route path="/portfolio" element={<Portfolio />} />
         <Route path="/services" element={<Services />} />
         <Route path="/quote" element={<Quote />} />
+        <Route path="/project/:id" element={<ProjectDetails />} />
+        <Route path="/project-details/:id" element={<ProjectDetails />} />
       </Routes>
     </>
   );
