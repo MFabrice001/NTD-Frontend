@@ -1,6 +1,6 @@
-import { getImageUrl } from '../utils/imageUrl';
 import React, { useState, useEffect } from 'react';
-import { X, Images, ChevronLeft, ChevronRight, Play } from 'lucide-react';
+import { getImageUrl, getFallbackImage } from '../utils/imageUrl';
+import { X, Images, ChevronLeft, ChevronRight, Play, ArrowRight, Calendar, MapPin, Tag } from 'lucide-react';
 
 const LandmarksSection = () => {
   const [projects, setProjects] = useState([]);
@@ -8,6 +8,8 @@ const LandmarksSection = () => {
   const [activeFilter, setActiveFilter] = useState('All Projects');
   const [selectedProject, setSelectedProject] = useState(null);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [pageIndex, setPageIndex] = useState(0);
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/public/projects`)
@@ -25,169 +27,422 @@ const LandmarksSection = () => {
       });
   }, []);
 
-  const openProjectModal = (project) => {
-    setSelectedProject(project);
-    setActiveImageIndex(0);
-  };
-
-  // Filter projects based on the active tab
+  // Filter projects by category
   const filteredProjects = projects.filter(project => {
     if (activeFilter === 'All Projects') return true;
     return project.category === activeFilter;
   });
 
-  // Collect unique categories for tabs (if any)
+  // Collect unique categories for tabs
   const categories = ['All Projects', ...new Set(projects.map(p => p.category).filter(Boolean))];
 
+  // Pagination for the 3-column view (3 items per page)
+  const pageSize = 3;
+  const totalPages = Math.ceil(filteredProjects.length / pageSize) || 1;
+  const safePageIndex = pageIndex >= totalPages ? 0 : pageIndex;
+
+  const displayedProjects = showAll 
+    ? filteredProjects 
+    : filteredProjects.slice(safePageIndex * pageSize, safePageIndex * pageSize + pageSize);
+
+  const handlePrevPage = () => {
+    setShowAll(false);
+    setPageIndex(prev => (prev === 0 ? totalPages - 1 : prev - 1));
+  };
+
+  const handleNextPage = () => {
+    setShowAll(false);
+    setPageIndex(prev => (prev === totalPages - 1 ? 0 : prev + 1));
+  };
+
+  const openProjectModal = (project) => {
+    setSelectedProject(project);
+    setActiveImageIndex(0);
+  };
+
   return (
-    <section className="section" style={{ backgroundColor: '#0F172A', padding: '3rem 5%' }}>
+    <section 
+      id="landmarks" 
+      style={{ 
+        backgroundColor: '#FFFFFF', 
+        padding: '5rem 6%', 
+        color: '#0F172A',
+        fontFamily: 'var(--font-body, system-ui, sans-serif)'
+      }}
+    >
       <style>{`
-        .landmark-card {
+        .landmarks-wrapper {
+          max-width: 1240px;
+          margin: 0 auto;
+        }
+        .landmarks-header-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 2rem;
+        }
+        .landmarks-title {
+          font-size: 2.2rem;
+          font-weight: 800;
+          color: #0F172A;
+          margin: 0;
+          letter-spacing: -0.02em;
+          text-transform: capitalize;
+        }
+        .carousel-arrows {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
+        .carousel-arrow-btn {
+          width: 38px;
+          height: 38px;
+          border: 1px solid #D1D5DB;
+          background: #FFFFFF;
+          color: #1F2937;
+          border-radius: 4px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           cursor: pointer;
+          transition: all 0.2s ease;
+        }
+        .carousel-arrow-btn:hover {
+          background: #F3F4F6;
+          border-color: #9CA3AF;
+        }
+        .landmarks-filter-tabs {
+          display: flex;
+          gap: 0.5rem;
+          flex-wrap: wrap;
+          margin-bottom: 2.25rem;
+        }
+        .landmark-filter-pill {
+          padding: 6px 16px;
+          border-radius: 20px;
+          font-size: 0.82rem;
+          font-weight: 600;
+          border: 1px solid #E2E8F0;
+          background: #F8FAFC;
+          color: #475569;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+        .landmark-filter-pill.active {
+          background: #0284C7;
+          color: #FFFFFF;
+          border-color: #0284C7;
+        }
+        .landmarks-grid {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 2.25rem;
+        }
+        @media (max-width: 1024px) {
+          .landmarks-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
+        }
+        @media (max-width: 640px) {
+          .landmarks-grid {
+            grid-template-columns: 1fr;
+          }
+          .landmarks-title {
+            font-size: 1.75rem;
+          }
+        }
+        .project-card {
           display: flex;
           flex-direction: column;
-          transition: transform 0.3s ease;
+          cursor: pointer;
+          background: #FFFFFF;
+          transition: transform 0.25s ease;
         }
-        .landmark-card:hover {
-          transform: translateY(-8px);
+        .project-card:hover {
+          transform: translateY(-4px);
         }
-        .landmark-image-wrapper {
-          overflow: hidden;
-          border-radius: 8px;
-          margin-bottom: 1.5rem;
+        .project-card-image-box {
           position: relative;
-        }
-        .landmark-card img {
           width: 100%;
-          height: 350px;
+          height: 220px;
+          overflow: hidden;
+          background: #E2E8F0;
+          border-radius: 2px;
+        }
+        .project-card-image-box img {
+          width: 100%;
+          height: 100%;
           object-fit: cover;
-          transition: transform 0.5s ease;
+          transition: transform 0.4s ease;
+          display: block;
         }
-        .landmark-card:hover img {
-          transform: scale(1.08);
+        .project-card:hover .project-card-image-box img {
+          transform: scale(1.05);
         }
-        .project-thumb-btn:hover {
+        .project-card-body {
+          padding-top: 1.15rem;
+          display: flex;
+          flex-direction: column;
+          flex-grow: 1;
+        }
+        .project-card-title {
+          font-size: 1.02rem;
+          font-weight: 800;
+          text-transform: uppercase;
+          color: #0F172A;
+          line-height: 1.35;
+          margin: 0 0 0.5rem 0;
+          letter-spacing: -0.01em;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          min-height: 2.7rem;
+        }
+        .project-card-meta {
+          font-size: 0.83rem;
+          color: #64748B;
+          margin: 0 0 0.75rem 0;
+          font-weight: 400;
+        }
+        .project-card-desc {
+          font-size: 0.9rem;
+          color: #475569;
+          line-height: 1.6;
+          margin: 0 0 1.25rem 0;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          flex-grow: 1;
+        }
+        .project-card-readmore {
+          font-size: 0.93rem;
+          font-weight: 700;
+          color: #0F172A;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.4rem;
+          margin-top: auto;
+          transition: color 0.2s ease, gap 0.2s ease;
+        }
+        .project-card:hover .project-card-readmore {
+          color: #0284C7;
+          gap: 0.65rem;
+        }
+        .more-projects-btn {
+          background-color: #0284C7;
+          color: #FFFFFF;
+          font-size: 0.95rem;
+          font-weight: 600;
+          padding: 12px 36px;
+          border-radius: 4px;
+          border: none;
+          cursor: pointer;
+          transition: background-color 0.2s ease, transform 0.1s;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .more-projects-btn:hover {
+          background-color: #0369A1;
+        }
+        .more-projects-btn:active {
+          transform: scale(0.98);
+        }
+        .project-modal-thumb:hover {
           opacity: 1 !important;
           transform: translateY(-2px);
         }
       `}</style>
 
-      <div className="section-header" style={{ color: '#FFFFFF' }}>
-        <h2 style={{ color: '#FFFFFF' }}>Impactful Landmarks</h2>
-        <p style={{ color: '#94A3B8' }}>A selection of our most recent structural achievements.</p>
-      </div>
-      
-      {categories.length > 1 && (
-        <div className="filter-tabs">
-          {categories.map(cat => (
-            <button 
-              key={cat} 
-              className={`filter-btn ${activeFilter === cat ? 'active' : ''}`}
-              onClick={() => setActiveFilter(cat)}
-            >
-              {cat}
-            </button>
-          ))}
+      <div className="landmarks-wrapper">
+        {/* Top Section Header with Title on Left and < > Controls on Right */}
+        <div className="landmarks-header-row">
+          <div>
+            <h2 className="landmarks-title">Impactful Landmarks</h2>
+          </div>
+          {filteredProjects.length > pageSize && (
+            <div className="carousel-arrows">
+              <button 
+                onClick={handlePrevPage} 
+                className="carousel-arrow-btn" 
+                title="Previous Projects"
+                aria-label="Previous Projects"
+              >
+                <ChevronLeft size={20} />
+              </button>
+              <button 
+                onClick={handleNextPage} 
+                className="carousel-arrow-btn" 
+                title="Next Projects"
+                aria-label="Next Projects"
+              >
+                <ChevronRight size={20} />
+              </button>
+            </div>
+          )}
         </div>
-      )}
 
-      {loading ? (
-        <div style={{ textAlign: 'center', padding: '2rem', color: '#cbd5e1' }}>Loading projects...</div>
-      ) : projects.length === 0 ? (
-        <div style={{ textAlign: 'center', padding: '2rem', color: '#64748b' }}>No projects available.</div>
-      ) : (
-        <div className="projects-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '2.5rem' }}>
-          {filteredProjects.map(project => {
-            const projectImages = project.imageUrls && project.imageUrls.length > 0
-              ? project.imageUrls
-              : (project.imageUrl ? [project.imageUrl] : []);
-            
-            const coverSrc = projectImages.length > 0 
-              ? getImageUrl(projectImages[0])
-              : 'https://images.unsplash.com/photo-1541888081622-df8d9c572baf?q=80&w=800&auto=format&fit=crop';
+        {/* Category Filter Pills (if multiple categories available) */}
+        {categories.length > 1 && (
+          <div className="landmarks-filter-tabs">
+            {categories.map(cat => (
+              <button 
+                key={cat} 
+                className={`landmark-filter-pill ${activeFilter === cat ? 'active' : ''}`}
+                onClick={() => {
+                  setActiveFilter(cat);
+                  setPageIndex(0);
+                  setShowAll(false);
+                }}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        )}
 
-            return (
-              <div key={project.id} onClick={() => openProjectModal(project)} className="landmark-card">
-                <div className="landmark-image-wrapper">
-                  <img 
-                    src={coverSrc} 
-                    alt={project.title} 
-                  />
-                  {projectImages.length > 1 && (
-                    <span 
-                      style={{
-                        position: 'absolute',
-                        bottom: '12px',
-                        right: '12px',
-                        background: 'rgba(15, 23, 42, 0.85)',
-                        backdropFilter: 'blur(6px)',
-                        color: '#ffffff',
-                        fontSize: '0.75rem',
-                        fontWeight: 600,
-                        padding: '4px 10px',
-                        borderRadius: '20px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '5px',
-                        border: '1px solid rgba(255, 255, 255, 0.25)',
-                        boxShadow: '0 4px 6px rgba(0,0,0,0.3)'
+        {/* Projects 3-Column Card Grid (Matching Screenshot 2) */}
+        {loading ? (
+          <div style={{ textAlign: 'center', padding: '4rem 1rem', color: '#64748B' }}>
+            Loading projects...
+          </div>
+        ) : filteredProjects.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '4rem 1rem', color: '#64748B' }}>
+            No projects available in this category.
+          </div>
+        ) : (
+          <div className="landmarks-grid">
+            {displayedProjects.map(project => {
+              const projectImages = project.imageUrls && project.imageUrls.length > 0
+                ? project.imageUrls
+                : (project.imageUrl ? [project.imageUrl] : []);
+
+              const coverSrc = projectImages.length > 0 
+                ? getImageUrl(projectImages[0])
+                : getFallbackImage();
+
+              // Clean format date/location metadata matching Screenshot 2
+              const metaString = [
+                project.year || '2025',
+                project.location || 'Kigali, Rwanda',
+                project.category || 'Architecture'
+              ].filter(Boolean).join(' • ');
+
+              return (
+                <div 
+                  key={project.id} 
+                  className="project-card" 
+                  onClick={() => openProjectModal(project)}
+                >
+                  {/* Landscape Image Box */}
+                  <div className="project-card-image-box">
+                    <img 
+                      src={coverSrc} 
+                      alt={project.title} 
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = getFallbackImage();
                       }}
-                    >
-                      <Images size={13} color="#10b981" /> {projectImages.length} Photos
-                    </span>
-                  )}
-                  {project.videoUrl && (
-                    <span 
-                      style={{
-                        position: 'absolute',
-                        top: '12px',
-                        right: '12px',
-                        background: 'rgba(15, 23, 42, 0.85)',
-                        backdropFilter: 'blur(6px)',
-                        color: '#ffffff',
-                        fontSize: '0.75rem',
-                        fontWeight: 600,
-                        padding: '4px 10px',
-                        borderRadius: '20px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '5px',
-                        border: '1px solid rgba(255, 255, 255, 0.25)'
-                      }}
-                    >
-                      <Play size={11} fill="#ffffff" /> Video Tour
-                    </span>
-                  )}
-                </div>
-                <div>
-                  <h4 style={{ fontSize: '1rem', fontWeight: '800', textTransform: 'uppercase', color: 'var(--color-primary)', marginBottom: '0.2rem', letterSpacing: '1px' }}>
-                    {project.category || 'PROJECT'}
-                  </h4>
-                  <h3 style={{ fontSize: '1.4rem', fontWeight: '600', color: '#FFFFFF', marginBottom: '0.5rem' }}>
-                    {project.title}
-                  </h3>
-                  {project.description && (
-                    <p style={{ color: '#CBD5E1', fontSize: '0.85rem', lineHeight: '1.6', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', marginBottom: '0.8rem' }}>
-                      {project.description}
+                    />
+
+                    {/* Multi-Image Badge */}
+                    {projectImages.length > 1 && (
+                      <span 
+                        style={{
+                          position: 'absolute',
+                          bottom: '10px',
+                          right: '10px',
+                          background: 'rgba(15, 23, 42, 0.85)',
+                          backdropFilter: 'blur(4px)',
+                          color: '#FFFFFF',
+                          fontSize: '0.72rem',
+                          fontWeight: 600,
+                          padding: '3px 8px',
+                          borderRadius: '4px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '4px',
+                          border: '1px solid rgba(255, 255, 255, 0.2)'
+                        }}
+                      >
+                        <Images size={12} color="#38BDF8" /> {projectImages.length} Photos
+                      </span>
+                    )}
+
+                    {/* Video Tour Badge */}
+                    {project.videoUrl && (
+                      <span 
+                        style={{
+                          position: 'absolute',
+                          top: '10px',
+                          right: '10px',
+                          background: 'rgba(15, 23, 42, 0.85)',
+                          backdropFilter: 'blur(4px)',
+                          color: '#FFFFFF',
+                          fontSize: '0.72rem',
+                          fontWeight: 600,
+                          padding: '3px 8px',
+                          borderRadius: '4px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '4px',
+                          border: '1px solid rgba(255, 255, 255, 0.2)'
+                        }}
+                      >
+                        <Play size={10} fill="#ffffff" /> Video
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Project Details Content */}
+                  <div className="project-card-body">
+                    <h3 className="project-card-title">
+                      {project.title}
+                    </h3>
+                    <p className="project-card-meta">
+                      {metaString}
                     </p>
-                  )}
-                  <p style={{ color: '#94A3B8', fontSize: '0.9rem', margin: 0 }}>
-                    {project.location} • {project.year}
-                  </p>
+                    <p className="project-card-desc">
+                      {project.description || 'Comprehensive structural details, scope of work, and project highlights.'}
+                    </p>
+                    <div className="project-card-readmore">
+                      Read more &rarr;
+                    </div>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
+              );
+            })}
+          </div>
+        )}
 
-      {/* Project Details Modal with Multi-Image Gallery */}
+        {/* Centered "More Projects" Button Matching Screenshot 2 */}
+        {filteredProjects.length > pageSize && (
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '3.5rem' }}>
+            <button 
+              className="more-projects-btn"
+              onClick={() => {
+                if (showAll) {
+                  setShowAll(false);
+                } else {
+                  setShowAll(true);
+                }
+              }}
+            >
+              {showAll ? 'Show Less' : 'More Projects'}
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* Full Interactive Project Modal (Displays Multi-Image Gallery + Description) */}
       {selectedProject && (() => {
         const modalImages = selectedProject.imageUrls && selectedProject.imageUrls.length > 0
           ? selectedProject.imageUrls
           : (selectedProject.imageUrl ? [selectedProject.imageUrl] : []);
 
-        const currentImage = modalImages.length > 0 ? getImageUrl(modalImages[activeImageIndex]) : null;
+        const activeImgSrc = modalImages.length > 0 
+          ? getImageUrl(modalImages[activeImageIndex]) 
+          : getFallbackImage();
 
         return (
           <div 
@@ -196,22 +451,22 @@ const LandmarksSection = () => {
               position: 'fixed',
               top: 0,
               left: 0,
-              width: '100%',
-              height: '100%',
-              backgroundColor: 'rgba(0,0,0,0.85)',
-              backdropFilter: 'blur(4px)',
-              zIndex: 9999,
+              width: '100vw',
+              height: '100vh',
+              backgroundColor: 'rgba(0, 0, 0, 0.85)',
+              backdropFilter: 'blur(5px)',
+              zIndex: 99999,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              padding: '1.5rem'
+              padding: '1.25rem'
             }}
           >
             <div 
               onClick={e => e.stopPropagation()}
               style={{
-                background: '#ffffff',
-                borderRadius: '16px',
+                background: '#FFFFFF',
+                borderRadius: '12px',
                 width: '100%',
                 maxWidth: '960px',
                 maxHeight: '92vh',
@@ -225,127 +480,141 @@ const LandmarksSection = () => {
               {/* Close Button */}
               <button 
                 onClick={() => setSelectedProject(null)}
+                title="Close"
                 style={{
                   position: 'absolute',
                   top: '1rem',
                   right: '1rem',
                   background: 'rgba(15, 23, 42, 0.75)',
-                  color: 'white',
+                  color: '#FFFFFF',
                   border: 'none',
                   borderRadius: '50%',
-                  width: '40px',
-                  height: '40px',
+                  width: '38px',
+                  height: '38px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   cursor: 'pointer',
-                  zIndex: 20,
+                  zIndex: 30,
                   transition: 'background 0.2s'
                 }}
               >
-                <X size={22} />
+                <X size={20} />
               </button>
 
               {/* Main Image Viewer */}
-              {currentImage && (
-                <div style={{ position: 'relative', width: '100%', height: '440px', background: '#090d16', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <img 
-                    src={currentImage} 
-                    alt={`${selectedProject.title} ${activeImageIndex + 1}`} 
-                    style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                  />
+              <div 
+                style={{ 
+                  position: 'relative', 
+                  width: '100%', 
+                  height: '460px', 
+                  background: '#090D16', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  overflow: 'hidden'
+                }}
+              >
+                <img 
+                  src={activeImgSrc} 
+                  alt={`${selectedProject.title} ${activeImageIndex + 1}`} 
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = getFallbackImage();
+                  }}
+                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                />
 
-                  {/* Previous / Next Controls if multiple images */}
-                  {modalImages.length > 1 && (
-                    <>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setActiveImageIndex(prev => (prev === 0 ? modalImages.length - 1 : prev - 1));
-                        }}
-                        title="Previous Image"
-                        style={{
-                          position: 'absolute',
-                          left: '1rem',
-                          top: '50%',
-                          transform: 'translateY(-50%)',
-                          background: 'rgba(15, 23, 42, 0.75)',
-                          color: '#ffffff',
-                          border: 'none',
-                          borderRadius: '50%',
-                          width: '44px',
-                          height: '44px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          cursor: 'pointer',
-                          transition: 'all 0.2s',
-                          boxShadow: '0 4px 6px rgba(0,0,0,0.3)'
-                        }}
-                      >
-                        <ChevronLeft size={26} />
-                      </button>
+                {/* Left/Right Carousel Controls if multiple images */}
+                {modalImages.length > 1 && (
+                  <>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveImageIndex(prev => (prev === 0 ? modalImages.length - 1 : prev - 1));
+                      }}
+                      title="Previous Image"
+                      style={{
+                        position: 'absolute',
+                        left: '1rem',
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        background: 'rgba(15, 23, 42, 0.8)',
+                        color: '#FFFFFF',
+                        border: 'none',
+                        borderRadius: '50%',
+                        width: '42px',
+                        height: '42px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: 'pointer',
+                        boxShadow: '0 4px 6px rgba(0,0,0,0.3)',
+                        transition: 'all 0.2s'
+                      }}
+                    >
+                      <ChevronLeft size={24} />
+                    </button>
 
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setActiveImageIndex(prev => (prev === modalImages.length - 1 ? 0 : prev + 1));
-                        }}
-                        title="Next Image"
-                        style={{
-                          position: 'absolute',
-                          right: '1rem',
-                          top: '50%',
-                          transform: 'translateY(-50%)',
-                          background: 'rgba(15, 23, 42, 0.75)',
-                          color: '#ffffff',
-                          border: 'none',
-                          borderRadius: '50%',
-                          width: '44px',
-                          height: '44px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          cursor: 'pointer',
-                          transition: 'all 0.2s',
-                          boxShadow: '0 4px 6px rgba(0,0,0,0.3)'
-                        }}
-                      >
-                        <ChevronRight size={26} />
-                      </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveImageIndex(prev => (prev === modalImages.length - 1 ? 0 : prev + 1));
+                      }}
+                      title="Next Image"
+                      style={{
+                        position: 'absolute',
+                        right: '1rem',
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        background: 'rgba(15, 23, 42, 0.8)',
+                        color: '#FFFFFF',
+                        border: 'none',
+                        borderRadius: '50%',
+                        width: '42px',
+                        height: '42px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: 'pointer',
+                        boxShadow: '0 4px 6px rgba(0,0,0,0.3)',
+                        transition: 'all 0.2s'
+                      }}
+                    >
+                      <ChevronRight size={24} />
+                    </button>
 
-                      {/* Image Counter Badge */}
-                      <span 
-                        style={{
-                          position: 'absolute',
-                          bottom: '1rem',
-                          right: '1rem',
-                          background: 'rgba(15, 23, 42, 0.8)',
-                          backdropFilter: 'blur(4px)',
-                          color: '#ffffff',
-                          padding: '4px 12px',
-                          borderRadius: '20px',
-                          fontSize: '0.8rem',
-                          fontWeight: 600,
-                          border: '1px solid rgba(255, 255, 255, 0.2)'
-                        }}
-                      >
-                        {activeImageIndex + 1} / {modalImages.length}
-                      </span>
-                    </>
-                  )}
-                </div>
-              )}
+                    {/* Image Counter Badge */}
+                    <span 
+                      style={{
+                        position: 'absolute',
+                        bottom: '1rem',
+                        right: '1rem',
+                        background: 'rgba(15, 23, 42, 0.85)',
+                        backdropFilter: 'blur(4px)',
+                        color: '#FFFFFF',
+                        padding: '4px 12px',
+                        borderRadius: '20px',
+                        fontSize: '0.8rem',
+                        fontWeight: 600,
+                        border: '1px solid rgba(255, 255, 255, 0.2)'
+                      }}
+                    >
+                      {activeImageIndex + 1} / {modalImages.length} Photos
+                    </span>
+                  </>
+                )}
+              </div>
 
-              {/* Thumbnail Strip (if more than 1 image) */}
+              {/* Thumbnail Strip (if multiple images uploaded) */}
               {modalImages.length > 1 && (
                 <div 
                   style={{
                     display: 'flex',
                     gap: '0.75rem',
-                    padding: '0.85rem 2.5rem',
-                    background: '#f8fafc',
-                    borderBottom: '1px solid #e2e8f0',
+                    padding: '0.85rem 1.5rem',
+                    background: '#F8FAFC',
+                    borderBottom: '1px solid #E2E8F0',
                     overflowX: 'auto'
                   }}
                 >
@@ -353,74 +622,84 @@ const LandmarksSection = () => {
                     <button
                       key={idx}
                       onClick={() => setActiveImageIndex(idx)}
-                      className="project-thumb-btn"
+                      className="project-modal-thumb"
                       style={{
-                        width: '84px',
-                        height: '58px',
-                        borderRadius: '8px',
+                        width: '80px',
+                        height: '56px',
+                        borderRadius: '6px',
                         overflow: 'hidden',
                         padding: 0,
-                        border: activeImageIndex === idx ? '2px solid var(--color-primary)' : '1px solid #cbd5e1',
-                        background: '#0f172a',
+                        border: activeImageIndex === idx ? '2px solid #0284C7' : '1px solid #CBD5E1',
+                        background: '#0F172A',
                         cursor: 'pointer',
                         flexShrink: 0,
                         opacity: activeImageIndex === idx ? 1 : 0.65,
-                        transition: 'all 0.2s',
-                        boxShadow: activeImageIndex === idx ? '0 0 0 2px rgba(22, 101, 52, 0.25)' : 'none'
+                        transition: 'all 0.2s'
                       }}
                     >
                       <img 
                         src={getImageUrl(imgUrl)} 
-                        alt={`Thumbnail ${idx + 1}`} 
+                        alt={`Thumb ${idx + 1}`} 
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = getFallbackImage();
+                        }}
                         style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
                       />
                     </button>
                   ))}
                 </div>
               )}
-              
-              {/* Project Text Info */}
-              <div style={{ padding: '2.5rem' }}>
-                <span 
-                  style={{ 
-                    background: 'var(--color-primary)', 
-                    color: 'white', 
-                    padding: '0.4rem 1rem', 
-                    borderRadius: '20px', 
-                    fontSize: '0.8rem', 
-                    fontWeight: '700', 
-                    textTransform: 'uppercase',
-                    letterSpacing: '1px'
-                  }}
-                >
-                  {selectedProject.category}
-                </span>
-                
-                <h2 style={{ fontSize: '2.2rem', margin: '1rem 0 0.5rem', color: '#0f172a', fontWeight: 800 }}>
+
+              {/* Project Content Description & Information */}
+              <div style={{ padding: '2rem 2.25rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem', flexWrap: 'wrap' }}>
+                  <span 
+                    style={{ 
+                      background: '#0284C7', 
+                      color: '#FFFFFF', 
+                      padding: '4px 12px', 
+                      borderRadius: '4px', 
+                      fontSize: '0.75rem', 
+                      fontWeight: '700', 
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px'
+                    }}
+                  >
+                    {selectedProject.category || 'PROJECT'}
+                  </span>
+                  <span style={{ fontSize: '0.88rem', color: '#64748B', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <MapPin size={14} /> {selectedProject.location || 'Rwanda'}
+                  </span>
+                  <span style={{ fontSize: '0.88rem', color: '#64748B', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <Calendar size={14} /> {selectedProject.year || '2025'}
+                  </span>
+                </div>
+
+                <h2 style={{ fontSize: '1.8rem', margin: '0 0 1rem 0', color: '#0F172A', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1.3 }}>
                   {selectedProject.title}
                 </h2>
-                <p style={{ fontSize: '1.05rem', color: '#64748b', marginBottom: '1.75rem', fontWeight: '500' }}>
-                  {selectedProject.location} &bull; {selectedProject.year}
-                </p>
 
                 {selectedProject.description ? (
-                  <div style={{ whiteSpace: 'pre-wrap', lineHeight: '1.7', color: '#334155', fontSize: '1.05rem', marginBottom: '2rem' }}>
+                  <div style={{ whiteSpace: 'pre-wrap', lineHeight: '1.75', color: '#334155', fontSize: '1rem', marginBottom: '1.5rem' }}>
                     {selectedProject.description}
                   </div>
                 ) : (
-                  <p style={{ color: '#94a3b8', fontStyle: 'italic', marginBottom: '2rem' }}>No detailed description provided for this project.</p>
+                  <p style={{ color: '#94A3B8', fontStyle: 'italic', marginBottom: '1.5rem' }}>
+                    No detailed description provided for this project.
+                  </p>
                 )}
 
-                {/* Optional Feature Video */}
+                {/* Optional Project Video Tour */}
                 {selectedProject.videoUrl && (
-                  <div style={{ marginTop: '2rem', borderTop: '1px solid #e2e8f0', paddingTop: '1.5rem' }}>
-                    <h4 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '1rem', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <Play size={18} color="var(--color-primary)" /> Project Video Tour
+                  <div style={{ marginTop: '1.5rem', borderTop: '1px solid #E2E8F0', paddingTop: '1.25rem' }}>
+                    <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '0.75rem', color: '#0F172A', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <Play size={16} color="#0284C7" /> Project Video Tour
                     </h4>
                     <video 
                       src={getImageUrl(selectedProject.videoUrl)} 
                       controls 
-                      style={{ width: '100%', maxHeight: '420px', borderRadius: '12px', background: '#000' }} 
+                      style={{ width: '100%', maxHeight: '420px', borderRadius: '8px', background: '#000000' }} 
                     />
                   </div>
                 )}

@@ -126,6 +126,45 @@ const AdminProjects = ({ token }) => {
     });
   };
 
+  // Compress image files client-side into lightweight data URLs
+  // This ensures images are permanently stored in PostgreSQL and never lost when Render restarts!
+  const compressImageFile = (file) => {
+    return new Promise((resolve) => {
+      if (!file || !file.type.startsWith('image/')) {
+        return resolve(null);
+      }
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          const maxDim = 1280;
+          let width = img.width;
+          let height = img.height;
+          if (width > maxDim || height > maxDim) {
+            if (width > height) {
+              height = Math.round((height * maxDim) / width);
+              width = maxDim;
+            } else {
+              width = Math.round((width * maxDim) / height);
+              height = maxDim;
+            }
+          }
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
+          resolve(dataUrl);
+        };
+        img.onerror = () => resolve(e.target.result);
+        img.src = e.target.result;
+      };
+      reader.onerror = () => resolve(null);
+      reader.readAsDataURL(file);
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
@@ -133,39 +172,17 @@ const AdminProjects = ({ token }) => {
     try {
       let uploadedUrls = [];
 
-      // 1. Upload multiple images if any new files selected
+      // 1. Process multiple images: compress into optimized persistent data URLs
       if (newImageFiles.length > 0) {
-        const fileData = new FormData();
-        newImageFiles.forEach(file => fileData.append('files', file));
-
-        try {
-          const uploadRes = await fetch(`${apiUrl}/api/admin/images/upload-multiple`, {
-            method: 'POST',
-            headers: { 'Authorization': `Bearer ${authToken}` },
-            body: fileData
-          });
-
-          if (uploadRes.ok) {
-            const data = await uploadRes.json();
-            uploadedUrls = data.urls || [];
-          } else {
-            // Fallback: Upload sequentially via /upload
-            for (const file of newImageFiles) {
-              const singleData = new FormData();
-              singleData.append('file', file);
-              const singleRes = await fetch(`${apiUrl}/api/admin/images/upload`, {
-                method: 'POST',
-                headers: { 'Authorization': `Bearer ${authToken}` },
-                body: singleData
-              });
-              if (singleRes.ok) {
-                const sJson = await singleRes.json();
-                if (sJson.url) uploadedUrls.push(sJson.url);
-              }
+        for (const file of newImageFiles) {
+          try {
+            const dataUrl = await compressImageFile(file);
+            if (dataUrl) {
+              uploadedUrls.push(dataUrl);
             }
+          } catch (compErr) {
+            console.error("Compression error for file", compErr);
           }
-        } catch (uploadErr) {
-          console.error("Multiple image upload failed, trying sequential:", uploadErr);
         }
       }
 
@@ -377,6 +394,10 @@ const AdminProjects = ({ token }) => {
                       <img 
                         src={getImageUrl(imgUrl)} 
                         alt="Project" 
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = 'https://images.unsplash.com/photo-1541888081622-df8d9c572baf?q=80&w=400&auto=format&fit=crop';
+                        }}
                         style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
                       />
                       {index === 0 && (
@@ -550,6 +571,10 @@ const AdminProjects = ({ token }) => {
                           <img 
                             src={getImageUrl(coverImg)} 
                             alt={p.title} 
+                            onError={(e) => {
+                              e.currentTarget.onerror = null;
+                              e.currentTarget.src = 'https://images.unsplash.com/photo-1541888081622-df8d9c572baf?q=80&w=400&auto=format&fit=crop';
+                            }}
                             style={{ width: '60px', height: '45px', objectFit: 'cover', borderRadius: '6px' }} 
                           />
                         ) : (
