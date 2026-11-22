@@ -12,6 +12,9 @@ const AdminServices = ({ token }) => {
   const [submitting, setSubmitting] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+  const authToken = token || localStorage.getItem('token');
+
   const fetchServices = async () => {
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/public/services`);
@@ -104,8 +107,8 @@ const AdminServices = ({ token }) => {
       }
 
       const url = currentService 
-        ? `${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/admin/services/${currentService.id}`
-        : `${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/admin/services`;
+        ? `${apiUrl}/api/admin/services/${currentService.id}`
+        : `${apiUrl}/api/admin/services`;
         
       const method = currentService ? 'PUT' : 'POST';
 
@@ -113,19 +116,23 @@ const AdminServices = ({ token }) => {
         method,
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${authToken}`
         },
         body: JSON.stringify({ ...formData, icon: finalIconUrl })
       });
 
       if (res.ok) {
+        alert(currentService ? 'Service updated successfully!' : 'Service created successfully!');
         fetchServices();
         handleCloseModal();
       } else {
-        console.error("Failed to save service");
+        const errText = await res.text().catch(() => '');
+        console.error("Failed to save service", res.status, errText);
+        alert(`Failed to save service (${res.status}). Please check backend connection.`);
       }
     } catch (e) {
       console.error("Error saving service", e);
+      alert('Network error while saving service. Please check your connection.');
     } finally {
       setSubmitting(false);
     }
@@ -134,15 +141,18 @@ const AdminServices = ({ token }) => {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this service?")) return;
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/admin/services/${id}`, {
+      const res = await fetch(`${apiUrl}/api/admin/services/${id}`, {
         method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${token}` }
+        headers: { 'Authorization': `Bearer ${authToken}` }
       });
       if (res.ok) {
         setServices(services.filter(s => s.id !== id));
+      } else {
+        alert(`Failed to delete service (${res.status}).`);
       }
     } catch (e) {
       console.error("Failed to delete service", e);
+      alert('Network error while deleting service.');
     }
   };
 

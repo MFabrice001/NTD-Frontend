@@ -12,9 +12,12 @@ const AdminBlogs = ({ token }) => {
   const [previewModal, setPreviewModal] = useState(null);
   const [uploading, setUploading] = useState(false);
 
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+  const authToken = token || localStorage.getItem('token');
+
   const fetchBlogs = async () => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/public/blogs`);
+      const res = await fetch(`${apiUrl}/api/public/blogs`);
       if (res.ok) setBlogs(await res.json());
     } catch (e) { console.error(e); } finally { setLoading(false); }
   };
@@ -24,9 +27,9 @@ const AdminBlogs = ({ token }) => {
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this blog perspective?')) return;
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/admin/blogs/${id}`, {
+      const res = await fetch(`${apiUrl}/api/admin/blogs/${id}`, {
         method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${token}` }
+        headers: { 'Authorization': `Bearer ${authToken}` }
       });
       if (res.ok) fetchBlogs();
     } catch (e) { console.error(e); }
@@ -88,19 +91,19 @@ const AdminBlogs = ({ token }) => {
       if (videoFile) {
         const fileData = new FormData();
         fileData.append('file', videoFile);
-        const uploadRes = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/admin/images/upload`, {
+        const uploadRes = await fetch(`${apiUrl}/api/admin/images/upload`, {
           method: 'POST',
-          headers: { 'Authorization': `Bearer ${token}` },
+          headers: { 'Authorization': `Bearer ${authToken}` },
           body: fileData
         });
         if (uploadRes.ok) finalVideoUrl = (await uploadRes.json()).url;
       }
 
-      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/admin/blogs`, {
+      const res = await fetch(`${apiUrl}/api/admin/blogs`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}` 
+          'Authorization': `Bearer ${authToken}` 
         },
         body: JSON.stringify({ ...formData, imageUrl: finalImageUrl, videoUrl: finalVideoUrl })
       });
@@ -111,9 +114,12 @@ const AdminBlogs = ({ token }) => {
         setVideoFile(null);
         fetchBlogs();
         alert('Article successfully published!');
+      } else {
+        alert(`Failed to save article (${res.status}).`);
       }
     } catch (e) { 
       console.error(e); 
+      alert('Error saving article.');
     } finally {
       setUploading(false);
     }

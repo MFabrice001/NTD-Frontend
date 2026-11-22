@@ -8,9 +8,12 @@ const AdminTeam = ({ token }) => {
   const [formData, setFormData] = useState({ name: '', role: '', quote: '', imageUrl: '' });
   const [imageFile, setImageFile] = useState(null);
 
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+  const authToken = token || localStorage.getItem('token');
+
   const fetchTeam = async () => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/public/team-members`);
+      const res = await fetch(`${apiUrl}/api/public/team-members`);
       if (res.ok) setTeam(await res.json());
     } catch (e) { console.error(e); } finally { setLoading(false); }
   };
@@ -20,9 +23,9 @@ const AdminTeam = ({ token }) => {
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this team member?')) return;
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/admin/team-members/${id}`, {
+      const res = await fetch(`${apiUrl}/api/admin/team-members/${id}`, {
         method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${token}` }
+        headers: { 'Authorization': `Bearer ${authToken}` }
       });
       if (res.ok) fetchTeam();
     } catch (e) { console.error(e); }
@@ -77,11 +80,11 @@ const AdminTeam = ({ token }) => {
         }
       }
 
-      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/admin/team-members`, {
+      const res = await fetch(`${apiUrl}/api/admin/team-members`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}` 
+          'Authorization': `Bearer ${authToken}` 
         },
         body: JSON.stringify({ ...formData, imageUrl: finalImageUrl })
       });
@@ -91,8 +94,13 @@ const AdminTeam = ({ token }) => {
         setImageFile(null);
         fetchTeam();
         alert('Team member successfully saved!');
+      } else {
+        alert(`Failed to save team member (${res.status}).`);
       }
-    } catch (e) { console.error(e); }
+    } catch (e) {
+      console.error(e);
+      alert('Error saving team member.');
+    }
   };
 
   return (

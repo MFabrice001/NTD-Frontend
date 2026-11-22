@@ -237,9 +237,11 @@ const AdminProjects = ({ token }) => {
         const errText = await res.text().catch(() => '');
         console.error('Save project failed:', res.status, errText);
         if (res.status === 413) {
-          setUploadWarning('Images are too large. Please use fewer images or smaller files (max 5 images recommended).');
+          setUploadWarning('Upload size limit exceeded (413). Please try with fewer images.');
+        } else if (res.status === 401 || res.status === 403) {
+          alert('Session expired or unauthorized. Please log out and log back in.');
         } else {
-          alert(`Failed to save project (${res.status}). Please try with fewer or smaller images.`);
+          alert(`Failed to save project (Status ${res.status}). ${errText ? errText.substring(0, 100) : 'Please check your connection.'}`);
         }
       }
     } catch (err) {
