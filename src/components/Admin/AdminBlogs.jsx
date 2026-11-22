@@ -131,8 +131,16 @@ const AdminBlogs = ({ token }) => {
           </p>
         </div>
         <button 
-          className="btn" style={{background: "var(--orbit-primary)", color: "#f1f5f9", border: "none"}} 
-          style={{display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.25rem'}}
+          className="btn" 
+          style={{
+            background: "var(--orbit-primary)", 
+            color: "#f1f5f9", 
+            border: "none",
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '0.5rem', 
+            padding: '0.75rem 1.25rem'
+          }}
           onClick={() => setShowForm(!showForm)}
         >
           {showForm ? <X size={18} /> : <Plus size={18} />}
@@ -271,8 +279,14 @@ const AdminBlogs = ({ token }) => {
               </button>
               <button 
                 type="submit" 
-                className="btn" style={{background: "var(--orbit-primary)", color: "#f1f5f9", border: "none"}} 
-                style={{padding: '0.75rem 2rem', fontWeight: '700'}}
+                className="btn" 
+                style={{
+                  background: "var(--orbit-primary)", 
+                  color: "#f1f5f9", 
+                  border: "none",
+                  padding: '0.75rem 2rem', 
+                  fontWeight: '700'
+                }}
                 disabled={uploading}
               >
                 {uploading ? 'Publishing Post...' : 'Publish Article'}
@@ -384,17 +398,17 @@ const AdminBlogs = ({ token }) => {
               {previewModal.videoUrl && (
                 <div style={{marginBottom: previewModal.imageUrl ? '1.5rem' : '0'}}>
                   <video 
-                    src={previewModal.videoUrl} 
+                    src={getImageUrl(previewModal.videoUrl)} 
                     controls 
                     className="blog-modal-video-player"
-                    poster={previewModal.imageUrl || undefined}
+                    poster={previewModal.imageUrl ? getImageUrl(previewModal.imageUrl) : undefined}
                   />
                 </div>
               )}
               {previewModal.imageUrl && !previewModal.videoUrl && (
                 <div 
                   className="blog-modal-img-banner" 
-                  style={{backgroundImage: `url(${previewModal.imageUrl})`}} 
+                  style={{backgroundImage: `url(${getImageUrl(previewModal.imageUrl)})`}} 
                 />
               )}
             </div>
