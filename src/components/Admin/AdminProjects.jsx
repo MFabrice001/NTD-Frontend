@@ -1,6 +1,6 @@
-import { getImageUrl } from '../../utils/imageUrl';
+import { getImageUrl, getFallbackImage } from '../../utils/imageUrl';
 import React, { useState, useEffect } from 'react';
-import { Upload, X, Star, Images, Edit2, Trash2, Plus, Film } from 'lucide-react';
+import { Upload, X, Star, Images, Edit2, Trash2, Plus, Film, AlertCircle } from 'lucide-react';
 
 const AdminProjects = ({ token }) => {
   const [projects, setProjects] = useState([]);
@@ -8,6 +8,7 @@ const AdminProjects = ({ token }) => {
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const [submitting, setSubmitting] = useState(false);
+  const [uploadWarning, setUploadWarning] = useState('');
 
   const [formData, setFormData] = useState({
     title: '',
@@ -137,7 +138,9 @@ const AdminProjects = ({ token }) => {
       reader.onload = (e) => {
         const img = new Image();
         img.onload = () => {
-          const maxDim = 1280;
+          // Compress aggressively: max 800px wide/tall, 65% quality
+          // This keeps each image ~50-80KB so multiple images fit in the JSON body
+          const maxDim = 800;
           let width = img.width;
           let height = img.height;
           if (width > maxDim || height > maxDim) {
@@ -154,7 +157,7 @@ const AdminProjects = ({ token }) => {
           canvas.height = height;
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0, width, height);
-          const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.65);
           resolve(dataUrl);
         };
         img.onerror = () => resolve(e.target.result);
@@ -168,6 +171,7 @@ const AdminProjects = ({ token }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
+    setUploadWarning('');
 
     try {
       let uploadedUrls = [];
@@ -230,11 +234,17 @@ const AdminProjects = ({ token }) => {
         fetchProjects();
         alert(editingId ? 'Project updated successfully!' : 'Project created successfully with multiple images!');
       } else {
-        alert('Failed to save project. Please check backend connection.');
+        const errText = await res.text().catch(() => '');
+        console.error('Save project failed:', res.status, errText);
+        if (res.status === 413) {
+          setUploadWarning('Images are too large. Please use fewer images or smaller files (max 5 images recommended).');
+        } else {
+          alert(`Failed to save project (${res.status}). Please try with fewer or smaller images.`);
+        }
       }
     } catch (err) {
       console.error("Submit error", err);
-      alert('An error occurred while saving the project.');
+      alert('Network error while saving. Please check your connection and try again.');
     } finally {
       setSubmitting(false);
     }
@@ -396,7 +406,7 @@ const AdminProjects = ({ token }) => {
                         alt="Project" 
                         onError={(e) => {
                           e.currentTarget.onerror = null;
-                          e.currentTarget.src = 'https://images.unsplash.com/photo-1541888081622-df8d9c572baf?q=80&w=400&auto=format&fit=crop';
+                          e.currentTarget.src = getFallbackImage();
                         }}
                         style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
                       />
@@ -499,38 +509,46 @@ const AdminProjects = ({ token }) => {
               )}
             </div>
 
-            <div style={{ display: 'flex', gap: '1rem' }}>
-              <button 
-                type="submit" 
-                disabled={submitting}
-                className="btn" 
-                style={{ 
-                  background: "var(--orbit-primary)", 
-                  color: "#f1f5f9", 
-                  border: "none",
-                  padding: '0.75rem 2rem',
-                  borderRadius: '8px',
-                  fontWeight: 600,
-                  cursor: submitting ? 'not-allowed' : 'pointer',
-                  opacity: submitting ? 0.7 : 1
-                }}
-              >
-                {submitting ? 'Uploading & Saving...' : (editingId ? 'Update Project' : 'Save Project')}
-              </button>
-              <button 
-                type="button" 
-                onClick={resetForm}
-                style={{ 
-                  background: 'transparent', 
-                  border: '1px solid var(--orbit-border)', 
-                  color: 'var(--orbit-text)', 
-                  padding: '0.75rem 1.5rem', 
-                  borderRadius: '8px', 
-                  cursor: 'pointer' 
-                }}
-              >
-                Cancel
-              </button>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              {uploadWarning && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(239,68,68,0.1)', border: '1px solid #ef4444', borderRadius: '8px', padding: '0.75rem 1rem', color: '#ef4444', fontSize: '0.85rem' }}>
+                  <AlertCircle size={16} />
+                  {uploadWarning}
+                </div>
+              )}
+              <div style={{ display: 'flex', gap: '1rem' }}>
+                <button 
+                  type="submit" 
+                  disabled={submitting}
+                  className="btn" 
+                  style={{ 
+                    background: "var(--orbit-primary)", 
+                    color: "#f1f5f9", 
+                    border: "none",
+                    padding: '0.75rem 2rem',
+                    borderRadius: '8px',
+                    fontWeight: 600,
+                    cursor: submitting ? 'not-allowed' : 'pointer',
+                    opacity: submitting ? 0.7 : 1
+                  }}
+                >
+                  {submitting ? 'Uploading & Saving...' : (editingId ? 'Update Project' : 'Save Project')}
+                </button>
+                <button 
+                  type="button" 
+                  onClick={resetForm}
+                  style={{ 
+                    background: 'transparent', 
+                    border: '1px solid var(--orbit-border)', 
+                    color: 'var(--orbit-text)', 
+                    padding: '0.75rem 1.5rem', 
+                    borderRadius: '8px', 
+                    cursor: 'pointer' 
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
           </form>
         </div>
@@ -573,7 +591,7 @@ const AdminProjects = ({ token }) => {
                             alt={p.title} 
                             onError={(e) => {
                               e.currentTarget.onerror = null;
-                              e.currentTarget.src = 'https://images.unsplash.com/photo-1541888081622-df8d9c572baf?q=80&w=400&auto=format&fit=crop';
+                              e.currentTarget.src = getFallbackImage();
                             }}
                             style={{ width: '60px', height: '45px', objectFit: 'cover', borderRadius: '6px' }} 
                           />
