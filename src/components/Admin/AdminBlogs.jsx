@@ -155,26 +155,34 @@ const AdminBlogs = ({ token }) => {
       </div>
 
       {showForm && (
-        <div className="admin-blog-studio" style={{marginBottom: '2.5rem'}}>
-          <div className="admin-studio-header">
+        <div className="admin-blog-studio" style={{marginBottom: '2.5rem', color: '#0f172a'}}>
+          <div className="admin-studio-header" style={{borderBottom: '2px solid #e2e8f0'}}>
             <div style={{display: 'flex', alignItems: 'center', gap: '0.75rem'}}>
               <FileText size={22} color="var(--color-primary)" />
-              <h2 style={{fontSize: '1.3rem', fontWeight: '700', color: '#f1f5f9'}}>
+              <h2 style={{fontSize: '1.3rem', fontWeight: '700', color: '#0f172a', margin: 0}}>
                 Article Composer
               </h2>
             </div>
-            <span style={{fontSize: '0.8rem', color: '#64748b'}}>Supports large 100MB videos & images</span>
+            <span style={{fontSize: '0.8rem', color: '#64748b', fontWeight: '500'}}>Supports large 100MB videos & images</span>
           </div>
 
           <form onSubmit={handleSubmit}>
             <div style={{display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1.5rem', marginBottom: '1.5rem'}}>
               <div>
-                <label style={{display: 'block', fontWeight: '600', marginBottom: '0.5rem', color: '#f1f5f9'}}>
+                <label style={{display: 'block', fontWeight: '700', marginBottom: '0.5rem', color: '#0f172a', fontSize: '0.9rem'}}>
                   Article Title *
                 </label>
                 <input 
                   className="login-input" 
-                  style={{padding: '0.75rem 1rem'}}
+                  style={{
+                    width: '100%', 
+                    padding: '0.75rem 1rem', 
+                    borderRadius: '8px', 
+                    border: '1px solid #cbd5e1', 
+                    background: '#ffffff', 
+                    color: '#0f172a', 
+                    fontSize: '0.95rem'
+                  }}
                   placeholder="e.g. Modern Minimalist Interiors: The 2026 Architectural Outlook" 
                   value={formData.title} 
                   onChange={e => setFormData({...formData, title: e.target.value})} 
@@ -182,12 +190,20 @@ const AdminBlogs = ({ token }) => {
                 />
               </div>
               <div>
-                <label style={{display: 'block', fontWeight: '600', marginBottom: '0.5rem', color: '#f1f5f9'}}>
+                <label style={{display: 'block', fontWeight: '700', marginBottom: '0.5rem', color: '#0f172a', fontSize: '0.9rem'}}>
                   Author Name *
                 </label>
                 <input 
                   className="login-input" 
-                  style={{padding: '0.75rem 1rem'}}
+                  style={{
+                    width: '100%', 
+                    padding: '0.75rem 1rem', 
+                    borderRadius: '8px', 
+                    border: '1px solid #cbd5e1', 
+                    background: '#ffffff', 
+                    color: '#0f172a', 
+                    fontSize: '0.95rem'
+                  }}
                   placeholder="e.g. ND Design Team" 
                   value={formData.author} 
                   onChange={e => setFormData({...formData, author: e.target.value})} 
@@ -197,12 +213,23 @@ const AdminBlogs = ({ token }) => {
             </div>
 
             <div style={{marginBottom: '1.75rem'}}>
-              <label style={{display: 'block', fontWeight: '600', marginBottom: '0.5rem', color: '#f1f5f9'}}>
+              <label style={{display: 'block', fontWeight: '700', marginBottom: '0.5rem', color: '#0f172a', fontSize: '0.9rem'}}>
                 Article Content & Description *
               </label>
               <textarea 
                 className="login-input" 
-                style={{resize: 'vertical', minHeight: '200px', padding: '1rem', lineHeight: '1.6', fontSize: '1rem'}} 
+                style={{
+                  width: '100%', 
+                  resize: 'vertical', 
+                  minHeight: '200px', 
+                  padding: '1rem', 
+                  lineHeight: '1.6', 
+                  fontSize: '1rem',
+                  borderRadius: '8px', 
+                  border: '1px solid #cbd5e1', 
+                  background: '#ffffff', 
+                  color: '#0f172a'
+                }} 
                 placeholder="Write your article description and editorial storytelling here..."
                 value={formData.content} 
                 onChange={e => setFormData({...formData, content: e.target.value})} 
@@ -212,13 +239,13 @@ const AdminBlogs = ({ token }) => {
 
             <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '2rem'}}>
               {/* Feature Image Upload */}
-              <div className="admin-media-upload-box">
+              <div className="admin-media-upload-box" style={{background: '#f8fafc', border: '2px dashed #cbd5e1'}}>
                 <label style={{cursor: 'pointer', display: 'block'}}>
                   <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem'}}>
                     <div style={{width: '44px', height: '44px', borderRadius: '50%', background: '#e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                       <ImageIcon size={22} color="#475569" />
                     </div>
-                    <span style={{fontWeight: '700', color: '#f1f5f9', fontSize: '0.95rem'}}>
+                    <span style={{fontWeight: '700', color: '#0f172a', fontSize: '0.95rem'}}>
                       Upload Featured Image
                     </span>
                     <span style={{fontSize: '0.8rem', color: '#64748b'}}>
@@ -243,13 +270,13 @@ const AdminBlogs = ({ token }) => {
               </div>
 
               {/* Feature Video Upload */}
-              <div className="admin-media-upload-box">
+              <div className="admin-media-upload-box" style={{background: '#f8fafc', border: '2px dashed #cbd5e1'}}>
                 <label style={{cursor: 'pointer', display: 'block'}}>
                   <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem'}}>
                     <div style={{width: '44px', height: '44px', borderRadius: '50%', background: '#e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                       <VideoIcon size={22} color="#e11d48" />
                     </div>
-                    <span style={{fontWeight: '700', color: '#f1f5f9', fontSize: '0.95rem'}}>
+                    <span style={{fontWeight: '700', color: '#0f172a', fontSize: '0.95rem'}}>
                       Upload Featured Video (Optional)
                     </span>
                     <span style={{fontSize: '0.8rem', color: '#64748b'}}>
@@ -278,7 +305,15 @@ const AdminBlogs = ({ token }) => {
               <button 
                 type="button" 
                 className="btn" 
-                style={{background: 'var(--orbit-surface2)', color: '#f1f5f9', fontWeight: '600'}}
+                style={{
+                  background: '#f1f5f9', 
+                  color: '#334155', 
+                  border: '1px solid #cbd5e1', 
+                  padding: '0.75rem 1.5rem', 
+                  borderRadius: '8px', 
+                  fontWeight: '600', 
+                  cursor: 'pointer'
+                }}
                 onClick={() => setShowForm(false)}
               >
                 Cancel
@@ -288,10 +323,12 @@ const AdminBlogs = ({ token }) => {
                 className="btn" 
                 style={{
                   background: "var(--orbit-primary)", 
-                  color: "#f1f5f9", 
+                  color: "#ffffff", 
                   border: "none",
                   padding: '0.75rem 2rem', 
-                  fontWeight: '700'
+                  borderRadius: '8px',
+                  fontWeight: '700',
+                  cursor: uploading ? 'not-allowed' : 'pointer'
                 }}
                 disabled={uploading}
               >

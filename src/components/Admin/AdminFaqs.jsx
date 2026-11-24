@@ -24,15 +24,18 @@ const AdminFaqs = ({ token }) => {
 
   const [submitting, setSubmitting] = useState(false);
 
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+  const authToken = token || localStorage.getItem('token');
+
   const fetchFaqs = () => {
     setLoading(true);
-    fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/public/faqs`)
+    fetch(`${apiUrl}/api/public/faqs`)
       .then(res => {
         if (!res.ok) throw new Error('Failed to fetch FAQs');
         return res.json();
       })
       .then(data => {
-        setFaqs(data);
+        setFaqs(Array.isArray(data) ? data : []);
         setLoading(false);
       })
       .catch(err => {
@@ -87,8 +90,8 @@ const AdminFaqs = ({ token }) => {
     };
 
     const url = editingFaq
-      ? `${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/admin/faqs/${editingFaq.id}`
-      : `${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/admin/faqs`;
+      ? `${apiUrl}/api/admin/faqs/${editingFaq.id}`
+      : `${apiUrl}/api/admin/faqs`;
 
     const method = editingFaq ? 'PUT' : 'POST';
 
@@ -97,7 +100,7 @@ const AdminFaqs = ({ token }) => {
         method,
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${authToken}`
         },
         body: JSON.stringify(payload)
       });
@@ -106,11 +109,12 @@ const AdminFaqs = ({ token }) => {
         throw new Error('Failed to save FAQ.');
       }
 
+      alert(editingFaq ? 'FAQ updated successfully!' : 'FAQ published successfully!');
       setShowModal(false);
       fetchFaqs();
     } catch (err) {
       console.error('Save FAQ error:', err);
-      alert('Error saving FAQ.');
+      alert('Error saving FAQ. Please check connection.');
     } finally {
       setSubmitting(false);
     }
@@ -120,14 +124,15 @@ const AdminFaqs = ({ token }) => {
     if (!window.confirm('Are you sure you want to delete this FAQ?')) return;
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/admin/faqs/${id}`, {
+      const res = await fetch(`${apiUrl}/api/admin/faqs/${id}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${authToken}`
         }
       });
       if (!res.ok) throw new Error('Failed to delete');
       setFaqs(faqs.filter(item => item.id !== id));
+      alert('FAQ deleted successfully.');
     } catch (err) {
       console.error('Delete FAQ error:', err);
       alert('Failed to delete FAQ.');
@@ -166,9 +171,9 @@ const AdminFaqs = ({ token }) => {
             Add your first custom FAQ entry to display it at the top of your public Knowledge Base!
           </p>
           <button 
-            className="btn" style={{background: "var(--orbit-primary)", color: "#f1f5f9", border: "none"}}
+            className="btn" 
             onClick={openNewModal}
-            style={{padding: '0.65rem 1.5rem', borderRadius: '30px'}}
+            style={{background: "var(--orbit-primary)", color: "#f1f5f9", border: "none", padding: '0.65rem 1.5rem', borderRadius: '30px', fontWeight: 600}}
           >
             Create First FAQ
           </button>
