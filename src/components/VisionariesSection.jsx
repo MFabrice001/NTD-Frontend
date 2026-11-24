@@ -35,20 +35,22 @@ const VisionariesSection = () => {
           background: #FFFFFF;
           display: flex;
           flex-direction: column;
-          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
           transition: transform 0.3s ease, box-shadow 0.3s ease;
-          border: 1px solid #E5E7EB;
+          border: 1px solid #334155;
           width: 100%;
-          max-width: 380px;
+          max-width: 360px;
+          border-radius: 16px;
+          overflow: hidden;
         }
         .screenshot-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+          transform: translateY(-6px);
+          box-shadow: 0 16px 32px rgba(0, 0, 0, 0.25);
         }
         .screenshot-image-wrapper {
           width: 100%;
           height: 350px;
-          background: linear-gradient(to bottom, #E5E7EB, #D1D5DB);
+          background: #0f172a;
           overflow: hidden;
           position: relative;
         }
@@ -56,28 +58,54 @@ const VisionariesSection = () => {
           width: 100%;
           height: 100%;
           object-fit: cover;
-          object-position: top;
+          object-position: top center;
+          transition: transform 0.4s ease;
+        }
+        .screenshot-card:hover .screenshot-image-wrapper img {
+          transform: scale(1.03);
         }
         .screenshot-text-wrapper {
-          padding: 2rem 1.5rem;
+          padding: 1.75rem 1.5rem 2rem;
           text-align: center;
           flex: 1;
           display: flex;
           flex-direction: column;
           justify-content: flex-start;
           align-items: center;
+          background: #FFFFFF;
         }
         .screenshot-name {
-          font-size: 1.15rem;
+          font-size: 1.25rem;
           font-weight: 800;
-          color: #111827;
-          margin-bottom: 0.8rem;
-          line-height: 1.4;
+          color: #0F172A;
+          margin-bottom: 0.35rem;
+          line-height: 1.3;
         }
         .screenshot-role {
+          font-size: 0.85rem;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: #D97706;
+          margin-bottom: 0.5rem;
+          line-height: 1.4;
+        }
+        .screenshot-quote-box {
+          position: relative;
+          width: 100%;
+          margin-top: 0.85rem;
+          padding-top: 0.85rem;
+          border-top: 1px solid #E2E8F0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .screenshot-quote {
           font-size: 0.95rem;
-          color: #6B7280;
-          line-height: 1.5;
+          color: #475569;
+          font-style: italic;
+          line-height: 1.6;
+          margin: 0;
         }
       `}</style>
 
@@ -106,7 +134,12 @@ const VisionariesSection = () => {
               </div>
               <div className="screenshot-text-wrapper">
                 <h4 className="screenshot-name">{member.name}</h4>
-                <p className="screenshot-role">{member.role}</p>
+                {member.role && <p className="screenshot-role">{member.role}</p>}
+                {member.quote && (
+                  <div className="screenshot-quote-box">
+                    <p className="screenshot-quote">"{member.quote}"</p>
+                  </div>
+                )}
               </div>
             </div>
           ))}

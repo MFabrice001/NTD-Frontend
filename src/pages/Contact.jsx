@@ -127,29 +127,35 @@ const Contact = () => {
               <h2 style={{ fontSize: '1.5rem', fontWeight: '700', color: '#0f172a', marginBottom: '2rem' }}>Contact Information</h2>
               
               <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-                <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                  <div style={{ width: '48px', height: '48px', background: 'rgba(255, 179, 71, 0.1)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-primary)', flexShrink: 0 }}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+                <div style={{ display: 'flex', gap: '1.25rem', alignItems: 'center' }}>
+                  <div style={{ width: '52px', height: '52px', background: 'linear-gradient(135deg, #EA4335 0%, #D93025 100%)', borderRadius: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FFFFFF', flexShrink: 0, boxShadow: '0 6px 16px rgba(234, 67, 53, 0.3)' }}>
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="#FFFFFF">
+                      <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                    </svg>
                   </div>
                   <div>
                     <h3 style={{ fontWeight: '600', color: '#0f172a', marginBottom: '0.25rem' }}>Email</h3>
-                    <p style={{ color: '#64748b' }}>ntdbuilddesignsolution@gmail.com</p>
+                    <a href="mailto:ntdbuilddesignsolution@gmail.com" style={{ color: '#64748b', textDecoration: 'none' }} onMouseOver={e => e.currentTarget.style.color = '#EA4335'} onMouseOut={e => e.currentTarget.style.color = '#64748b'}>ntdbuilddesignsolution@gmail.com</a>
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                  <div style={{ width: '48px', height: '48px', background: 'rgba(255, 179, 71, 0.1)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-primary)', flexShrink: 0 }}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                <div style={{ display: 'flex', gap: '1.25rem', alignItems: 'center' }}>
+                  <div style={{ width: '52px', height: '52px', background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)', borderRadius: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FFFFFF', flexShrink: 0, boxShadow: '0 6px 16px rgba(16, 185, 129, 0.3)' }}>
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="#FFFFFF">
+                      <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.52 0-.55-.45-1-1-1H4.1c-.55 0-1 .45-1 1C3.1 13.39 10.71 21 20.1 21c.55 0 1-.45 1-1v-3.62c0-.55-.45-1-1.09-1z"/>
+                    </svg>
                   </div>
                   <div>
                     <h3 style={{ fontWeight: '600', color: '#0f172a', marginBottom: '0.25rem' }}>Phone</h3>
-                    <p style={{ color: '#64748b' }}>(+250) 780 754 701</p>
+                    <a href="tel:+250780754701" style={{ color: '#64748b', textDecoration: 'none' }} onMouseOver={e => e.currentTarget.style.color = '#10B981'} onMouseOut={e => e.currentTarget.style.color = '#64748b'}>(+250) 780 754 701</a>
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                  <div style={{ width: '48px', height: '48px', background: 'rgba(255, 179, 71, 0.1)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-primary)', flexShrink: 0 }}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <div style={{ display: 'flex', gap: '1.25rem', alignItems: 'flex-start' }}>
+                  <div style={{ width: '52px', height: '52px', background: 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)', borderRadius: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FFFFFF', flexShrink: 0, boxShadow: '0 6px 16px rgba(245, 158, 11, 0.3)' }}>
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="#FFFFFF">
+                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/>
+                    </svg>
                   </div>
                   <div>
                     <h3 style={{ fontWeight: '600', color: '#0f172a', marginBottom: '0.25rem' }}>Office</h3>
@@ -157,9 +163,11 @@ const Contact = () => {
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                  <div style={{ width: '48px', height: '48px', background: 'rgba(255, 179, 71, 0.1)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-primary)', flexShrink: 0 }}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                <div style={{ display: 'flex', gap: '1.25rem', alignItems: 'flex-start' }}>
+                  <div style={{ width: '52px', height: '52px', background: 'linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)', borderRadius: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FFFFFF', flexShrink: 0, boxShadow: '0 6px 16px rgba(59, 130, 246, 0.3)' }}>
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="#FFFFFF">
+                      <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/>
+                    </svg>
                   </div>
                   <div>
                     <h3 style={{ fontWeight: '600', color: '#0f172a', marginBottom: '0.25rem' }}>Business Hours</h3>

@@ -17,10 +17,15 @@ import ProjectDetails from './pages/ProjectDetails';
 import { useEffect } from 'react';
 
 const AppContent = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/public/visit`, { method: 'POST' }).catch(() => {});
   }, []);
-  const location = useLocation();
   const hideHeaderRoutes = ['/login', '/admin'];
   const shouldHideHeader = hideHeaderRoutes.includes(location.pathname);
 

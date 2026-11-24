@@ -117,17 +117,17 @@ const AdminTeam = ({ token }) => {
           <form onSubmit={handleSubmit}>
             <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem'}}>
               <div>
-                <label>Name</label>
-                <input className="login-input" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} required />
+                <label style={{display: 'block', marginBottom: '0.4rem', fontWeight: '600', color: '#f1f5f9'}}>Full Name *</label>
+                <input className="login-input" placeholder="e.g. Eng. Fabrice M." value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} required />
               </div>
               <div>
-                <label>Role</label>
-                <input className="login-input" value={formData.role} onChange={e => setFormData({...formData, role: e.target.value})} required />
+                <label style={{display: 'block', marginBottom: '0.4rem', fontWeight: '600', color: '#f1f5f9'}}>Role / Designation *</label>
+                <input className="login-input" placeholder="e.g. Managing Director & Senior Engineer" value={formData.role} onChange={e => setFormData({...formData, role: e.target.value})} required />
               </div>
             </div>
             <div style={{marginBottom: '1rem'}}>
-              <label>Quote</label>
-              <textarea className="login-input" style={{resize: 'vertical', minHeight: '80px'}} value={formData.quote} onChange={e => setFormData({...formData, quote: e.target.value})} required />
+              <label style={{display: 'block', marginBottom: '0.4rem', fontWeight: '600', color: '#f1f5f9'}}>Leadership Quote / Philosophy *</label>
+              <textarea className="login-input" placeholder="e.g. Innovating structural elegance and engineering standards that shape tomorrow's landscapes." style={{resize: 'vertical', minHeight: '80px'}} value={formData.quote} onChange={e => setFormData({...formData, quote: e.target.value})} required />
             </div>
             <div style={{marginBottom: '1.5rem'}}>
               <label>Profile Image</label>
