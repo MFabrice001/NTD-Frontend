@@ -62,19 +62,31 @@ const Header = () => {
               CONTACT US
             </button>
           </NavLink>
-          {isLoggedIn ? (
-            <NavLink to="/admin"><button className="btn btn-dark" style={{ padding: '0.6rem 1.5rem', borderRadius: '30px' }}>ADMIN</button></NavLink>
-          ) : (
-            <NavLink to="/login"><button className="btn btn-dark" style={{ padding: '0.6rem 1.5rem', borderRadius: '30px' }}>LOGIN</button></NavLink>
-          )}
+          <NavLink to="/login" onClick={() => localStorage.removeItem('token')}>
+            <button className="btn btn-dark" style={{ padding: '0.6rem 1.5rem', borderRadius: '30px' }}>
+              LOGIN
+            </button>
+          </NavLink>
         </div>
 
-        <button className="mobile-menu-btn" onClick={toggleMobileMenu} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent', border: 'none', cursor: 'pointer', color: '#FFFFFF' }}>
-          {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+        <button 
+          className="mobile-menu-btn" 
+          onClick={toggleMobileMenu} 
+          aria-label="Toggle navigation menu"
+          style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            background: 'transparent', 
+            border: 'none', 
+            cursor: 'pointer', 
+            color: '#0F172A',
+            padding: '6px'
+          }}
+        >
+          {isMobileMenuOpen ? <X size={30} strokeWidth={2.5} /> : <Menu size={30} strokeWidth={2.5} />}
         </button>
       </div>
-
-
 
       {/* Mobile Navigation Menu */}
       {isMobileMenuOpen && (
@@ -100,21 +112,17 @@ const Header = () => {
                 FAQ
               </NavLink>
             </li>
-            <li>
-              <NavLink to="/contact" onClick={closeMobileMenu} className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
-                Contact Us
+            <li style={{ marginTop: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              <NavLink to="/contact" onClick={closeMobileMenu} style={{ padding: 0 }}>
+                <button className="btn btn-primary" style={{ width: '100%', padding: '0.85rem 1rem', borderRadius: '30px', fontWeight: '700', fontSize: '1rem' }}>
+                  CONTACT US
+                </button>
               </NavLink>
-            </li>
-            <li style={{ marginTop: '1rem' }}>
-              {isLoggedIn ? (
-                <NavLink to="/admin" onClick={closeMobileMenu}>
-                  <button className="btn btn-dark" style={{ width: '100%', padding: '0.75rem 1rem' }}>ADMIN DASHBOARD</button>
-                </NavLink>
-              ) : (
-                <NavLink to="/login" onClick={closeMobileMenu}>
-                  <button className="btn btn-dark" style={{ width: '100%', padding: '0.75rem 1rem' }}>ADMIN LOGIN</button>
-                </NavLink>
-              )}
+              <NavLink to="/login" onClick={() => { localStorage.removeItem('token'); closeMobileMenu(); }} style={{ padding: 0 }}>
+                <button className="btn btn-dark" style={{ width: '100%', padding: '0.85rem 1rem', borderRadius: '30px', fontWeight: '700', fontSize: '1rem' }}>
+                  ADMIN LOGIN
+                </button>
+              </NavLink>
             </li>
           </ul>
         </div>

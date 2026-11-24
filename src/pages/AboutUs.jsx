@@ -49,7 +49,7 @@ const AboutUs = () => {
           <span style={{ color: '#94A3B8', fontWeight: '600', fontSize: '16px' }}>
             About us
           </span>
-          <h1 style={{ fontSize: '42px', fontWeight: '900', color: '#0F172A', marginTop: '1rem', lineHeight: '1.2' }}>
+          <h1 style={{ fontSize: 'clamp(28px, 6vw, 42px)', fontWeight: '900', color: '#0F172A', marginTop: '1rem', lineHeight: '1.2' }}>
             Building <span style={{ color: 'var(--color-primary)' }}>&</span> Design Solutions
           </h1>
           <p style={{ color: '#475569', fontSize: '16px', maxWidth: '800px', margin: '1.5rem 0 0', lineHeight: '1.6' }}>
@@ -64,7 +64,7 @@ const AboutUs = () => {
           style={{ maxWidth: '1200px', margin: '0 auto' }}
         >
           <div style={{
-            height: '500px',
+            height: 'clamp(260px, 45vw, 500px)',
             borderRadius: '24px',
             backgroundImage: `url(${heroImage})`,
             backgroundSize: 'cover',
@@ -75,7 +75,7 @@ const AboutUs = () => {
       </div>
 
       {/* Company Profile Section */}
-      <div style={{ padding: '6rem 5%' }}>
+      <div style={{ padding: 'clamp(3rem, 6vw, 6rem) 5%' }}>
         <motion.div 
           initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer}
           style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}
@@ -83,7 +83,7 @@ const AboutUs = () => {
           <motion.span variants={fadeInUp} style={{ color: 'var(--color-primary)', fontWeight: '800', letterSpacing: '2px', fontSize: '0.9rem', textTransform: 'uppercase' }}>
             Our Profile
           </motion.span>
-          <motion.h2 variants={fadeInUp} style={{ fontSize: '2.5rem', fontWeight: '800', color: '#0F172A', marginTop: '1rem', marginBottom: '2rem' }}>
+          <motion.h2 variants={fadeInUp} style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', fontWeight: '800', color: '#0F172A', marginTop: '1rem', marginBottom: '2rem' }}>
             A Legacy of Excellence
           </motion.h2>
           <motion.p variants={fadeInUp} style={{ fontSize: '1.15rem', color: '#475569', lineHeight: '1.8', marginBottom: '1.5rem' }}>
@@ -99,12 +99,12 @@ const AboutUs = () => {
       </div>
 
       {/* Vision & Mission (2-Column Floating Cards) */}
-      <div style={{ padding: '2rem 5% 6rem' }}>
+      <div style={{ padding: '1rem 5% clamp(3rem, 6vw, 6rem)' }}>
         <motion.div 
           initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer}
-          style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '3rem' }}
+          style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '2rem' }}
         >
-          <motion.div variants={fadeInUp} style={{ background: '#FFFFFF', padding: '3.5rem', borderRadius: '24px', boxShadow: '0 10px 40px rgba(0,0,0,0.04)', textAlign: 'left' }}>
+          <motion.div variants={fadeInUp} style={{ background: '#FFFFFF', padding: 'clamp(2rem, 4vw, 3.5rem)', borderRadius: '24px', boxShadow: '0 10px 40px rgba(0,0,0,0.04)', textAlign: 'left' }}>
             <div style={{ width: '80px', height: '80px', background: 'transparent', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', margin: '0 0 1.5rem', color: '#D32F2F' }}>
               <Eye size={48} strokeWidth={2.5} />
             </div>
@@ -114,7 +114,7 @@ const AboutUs = () => {
             </p>
           </motion.div>
 
-          <motion.div variants={fadeInUp} style={{ background: '#FFFFFF', padding: '3.5rem', borderRadius: '24px', boxShadow: '0 10px 40px rgba(0,0,0,0.04)', textAlign: 'left' }}>
+          <motion.div variants={fadeInUp} style={{ background: '#FFFFFF', padding: 'clamp(2rem, 4vw, 3.5rem)', borderRadius: '24px', boxShadow: '0 10px 40px rgba(0,0,0,0.04)', textAlign: 'left' }}>
             <div style={{ width: '80px', height: '80px', background: 'transparent', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', margin: '0 0 1.5rem', color: '#D32F2F' }}>
               <Target size={48} strokeWidth={2.5} />
             </div>
@@ -127,36 +127,36 @@ const AboutUs = () => {
       </div>
 
       {/* Core Values (3-Column Grid) */}
-      <div style={{ padding: '6rem 5%', background: '#FFFFFF' }}>
+      <div style={{ padding: 'clamp(3rem, 6vw, 6rem) 5%', background: '#FFFFFF' }}>
         <motion.div 
           initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer}
           style={{ maxWidth: '1200px', margin: '0 auto' }}
         >
-          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
             <motion.span variants={fadeInUp} style={{ color: 'var(--color-primary)', fontWeight: '800', letterSpacing: '2px', fontSize: '0.9rem', textTransform: 'uppercase' }}>
               Our Foundation
             </motion.span>
-            <motion.h2 variants={fadeInUp} style={{ fontSize: '2.5rem', fontWeight: '800', color: '#0F172A', marginTop: '1rem' }}>
+            <motion.h2 variants={fadeInUp} style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', fontWeight: '800', color: '#0F172A', marginTop: '1rem' }}>
               Core Values
             </motion.h2>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))', gap: '1.25rem' }}>
             {coreValues.map((value, idx) => (
               <motion.div key={idx} variants={fadeInUp} style={{ 
                 background: '#F8FAFC', 
-                padding: '2rem', 
-                borderRadius: '100px', 
+                padding: '1.25rem 1.75rem', 
+                borderRadius: '16px', 
                 display: 'flex', 
                 alignItems: 'center', 
-                gap: '1.5rem',
+                gap: '1.25rem',
                 boxShadow: '0 4px 15px rgba(0,0,0,0.02)',
                 border: '1px solid #F1F5F9'
               }}>
-                <div style={{ width: '48px', height: '48px', background: '#FFFFFF', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0F172A', boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }}>
+                <div style={{ width: '44px', height: '44px', background: '#FFFFFF', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0F172A', boxShadow: '0 2px 10px rgba(0,0,0,0.05)', flexShrink: 0 }}>
                   {value.icon}
                 </div>
-                <h4 style={{ fontSize: '1.1rem', fontWeight: '700', color: '#1E293B', margin: 0 }}>{value.title}</h4>
+                <h4 style={{ fontSize: '1.05rem', fontWeight: '700', color: '#1E293B', margin: 0 }}>{value.title}</h4>
               </motion.div>
             ))}
           </div>
@@ -164,10 +164,10 @@ const AboutUs = () => {
       </div>
 
       {/* Quality, HSE, Sustainability & Commitment (Dark Block) */}
-      <div style={{ padding: '8rem 5%', backgroundColor: '#0F172A', color: '#FFFFFF' }}>
+      <div style={{ padding: 'clamp(4rem, 8vw, 8rem) 5%', backgroundColor: '#0F172A', color: '#FFFFFF' }}>
         <motion.div 
           initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer}
-          style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '4rem' }}
+          style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: '3rem' }}
         >
           <motion.div variants={fadeInUp}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>

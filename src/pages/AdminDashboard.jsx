@@ -149,7 +149,7 @@ const AdminDashboard = () => {
                   <div style={{ color: '#64748b', fontSize: '0.75rem' }}>admin@ntd.rw</div>
                 </div>
               </div>
-              <button onClick={() => navigate('/')} style={{ background: 'transparent', border: 'none', color: '#879A91', textAlign: 'left', padding: '0.25rem 0', fontSize: '0.85rem', cursor: 'pointer' }}>
+              <button onClick={() => { localStorage.removeItem('token'); navigate('/'); }} style={{ background: 'transparent', border: 'none', color: '#879A91', textAlign: 'left', padding: '0.25rem 0', fontSize: '0.85rem', cursor: 'pointer' }}>
                 &larr; Return to Website
               </button>
               <button onClick={handleLogout} style={{ background: 'transparent', border: 'none', color: '#EF4444', textAlign: 'left', padding: '0.25rem 0', fontSize: '0.85rem', cursor: 'pointer' }}>

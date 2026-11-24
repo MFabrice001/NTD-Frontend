@@ -20,6 +20,19 @@ const FAQ = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  const availableCategories = useMemo(() => {
+    const cats = new Set(['All']);
+    adminFaqs.forEach(item => {
+      if (item.category && item.category.trim()) {
+        cats.add(item.category.trim());
+      }
+    });
+    if (cats.size === 1) {
+      return CATEGORIES;
+    }
+    return Array.from(cats);
+  }, [adminFaqs]);
+
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/public/faqs`)
       .then(res => {
@@ -106,7 +119,7 @@ const FAQ = () => {
 
       {/* Category Filter Pills */}
       <div className="faq-categories-bar">
-        {CATEGORIES.map(cat => (
+        {availableCategories.map(cat => (
           <button
             key={cat}
             className={`faq-category-btn ${selectedCategory === cat ? 'active' : ''}`}

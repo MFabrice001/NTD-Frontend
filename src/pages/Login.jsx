@@ -14,6 +14,11 @@ const Login = () => {
   const timerRef = useRef(null);
   const navigate = useNavigate();
 
+  // Ensure security: when visiting login, clear any previous session so re-authentication is required
+  useEffect(() => {
+    localStorage.removeItem('token');
+  }, []);
+
   // Start 5-min countdown whenever we enter step 2
   useEffect(() => {
     if (step === 2) {

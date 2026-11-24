@@ -17,7 +17,7 @@ const AdminFaqs = ({ token }) => {
   const [editingFaq, setEditingFaq] = useState(null);
 
   const [formData, setFormData] = useState({
-    category: 'Architectural Design',
+    category: '',
     question: '',
     answer: ''
   });
@@ -52,7 +52,7 @@ const AdminFaqs = ({ token }) => {
   const openNewModal = () => {
     setEditingFaq(null);
     setFormData({
-      category: 'Architectural Design',
+      category: '',
       question: '',
       answer: ''
     });
@@ -61,7 +61,7 @@ const AdminFaqs = ({ token }) => {
 
   const openEditModal = (faq) => {
     setEditingFaq(faq);
-    let cat = 'Architectural Design';
+    let cat = '';
     let qText = faq.question || '';
     if (qText.startsWith('[') && qText.includes(']')) {
       cat = qText.split(']')[0].replace('[', '').trim();
@@ -279,11 +279,13 @@ const AdminFaqs = ({ token }) => {
             <form onSubmit={handleSave}>
               <div style={{marginBottom: '1.25rem'}}>
                 <label style={{display: 'block', fontWeight: 700, fontSize: '0.85rem', color: '#0f172a', marginBottom: '0.4rem'}}>
-                  Category
+                  Category *
                 </label>
-                <select
+                <input
+                  type="text"
                   value={formData.category}
                   onChange={e => setFormData({ ...formData, category: e.target.value })}
+                  placeholder="e.g. Architectural Design, Engineering & Construction, Pricing"
                   style={{
                     width: '100%',
                     padding: '0.75rem 1rem',
@@ -291,13 +293,11 @@ const AdminFaqs = ({ token }) => {
                     borderRadius: '10px',
                     fontSize: '0.95rem',
                     color: '#0f172a',
-                    background: 'white'
+                    background: 'white',
+                    outline: 'none'
                   }}
-                >
-                  {CATEGORIES.map(cat => (
-                    <option key={cat} value={cat}>{cat}</option>
-                  ))}
-                </select>
+                  required
+                />
               </div>
 
               <div style={{marginBottom: '1.25rem'}}>

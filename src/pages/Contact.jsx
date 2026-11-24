@@ -57,20 +57,20 @@ const Contact = () => {
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.4))' }}></div>
         
         <div style={{ position: 'relative', zIndex: 10, maxWidth: '1000px', margin: '0 auto', padding: '0 5%' }}>
-          <h1 style={{ fontSize: '3.5rem', fontWeight: '700', marginBottom: '1.5rem', color: 'white' }}>Get in Touch</h1>
-          <p style={{ fontSize: '1.25rem', lineHeight: '1.6', opacity: 0.9 }}>
+          <h1 style={{ fontSize: 'clamp(2.2rem, 6vw, 3.5rem)', fontWeight: '700', marginBottom: '1.25rem', color: 'white' }}>Get in Touch</h1>
+          <p style={{ fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', lineHeight: '1.6', opacity: 0.9 }}>
             Have questions about our services? We're here to help. Reach out to us and let's discuss how we can empower your business.
           </p>
         </div>
       </section>
 
       {/* Main Content Section */}
-      <section style={{ padding: '5rem 5%', backgroundColor: '#f8fafc' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '3rem' }}>
+      <section style={{ padding: 'clamp(3rem, 6vw, 5rem) 5%', backgroundColor: '#f8fafc' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: '2.5rem' }}>
           
           {/* Form Side */}
-          <div style={{ background: 'white', borderRadius: '16px', padding: '2.5rem', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}>
-            <h2 style={{ fontSize: '2rem', fontWeight: '700', color: '#0f172a', marginBottom: '0.5rem' }}>Send Us A Message</h2>
+          <div style={{ background: 'white', borderRadius: '16px', padding: 'clamp(1.5rem, 4vw, 2.5rem)', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}>
+            <h2 style={{ fontSize: 'clamp(1.5rem, 3.5vw, 2rem)', fontWeight: '700', color: '#0f172a', marginBottom: '0.5rem' }}>Send Us A Message</h2>
             <p style={{ color: '#64748b', marginBottom: '2rem' }}>Fill Out The Form Below And Our Team Will Get Back To You Within 24 Hours.</p>
             
             {submitted ? (
@@ -84,9 +84,9 @@ const Contact = () => {
               <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.9rem', fontWeight: '600', color: '#0f172a', marginBottom: '0.5rem' }}>Full Name *</label>
-                  <div style={{ display: 'flex', gap: '1rem' }}>
-                    <input type="text" name="firstName" placeholder="First Name" required value={formData.firstName} onChange={handleChange} style={{ flex: 1, width: '100%', padding: '0.75rem 1rem', border: '1px solid #e2e8f0', borderRadius: '8px', background: '#fff', fontSize: '1rem', outline: 'none' }} />
-                    <input type="text" name="lastName" placeholder="Last Name" required value={formData.lastName} onChange={handleChange} style={{ flex: 1, width: '100%', padding: '0.75rem 1rem', border: '1px solid #e2e8f0', borderRadius: '8px', background: '#fff', fontSize: '1rem', outline: 'none' }} />
+                  <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                    <input type="text" name="firstName" placeholder="First Name" required value={formData.firstName} onChange={handleChange} style={{ flex: '1 1 140px', minWidth: '120px', width: '100%', padding: '0.75rem 1rem', border: '1px solid #e2e8f0', borderRadius: '8px', background: '#fff', fontSize: '1rem', outline: 'none' }} />
+                    <input type="text" name="lastName" placeholder="Last Name" required value={formData.lastName} onChange={handleChange} style={{ flex: '1 1 140px', minWidth: '120px', width: '100%', padding: '0.75rem 1rem', border: '1px solid #e2e8f0', borderRadius: '8px', background: '#fff', fontSize: '1rem', outline: 'none' }} />
                   </div>
                 </div>
                 
